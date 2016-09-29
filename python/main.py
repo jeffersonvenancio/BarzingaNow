@@ -1,14 +1,19 @@
-from flask import Flask, jsonify, url_for, redirect
-from cozinha import Mesa, Status
-from user_token import UserToken
-import json
-import httplib
+from flask import Flask, render_template
 
-app = Flask(__name__)
+from usuario.controller import usuario as usuario_controller
+from produto.controller import produto as produto_controller
+from transacao.controller import transacao as transacao_controller
+
+app = Flask(__name__, template_folder='web')
+
+app.register_blueprint(usuario_controller, url_prefix='/usuario')
+app.register_blueprint(produto_controller, url_prefix='/produto')
+app.register_blueprint(transacao_controller, url_prefix='/transacao')
 
 @app.route('/')
 def hello():
-	return redirect(url_for('static', filename='main.html'))
+	# return 'sadasda'
+	return render_template('index.html')
 
 @app.errorhandler(404)
 def page_not_found(e):

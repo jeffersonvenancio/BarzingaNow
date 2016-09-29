@@ -6,14 +6,6 @@ threadsafe: yes
 
 # Handlers define how to route requests to your application.
 handlers:
-- url: /static
-  static_dir: web
-
-- url: /js
-  static_dir: web/js
-
-- url: /web
-  static_dir: web
 
 - url: .*  # This regex directs all routes to main.app
   script: main.app
