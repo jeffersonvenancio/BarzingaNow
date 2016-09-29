@@ -12,7 +12,6 @@ app.register_blueprint(transacao_controller, url_prefix='/transacao')
 
 @app.route('/')
 def hello():
-	# return 'sadasda'
 	return render_template('index.html')
 
 @app.errorhandler(404)
