@@ -4,4 +4,4 @@ transaction = Blueprint('transaction', __name__)
 
 @transaction.route('/')
 def get_all():
-	return "TRANSACAO"
+    return "TRANSACAO"

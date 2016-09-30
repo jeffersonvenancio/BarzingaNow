@@ -12,12 +12,12 @@ app.register_blueprint(transaction_controller, url_prefix='/transaction')
 
 @app.route('/')
 def hello():
-	return render_template('index.html')
+    return render_template('index.html')
 
 @app.errorhandler(404)
 def page_not_found(e):
-	return 'Sorry, Nothing at this URL.', 404
+    return 'Sorry, Nothing at this URL.', 404
 
 @app.errorhandler(500)
 def application_error(e):
-	return 'Sorry, unexpected error: {}'.format(e), 500
+    return 'Sorry, unexpected error: {}'.format(e), 500

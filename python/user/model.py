@@ -4,8 +4,8 @@ class User(ndb.Model):
     name = ndb.StringProperty()
     money = ndb.FloatProperty()
 
-    def debitar(self, value):
-    	self.money -= value
+    def debit(self, value):
+        self.money -= value
 
-    def creditar(self, value)
-    	self.money += value
+    def credit(self, value):
+        self.money += value
