@@ -3,7 +3,7 @@ Repositório para a solucção devo ir almoçar?
 
 
 QUER INTALAR AS DEPENDENCIAS???
- - pip install -r requirements.txt --target=./lib
+ - pip install -t ./lib -r requirements.txt --upgrade
 
 QUER RODAR EM DEV (NA SUA MAQUINA, Meu CHAPA)!?!?
  - dev_appserver.py ../python

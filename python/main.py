@@ -19,7 +19,7 @@ app.register_blueprint(transaction_controller, url_prefix='/transaction')
 @app.route('/')
 def hello():
 	session['session_state'] = None
-	return redirect('https://accounts.google.com/AccountChooser?continue=https://accounts.google.com/o/oauth2/auth?scope%3Dhttps://www.googleapis.com/auth/userinfo.email%26response_type%3Dcode%26redirect_uri%3Dhttp://localhost:8080/token%26state%3Dsecurity_token%253D138r5719ru3e1%2526url%253Dhttps://localhost:8080%26client_id%3D905590247007-tmmromevhmghnve94lc1sqoh08itlhjf.apps.googleusercontent.com%26from_login%3D1%26as%3D-231db6e2ffa9ce49&btmpl=authsub&scc=1&oauth=1')
+	return redirect('https://accounts.google.com/AccountChooser?continue=https://accounts.google.com/o/oauth2/auth?scope%3Dhttps://www.googleapis.com/auth/userinfo.email%26response_type%3Dcode%26redirect_uri%3Dhttp://barzinganow.appspot.com/token%26state%3Dsecurity_token%253D138r5719ru3e1%2526url%253Dhttp://barzinganow.appspot.com%26client_id%3D905590247007-tmmromevhmghnve94lc1sqoh08itlhjf.apps.googleusercontent.com%26from_login%3D1%26as%3D-231db6e2ffa9ce49&btmpl=authsub&scc=1&oauth=1')
 
 @app.route('/token')
 def token():
@@ -33,7 +33,7 @@ def get_token(code):
     client_auth = requests.auth.HTTPBasicAuth('905590247007-tmmromevhmghnve94lc1sqoh08itlhjf.apps.googleusercontent.com', 'l-p5n0NQsBQNOl_naYVxgBFd')
     post_data = {"grant_type": "authorization_code",
                  "code": code,
-                 "redirect_uri": 'http://localhost:8080/token'}
+                 "redirect_uri": 'http://barzinganow.appspot.com/token'}
     response = requests.post("https://accounts.google.com/o/oauth2/token",
                              auth=client_auth,
                              data=post_data)
