@@ -1,8 +1,8 @@
-from flask import Flask, request, session, abort, render_template
+from flask import Flask, request, session
 from werkzeug.utils import redirect
 from requests_toolbelt.adapters import appengine
+
 appengine.monkeypatch()
-import requests
 
 from user.controller import user as user_controller
 from product.controller import product as product_controller
@@ -18,8 +18,8 @@ app.register_blueprint(transaction_controller, url_prefix='/transaction')
 
 @app.route('/')
 def hello():
-	session['session_state'] = None
-	return redirect('https://accounts.google.com/AccountChooser?continue=https://accounts.google.com/o/oauth2/auth?scope%3Dhttps://www.googleapis.com/auth/userinfo.email%26response_type%3Dcode%26redirect_uri%3Dhttp://localhost:8080/token%26state%3Dsecurity_token%253D138r5719ru3e1%2526url%253Dhttps://localhost:8080%26client_id%3D905590247007-tmmromevhmghnve94lc1sqoh08itlhjf.apps.googleusercontent.com%26from_login%3D1%26as%3D-231db6e2ffa9ce49&btmpl=authsub&scc=1&oauth=1')
+    session['session_state'] = None
+    return redirect('https://accounts.google.com/AccountChooser?continue=https://accounts.google.com/o/oauth2/auth?scope%3Dhttps://www.googleapis.com/auth/userinfo.email%26response_type%3Dcode%26redirect_uri%3Dhttp://localhost:8080/token%26state%3Dsecurity_token%253D138r5719ru3e1%2526url%253Dhttps://localhost:8080%26client_id%3D905590247007-tmmromevhmghnve94lc1sqoh08itlhjf.apps.googleusercontent.com%26from_login%3D1%26as%3D-231db6e2ffa9ce49&btmpl=authsub&scc=1&oauth=1')
 
 @app.route('/token')
 def token():

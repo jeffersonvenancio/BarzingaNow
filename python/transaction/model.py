@@ -1,9 +1,19 @@
 from google.appengine.ext import ndb
-from user import User
-from product import Product
+from user.model import User
+from product.model import Product
 
 class Transaction(ndb.Model):
-    description = ndb.StringProperty()
+    value = ndb.FloatProperty()
+    user = ndb.KeyProperty(kind=User)
+    product = ndb.KeyProperty(kind=Product)
 
-    user = ndb.ReferenceProperty(User)
-    product = ndb.ReferenceProperty(Product)
+    def __init__(self, user, product, value):
+        ndb.Model.__init__(self)
+
+        self.user = user.key
+        self.product = product.key
+
+        if product:
+            self.value = product.price
+        else: 
+            self.value = value

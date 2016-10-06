@@ -26,8 +26,8 @@ def add():
     price = float(request.form['price'])
     quantity = int(request.form['quantity'])
 
-    p = Product(description=description, price=price, quantity=quantity)
-    p.put()
+    product = Product(description=description, price=price, quantity=quantity)
+    product.put()
 
     return '', 204
 
