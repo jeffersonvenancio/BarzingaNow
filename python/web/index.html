@@ -1,27 +1,41 @@
-<!DOCTYPE html>
-<html ng-app="starter">
+<!doctype html>
+<html ng-app="app">
 
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="content-language" content="pt-br" />
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+
     <title>Barzinga NOW!</title>
 
-    <link rel="icon" href="img/icon.png">
+    <!-- <link rel="icon" href="img/icon.png"> -->
 
-    <link href="css/style.css" rel="stylesheet">
+    <link href="web/styles/main.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 
-    <script src="lib/angular.js"></script>
+    <script src="web/lib/angular.js"></script>
+    <script src="web/lib/angular-route.js"></script>
 
-    <script src="js/app.js"></script>
+    <script src="web/app/app.js"></script>
+    <script src="web/app/controllers/home.js"></script>
+    <script src="web/app/controllers/product.js"></script>
 
 </head>
 
 <body>
     <div class="overlay"></div>
-    <div ng-controller="MainCtrl">
-        <div class="text">
-           BARZINGA!
-        </div>
-    </div>
+    <header>
+        <img class="logo" src="web/images/logo-barzinga.png">
+    </header>
+    <nav>
+        <ul>
+            <li><a class="bebidas" href="#">Bebidas</a></li>
+            <li><a class="doces ativo" href="#">Doces</a></li>
+            <li><a class="naturebas" href="#">Naturebas</a></li>
+            <li><a class="salgados" href="#">Salgados</a></li>
+        </ul>
+    </nav>
+    <main ng-view>
+    </main>
 </body>
 </html>

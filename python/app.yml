@@ -7,7 +7,7 @@ threadsafe: yes
 # Handlers define how to route requests to your application.
 handlers:
 
-- url: .*  # This regex directs all routes to main.app
+- url: .*
   script: main.app
 
 libraries:
