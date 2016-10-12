@@ -14,8 +14,9 @@ html, body {
 
 header {
     width: 100%;
-    height: 120px;
+    height: 100px;
     position: relative;
+    margin-bottom: 50px;
 
     background-color: #333333;
     box-shadow: 0px 5px 10px 10px #333333;
@@ -23,20 +24,45 @@ header {
 
 header .logo {
     position: absolute;
-    top: 50px;
+    top: 30px;
     left: 50px;
 }
 
+div.ng-scope {
+    height: calc(100% - 200px);
+    min-height: 290px;
+}
+
 nav {
+    display: inline-block;
+    position: relative;
     width: 300px;
-    height: calc(100% - 120px);
+    height: 100%;
+    vertical-align: top;
 
     border-right: 1px solid #CCCCCC;
     font-size: 24px;
 }
 
+nav .nav-arrow {
+    display: block;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    /*top: 127px;*/
+    right: -15px;
+
+    background-color: #FFFFFF;
+    border-top: 1px solid #CCCCCC;
+    border-left: 1px solid #CCCCCC;
+
+    -ms-transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
 nav ul {
-    padding: 100px 50px 0 100px;
+    padding: 50px 50px 0 100px;
 }
 
 nav ul li {
@@ -50,14 +76,14 @@ nav ul li a {
     color: #333333;
 }
 
-nav ul li a.ativo {
+nav ul li a.active {
     color: #FFAE00;
 }
 
 nav ul li a:before {
     position: absolute;
     top: -10px;
-    left: -50px;
+    left: -60px;
 }
 
 nav ul li a.bebidas:before { content: url(../images/icone-bebidas.png); }
@@ -65,7 +91,55 @@ nav ul li a.doces:before { content: url(../images/icone-doces.png); }
 nav ul li a.naturebas:before { content: url(../images/icone-naturebas.png); }
 nav ul li a.salgados:before { content: url(../images/icone-salgados.png); }
 
-nav ul li a.bebidas.ativo:before { content: url(../images/icone-bebidas-ativo.png); }
-nav ul li a.doces.ativo:before { content: url(../images/icone-doces-ativo.png); }
-nav ul li a.naturebas.ativo:before { content: url(../images/icone-naturebas-ativo.png); }
-nav ul li a.salgados.ativo:before { content: url(../images/icone-salgados-ativo.png); }
+nav ul li a.bebidas.active:before { content: url(../images/icone-bebidas-ativo.png); }
+nav ul li a.doces.active:before { content: url(../images/icone-doces-ativo.png); }
+nav ul li a.naturebas.active:before { content: url(../images/icone-naturebas-ativo.png); }
+nav ul li a.salgados.active:before { content: url(../images/icone-salgados-ativo.png); }
+
+main {
+    display: inline-block;
+    width: calc(100% - 350px);
+    height: 100%;
+    padding-top: 50px;
+    text-align: center;
+}
+
+main ul.products li {
+    display: inline-block;
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    overflow: auto;
+
+    color: #777777;
+}
+
+main ul.products li .product-image {
+    display: inline-block;
+    margin: 0 auto 20px;
+}
+
+main ul.products li .product-image img {
+    width: 100px;
+
+    -webkit-filter: drop-shadow(5px 5px 0 #1BE663)
+                  drop-shadow(-5px -5px 0 #1BE663);
+    filter: drop-shadow(5px 5px 0 #1BE663) 
+          drop-shadow(-5px -5px 0 #1BE663);
+}
+
+main ul.products li .product-price {
+    font-weight: bold;
+}
+
+main ul.products li .product-price span {
+    color: #67D1E4;
+    font-size: 32px;
+}
+
+
+main ul.products li .product-quantity span {
+    color: #89E215;
+    font-size: 18px;
+    font-weight: bold;
+}

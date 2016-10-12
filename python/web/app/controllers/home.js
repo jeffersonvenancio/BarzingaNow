@@ -1,3 +1,3 @@
-app.controller('HomeCtrl', ['$scope', '$location', function ($scope, $location) {
+app.controller('HomeCtrl', ['$scope', '$location', function($scope, $location) {
     $location.path('/product');
 }]);

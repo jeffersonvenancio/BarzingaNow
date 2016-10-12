@@ -1,6 +1,7 @@
 from flask import Flask, request, session, url_for
 from werkzeug.utils import redirect
 from requests_toolbelt.adapters import appengine
+from flask.ext.cors import CORS
 
 appengine.monkeypatch()
 
@@ -10,6 +11,8 @@ from product.controller import product as product_controller
 from transaction.controller import transaction as transaction_controller
 
 app = Flask(__name__, static_folder='web')
+
+cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 app.secret_key = 'super secret key'
 app.config['SESSION_TYPE'] = 'filesystem'

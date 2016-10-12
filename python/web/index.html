@@ -15,10 +15,15 @@
 
     <script src="web/lib/angular.js"></script>
     <script src="web/lib/angular-route.js"></script>
+    <script src="web/lib/jquery.js"></script>
 
     <script src="web/app/app.js"></script>
+    
+    <script src="web/app/services/product.js"></script>
+
     <script src="web/app/controllers/home.js"></script>
     <script src="web/app/controllers/product.js"></script>
+
 
 </head>
 
@@ -27,15 +32,6 @@
     <header>
         <img class="logo" src="web/images/logo-barzinga.png">
     </header>
-    <nav>
-        <ul>
-            <li><a class="bebidas" href="#">Bebidas</a></li>
-            <li><a class="doces ativo" href="#">Doces</a></li>
-            <li><a class="naturebas" href="#">Naturebas</a></li>
-            <li><a class="salgados" href="#">Salgados</a></li>
-        </ul>
-    </nav>
-    <main ng-view>
-    </main>
+    <div ng-view></div>
 </body>
 </html>

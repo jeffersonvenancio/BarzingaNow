@@ -10,6 +10,5 @@ app.config(function($routeProvider, $locationProvider) {
             templateUrl: 'web/app/views/product.html',
             controller: 'ProductCtrl'
         })
-
         .otherwise({ redirectTo: '/' });
 });
