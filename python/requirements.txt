@@ -5,7 +5,7 @@
 #
 # Note: The `lib` directory is added to `sys.path` by `appengine_config.py`.
 Flask
-Flask-Cors==2.1.2
+flask-cors
 urllib3[secure]
 urlfetch
 httplib2==0.9.2

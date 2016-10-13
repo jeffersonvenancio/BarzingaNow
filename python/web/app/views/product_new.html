@@ -1,0 +1,12 @@
+<main>
+    <h2>Cadastrar produto</h2>
+    <ul class="form-product">
+        <li><label for="">Descri&ccedil;&atilde;o</label><input type="text" ng-model="product.description"></li>
+        <li><label for="">Pre&ccedil;o</label><input type="number" ng-model="product.price"></li>
+        <li><label for="">Quantidade dispon&iacute;vel</label><input type="number" ng-model="product.quantity"></li>
+    </ul>
+    <div class="container-button">
+        <input type="button" class="confirm" value="CADASTRAR" ng-click="new()"/>
+        <input type="button" class="cancel" value="LIMPAR" ng-click="clear()"/>
+    </div>
+</main>

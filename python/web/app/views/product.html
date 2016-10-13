@@ -1,12 +1,3 @@
-<nav>
-    <ul>
-        <li><a ng-click="selectCategory('bebidas', $event)" class="bebidas" href="javascript:;">Bebidas</a></li>
-        <li><a ng-click="selectCategory('doces', $event)" class="doces" href="javascript:;">Doces</a></li>
-        <li><a ng-click="selectCategory('naturebas', $event)" class="naturebas" href="javascript:;">Naturebas</a></li>
-        <li><a ng-click="selectCategory('salgados', $event)" class="salgados" href="javascript:;">Salgados</a></li>
-    </ul>
-    <div class="nav-arrow"></div>
-</nav>
 <main>
     <ul class="products">
         <li ng-repeat="product in products">
@@ -20,7 +11,7 @@
                 BZG <span>{{ product.price | currency : '' : 2}}</span>
             </div>
             <div class="product-quantity">
-                Qtde. <span>{{ product.quantity }}</span>
+                Qtde. Dispon&iacute;vel <span>{{ product.quantity }}</span>
             </div>
         </li>
     </ul>

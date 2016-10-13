@@ -1,7 +1,7 @@
 from flask import Flask, request, session, url_for
 from werkzeug.utils import redirect
 from requests_toolbelt.adapters import appengine
-from flask.ext.cors import CORS
+from flask_cors import CORS
 
 appengine.monkeypatch()
 

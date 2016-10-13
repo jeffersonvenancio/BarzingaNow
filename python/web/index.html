@@ -22,16 +22,27 @@
     <script src="web/app/services/product.js"></script>
 
     <script src="web/app/controllers/home.js"></script>
+    <script src="web/app/controllers/sidemenu.js"></script>
     <script src="web/app/controllers/product.js"></script>
-
+    <script src="web/app/controllers/product_new.js"></script>
 
 </head>
 
 <body>
-    <div class="overlay"></div>
     <header>
         <img class="logo" src="web/images/logo-barzinga.png">
     </header>
-    <div ng-view></div>
+    <nav ng-controller="SideMenuCtrl">
+        <ul>
+            <li><a ng-click="openPageProduct($event)" class="add-product" href="javascript:;">CADASTRAR PRODUTO</a></li>
+            <li><a ng-click="selectCategory('bebidas', $event)" class="bebidas" href="javascript:;">Bebidas</a></li>
+            <li><a ng-click="selectCategory('doces', $event)" class="doces" href="javascript:;">Doces</a></li>
+            <li><a ng-click="selectCategory('naturebas', $event)" class="naturebas" href="javascript:;">Naturebas</a></li>
+            <li><a ng-click="selectCategory('salgados', $event)" class="salgados" href="javascript:;">Salgados</a></li>
+        </ul>
+        <div class="nav-arrow"></div>
+    </nav>
+    <main ng-view></main>
+    <modal></modal>
 </body>
 </html>
