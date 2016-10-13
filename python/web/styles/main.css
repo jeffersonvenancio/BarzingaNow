@@ -29,10 +29,52 @@ header .logo {
     left: 50px;
 }
 
-body > div.ng-scope {
+header .user-container {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-right: 20px;
+    margin-top: -30px;
+
+    font-weight: bold;
+    font-size: 24px;
+    color: #FFFFFF;
+}
+
+header .user-container .money {
+    display: inline-block;
+    text-align: center;
+    padding-right: 30px;
+
+    border-right: 1px solid #777777;
+}
+
+header .user-container .money span {
+    color: #FFDC00;
+    font-size: 36px;
+}
+
+header .user-container .avatar {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    margin-left: 30px;
+
+    border-radius: 30px;
+    overflow: hidden;
+}
+
+header .user-container .avatar img {
+    width: 100px;
+}
+
+/*body > .ng-scope {
     height: calc(100% - 200px);
     min-height: 350px;
-}
+}*/
 
 nav {
     display: inline-block;

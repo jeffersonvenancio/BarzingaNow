@@ -22,6 +22,7 @@
     <script src="web/app/services/product.js"></script>
 
     <script src="web/app/controllers/home.js"></script>
+    <script src="web/app/controllers/header.js"></script>
     <script src="web/app/controllers/sidemenu.js"></script>
     <script src="web/app/controllers/product.js"></script>
     <script src="web/app/controllers/product_new.js"></script>
@@ -29,8 +30,16 @@
 </head>
 
 <body>
-    <header>
+    <header ng-controller="HeaderCtrl">
         <img class="logo" src="web/images/logo-barzinga.png">
+        <div class="user-container">
+            <div class="money">
+                BZG <span>{{ user.money | currency : '' : 2  }}</span>
+            </div>
+            <div class="avatar">
+                <img src="web/images/user.jpg" alt="">
+            </div>
+        </div>
     </header>
     <nav ng-controller="SideMenuCtrl">
         <ul>
