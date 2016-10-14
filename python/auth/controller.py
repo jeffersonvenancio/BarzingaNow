@@ -8,16 +8,19 @@ CLIENT_ID = '905590247007-tmmromevhmghnve94lc1sqoh08itlhjf.apps.googleuserconten
 CLIENT_SECRET = 'l-p5n0NQsBQNOl_naYVxgBFd'
 REDIRECT_URI = 'http://localhost:8080/api/auth/token'
 HD = 'dextra-sw.com'
-@auth.route('/')
+SCOPE = 'https://www.googleapis.com/auth/userinfo.email'
+URL = 'http://localhost:8080/'
+
+
+
+@auth.route('/', strict_slashes=False)
 def hello():
-    if 'barzinga_user' in session:
-        print session['barzinga_user']
-        return redirect('/')
+    print 'adsfadasdf'
+    return redirect('https://accounts.google.com/AccountChooser?continue=https://accounts.google.com/o/oauth2/auth?scope%3D'+SCOPE+'%26response_type%3Dcode%26redirect_uri%3D'+REDIRECT_URI+'%26state%3Dsecurity_token%253D138r5719ru3e1%2526url%253D'+URL+'%26client_id%3D'+CLIENT_ID+'%26from_login%3D1%26as%3D-231db6e2ffa9ce49&btmpl=authsub&scc=1&oauth=1&hd='+HD)
 
-    return redirect('https://accounts.google.com/AccountChooser?continue=https://accounts.google.com/o/oauth2/auth?scope%3Dhttps://www.googleapis.com/auth/userinfo.email%26response_type%3Dcode%26redirect_uri%3D'+REDIRECT_URI+'%26state%3Dsecurity_token%253D138r5719ru3e1%2526url%253Dhttp://barzinganow.appspot.com%26client_id%3D'+CLIENT_ID+'%26from_login%3D1%26as%3D-231db6e2ffa9ce49&btmpl=authsub&scc=1&oauth=1&hd='+HD)
-
-@auth.route('/token')
+@auth.route('/token', strict_slashes=False)
 def token():
+    print 'jjj jj j j '
     code = request.args.get('code')
     client_auth = requests.auth.HTTPBasicAuth(CLIENT_ID, CLIENT_SECRET)
     post_data = {"grant_type": "authorization_code",
@@ -35,10 +38,3 @@ def token():
     session['barzinga_user'] = r.json()
 
     return redirect('/')
-
-
-def save_created_state(state):
-    pass
-
-def is_valid_state(state):
-    return True

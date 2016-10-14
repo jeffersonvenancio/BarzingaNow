@@ -26,6 +26,13 @@ app.register_blueprint(transaction_controller, url_prefix='/api/transaction')
 def main():
     return app.send_static_file('index.html')
 
+@app.before_request
+def filter():
+    if '/api/auth' not in request.url and '/api/auth/token' not in request.url:
+        if not 'barzinga_user' in session:
+            return redirect('/api/auth/')
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     return 'Sorry, Nothing at this URL.', 404
