@@ -36,7 +36,7 @@ def add():
     price = float(request.form['price'])
     quantity = int(request.form['quantity'])
 
-    image = request.files['image']
+    image = None #request.files['image']
     image_url = None
 
     if image:
