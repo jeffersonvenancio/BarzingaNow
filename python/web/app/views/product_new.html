@@ -1,10 +1,14 @@
 <div class="form-product">
     <ul>
         <li class="product-image">
-            <div>
-                <img src="web/images/icone-camera.png" alt="">
-                <div>CLIQUE AQUI PARA ADICIONAR A IMAGEM</div>
+            <div ng-click="addImage()">
+                <div class="add-image">
+                    <img class="icon-camera" src="web/images/icone-camera.png" alt="">
+                    <div>CLIQUE AQUI PARA ADICIONAR A IMAGEM</div>
+                </div>
+                <img class="new-image" src="#" alt="">
             </div>
+            <input class="hidden" type="file">
         </li>
         <li class="product-description"><label for="">Nome do produto</label><input type="text" ng-model="product.description"></li>
         <li class="product-category"><label for="">Categoria</label>

@@ -17,6 +17,10 @@ html, body {
     color: #333333;
 }
 
+.hidden {
+    display: none !important;
+}
+
 header {
     width: 100%;
     height: 100px;
@@ -239,7 +243,7 @@ main .form-product ul li select {
 }
 
 main .form-product ul li.product-image {
-    display: table;
+    display: inline-block;
     width: 100%;
     height: 200px;
     text-align: center;
@@ -250,15 +254,26 @@ main .form-product ul li.product-image {
     border: 1px dashed #CCCCCC;
     font-weight: bold;
     cursor: pointer;
+    overflow: hidden;
 }
 
 main .form-product ul li.product-image > div {
-    display: table-cell;
-    vertical-align: middle;
+    height: 100%;
 }
 
-main .form-product ul li.product-image img {
+main .form-product ul li.product-image .add-image {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+main .form-product ul li.product-image .icon-camera {
     margin: 0 auto 10px;
+}
+
+main .form-product ul li.product-image .new-image {
+    display: none;
 }
 
 main .form-product ul li.product-description {

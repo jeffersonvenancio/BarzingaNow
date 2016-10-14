@@ -37,17 +37,19 @@ def add():
     quantity = int(request.form['quantity'])
 
     image = request.files['image']
+    image_url = None
 
-    write_retry_params = gcs.RetryParams(backoff_factor=1.1)
-    filename = '/' + bucket_name + '/' + image.filename
-    gcs_file = gcs.open(filename, 'w', content_type=image.content_type, retry_params=write_retry_params)
-    gcs_file.write(image.read())
-    gcs_file.close()
+    if image:
+        write_retry_params = gcs.RetryParams(backoff_factor=1.1)
+        filename = '/' + bucket_name + '/' + image.filename
+        gcs_file = gcs.open(filename, 'w', content_type=image.content_type, retry_params=write_retry_params)
+        gcs_file.write(image.read())
+        gcs_file.close()
 
-    blobstore_filename = '/gs' + filename
-    key = blobstore.create_gs_key(blobstore_filename)
+        blobstore_filename = '/gs' + filename
+        key = blobstore.create_gs_key(blobstore_filename)
 
-    image_url =  get_serving_url(key)
+        image_url =  get_serving_url(key)
 
     product = Product(description=description, price=price, quantity=quantity, image_url=image_url)
     product.put()
