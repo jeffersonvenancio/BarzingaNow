@@ -1,39 +1,40 @@
-from flask import Blueprint, request, session
+from flask import Blueprint, request, session, redirect
+import requests
+import requests.auth
 
 auth = Blueprint('auth', __name__)
 
+CLIENT_ID = '905590247007-tmmromevhmghnve94lc1sqoh08itlhjf.apps.googleusercontent.com'
+CLIENT_SECRET = 'l-p5n0NQsBQNOl_naYVxgBFd'
+REDIRECT_URI = 'http://localhost:8080/api/auth/token'
+
 @auth.route('/')
 def hello():
-    session['session_state'] = None
-    return redirect('https://accounts.google.com/AccountChooser?continue=https://accounts.google.com/o/oauth2/auth?scope%3Dhttps://www.googleapis.com/auth/userinfo.email%26response_type%3Dcode%26redirect_uri%3Dhttp://barzinganow.appspot.com/token%26state%3Dsecurity_token%253D138r5719ru3e1%2526url%253Dhttp://barzinganow.appspot.com%26client_id%3D905590247007-tmmromevhmghnve94lc1sqoh08itlhjf.apps.googleusercontent.com%26from_login%3D1%26as%3D-231db6e2ffa9ce49&btmpl=authsub&scc=1&oauth=1')
+    if 'session_state' in session:
+        print session['session_state']
+        return redirect('/')
+
+    return redirect('https://accounts.google.com/AccountChooser?continue=https://accounts.google.com/o/oauth2/auth?scope%3Dhttps://www.googleapis.com/auth/userinfo.email%26response_type%3Dcode%26redirect_uri%3D'+REDIRECT_URI+'%26state%3Dsecurity_token%253D138r5719ru3e1%2526url%253Dhttp://barzinganow.appspot.com%26client_id%3D'+CLIENT_ID+'%26from_login%3D1%26as%3D-231db6e2ffa9ce49&btmpl=authsub&scc=1&oauth=1')
 
 @auth.route('/token')
 def token():
     code = request.args.get('code')
-    return "got an access token! %s" % get_token(code)
-
-
-import requests
-import requests.auth
-def get_token(code):
-    client_auth = requests.auth.HTTPBasicAuth('905590247007-tmmromevhmghnve94lc1sqoh08itlhjf.apps.googleusercontent.com', 'l-p5n0NQsBQNOl_naYVxgBFd')
+    client_auth = requests.auth.HTTPBasicAuth(CLIENT_ID, CLIENT_SECRET)
     post_data = {"grant_type": "authorization_code",
                  "code": code,
-                 "redirect_uri": 'http://barzinganow.appspot.com/token'}
+                 "redirect_uri": REDIRECT_URI}
     response = requests.post("https://accounts.google.com/o/oauth2/token",
                              auth=client_auth,
                              data=post_data)
     token_json = response.json()
-    return user_info(token_json["access_token"])
 
-def user_info(token):
-    print '\ntoken\n', token
-    access_token = token
-    authorization_header = {"Authorization": "OAuth %s" % access_token}
+    authorization_header = {"Authorization": "OAuth %s" % token_json["access_token"]}
     r = requests.get("https://www.googleapis.com/oauth2/v2/userinfo",
                      headers=authorization_header)
 
-    return r.text
+    session['session_state'] = r.json()
+
+    return redirect('/')
 
 
 def save_created_state(state):
