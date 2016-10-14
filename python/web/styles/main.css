@@ -5,6 +5,10 @@
     vertical-align: baseline;
 }
 
+*:focus {
+    outline: none;
+}
+
 html, body {
     width: 100%;
     height: 100%;
@@ -70,11 +74,6 @@ header .user-container .avatar {
 header .user-container .avatar img {
     width: 100px;
 }
-
-/*body > .ng-scope {
-    height: calc(100% - 200px);
-    min-height: 350px;
-}*/
 
 nav {
     display: inline-block;
@@ -166,8 +165,11 @@ main {
     display: inline-block;
     width: calc(100% - 350px);
     height: 100%;
-    padding-top: 50px;
     text-align: center;
+}
+
+main ul.products {
+    margin-top: 50px;
 }
 
 main ul.products li {
@@ -205,40 +207,92 @@ main ul.products li .product-quantity span {
     font-weight: bold;
 }
 
-main ul.form-product {
-    margin-top: 30px;
+main .form-product {
+    width: 250px;
+    margin: 0 auto;
+
+    color: #888888;
+    font-size: 18px;
 }
 
-main ul.form-product li {
+main .form-product ul li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
     margin-top: 10px;
 }
 
-main ul.form-product li label {
-    display: inline-block;
-    width: 200px;
+main .form-product ul li input, 
+main .form-product ul li select {
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
     text-align: left;
+    margin-top: 5px;
+    padding: 0 10px;
+    box-sizing: border-box;
+
+    color: #888888;
+    border: 1px solid #888888;
+    border-radius: 15px;
 }
 
-main .container-button {
-    margin-top: 40px;
-}
+main .form-product ul li.product-image {
+    display: table;
+    width: 100%;
+    height: 200px;
+    text-align: center;
+    margin-bottom: 20px;
 
-main .container-button input {
-    background: none;
-    padding: 5px 10px;
-    margin: 10px;
-
-    border: 2px solid;
+    color: #AAAAAA;
+    background-color: #EEEEEE;
+    border: 1px dashed #CCCCCC;
     font-weight: bold;
     cursor: pointer;
 }
 
-main .container-button input.confirm {
-    color: green;
-    border-color: green;
+main .form-product ul li.product-image > div {
+    display: table-cell;
+    vertical-align: middle;
 }
 
-main .container-button input.cancel {
-    color: red;
-    border-color: red;
+main .form-product ul li.product-image img {
+    margin: 0 auto 10px;
+}
+
+main .form-product ul li.product-description {
+    display: block;
+}
+
+main .form-product ul li.product-price label {
+    font-weight: bold;
+}
+
+main .form-product ul li.product-category select {
+    width: 140px;
+}
+
+main .form-product ul li.product-price input,
+main .form-product ul li.product-quantity input {
+    width: 80px;
+}
+
+main .form-product .btn-confirm {
+    display: inline-block;
+    width: 100%;
+    height: 30px;
+    margin-top: 30px;
+
+    font-size: 14px;
+    background: none;
+    color: #2BB035;
+    border: 1px solid #2BB035;
+    border-radius: 15px;
+}
+
+main .form-product .btn-confirm:hover {
+    color: #FFFFFF;
+    background-color: #2BB035;
+    cursor: pointer;
 }

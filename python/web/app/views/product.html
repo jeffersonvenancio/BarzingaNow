@@ -1,18 +1,16 @@
-<main>
-    <ul class="products">
-        <li ng-repeat="product in products">
-            <a class="product-image" href="javascript:;">
-                <img src="web/images/teste.png" alt="">
-            </a>
-            <div class="product-description">
-                {{ product.description }}
-            </div>
-            <div class="product-price">
-                BZG <span>{{ product.price | currency : '' : 2 }}</span>
-            </div>
-            <div class="product-quantity">
-                Qtde. Dispon&iacute;vel <span>{{ product.quantity }}</span>
-            </div>
-        </li>
-    </ul>
-</main>
+<ul class="products">
+    <li ng-repeat="product in products">
+        <a class="product-image" href="javascript:;">
+            <img src="{{ product.image_url }}" alt="">
+        </a>
+        <div class="product-description">
+            {{ product.description }}
+        </div>
+        <div class="product-price">
+            BZG <span>{{ product.price | currency : '' : 2 }}</span>
+        </div>
+        <div class="product-quantity">
+            Qtde. Dispon&iacute;vel <span>{{ product.quantity }}</span>
+        </div>
+    </li>
+</ul>

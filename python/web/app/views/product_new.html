@@ -1,12 +1,23 @@
-<main>
-    <h2>Cadastrar produto</h2>
-    <ul class="form-product">
-        <li><label for="">Descri&ccedil;&atilde;o</label><input type="text" ng-model="product.description"></li>
-        <li><label for="">Pre&ccedil;o</label><input type="number" ng-model="product.price"></li>
-        <li><label for="">Quantidade dispon&iacute;vel</label><input type="number" ng-model="product.quantity"></li>
+<div class="form-product">
+    <ul>
+        <li class="product-image">
+            <div>
+                <img src="web/images/icone-camera.png" alt="">
+                <div>CLIQUE AQUI PARA ADICIONAR A IMAGEM</div>
+            </div>
+        </li>
+        <li class="product-description"><label for="">Nome do produto</label><input type="text" ng-model="product.description"></li>
+        <li class="product-category"><label for="">Categoria</label>
+            <select ng-model="product.category">
+                <option value="">--</option>
+                <option value="">BEBIDAS</option>
+                <option value="">DOCES</option>
+                <option value="">NATUREBAS</option>
+                <option value="">SALGADOS</option>
+            </select>
+        </li>
+        <li class="product-price"><label for="">BZG</label><input type="number" ng-model="product.price"></li>
+        <li class="product-quantity"><label for="">Quantidade</label><input type="number" ng-model="product.quantity"></li>
     </ul>
-    <div class="container-button">
-        <input type="button" class="confirm" value="CADASTRAR" ng-click="new()"/>
-        <input type="button" class="cancel" value="LIMPAR" ng-click="clear()"/>
-    </div>
-</main>
+    <input type="button" class="btn-confirm" value="CADASTRAR PRODUTO" ng-click="new()"/>
+</div>
