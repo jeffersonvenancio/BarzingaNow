@@ -14,7 +14,7 @@ def hello():
         print session['session_state']
         return redirect('/')
 
-    return redirect('https://accounts.google.com/AccountChooser?continue=https://accounts.google.com/o/oauth2/auth?scope%3Dhttps://www.googleapis.com/auth/userinfo.email%26response_type%3Dcode%26redirect_uri%3D'+REDIRECT_URI+'%26state%3Dsecurity_token%253D138r5719ru3e1%2526url%253Dhttp://barzinganow.appspot.com%26client_id%3D'+CLIENT_ID+'%26from_login%3D1%26as%3D-231db6e2ffa9ce49&btmpl=authsub&scc=1&oauth=1')
+    return redirect('https://accounts.google.com/AccountChooser?continue=https://accounts.google.com/o/oauth2/auth?scope%3Dhttps://www.googleapis.com/auth/userinfo.email%26response_type%3Dcode%26redirect_uri%3D'+REDIRECT_URI+'%26state%3Dsecurity_token%253D138r5719ru3e1%2526url%253Dhttp://barzinganow.appspot.com%26client_id%3D'+CLIENT_ID+'%26from_login%3D1%26as%3D-231db6e2ffa9ce49&btmpl=authsub&scc=1&oauth=1&hd=dextra-sw.com')
 
 @auth.route('/token')
 def token():
