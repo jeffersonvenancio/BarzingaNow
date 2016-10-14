@@ -20,6 +20,7 @@
     <script src="web/app/app.js"></script>
     
     <script src="web/app/services/product.js"></script>
+    <script src="web/app/services/user.js"></script>
 
     <script src="web/app/controllers/home.js"></script>
     <script src="web/app/controllers/header.js"></script>
@@ -34,10 +35,10 @@
         <img class="logo" src="web/images/logo-barzinga.png">
         <div class="user-container">
             <div class="money">
-                BZG <span>{{ user.money | currency : '' : 2  }}</span>
+                BZG <span>{{ (user.money || 0) | currency : '' : 2  }}</span>
             </div>
             <div class="avatar">
-                <img src="web/images/user.jpg" alt="">
+                <img src="{{ user.photo_url }}" alt="">
             </div>
         </div>
     </header>

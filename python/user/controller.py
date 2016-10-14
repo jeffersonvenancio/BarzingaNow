@@ -1,6 +1,6 @@
 import json
 
-from flask import Blueprint, request
+from flask import Blueprint, request, session
 
 from user.model import User
 
@@ -14,12 +14,8 @@ def get_all():
 def get_by_id(user_id):
     return json.dumps(User.get_by_id(user_id))
 
-@user.route('/', methods=['POST'])
-def add():
-    name = request.form['name']
-    money = float(request.form['money'])
-
-    user = User(name=name, money=money)
-    user.put()
-
-    return '', 204
+@user.route('/logged', methods=['GET'])
+def get_logged():
+    user_json = session['barzinga_user']
+    user = User.query().filter(User.email == user_json["email"]).get()
+    return json.dumps(user.to_dict())
