@@ -14,8 +14,9 @@ gcs.set_default_retry_params(my_default_retry_params)
 
 product = Blueprint('product', __name__)
 
-@product.route('/', methods=['GET'])
-def get_all():
+@product.route('/category/<string:category>', methods=['GET'])
+def get_all(category):
+    print category
     products = [p.to_dict() for p in Product.query().fetch()]
     return json.dumps(products)
 
