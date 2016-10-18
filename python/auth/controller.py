@@ -2,29 +2,40 @@ from flask import Blueprint, request, session, redirect
 import requests
 import requests.auth
 from user.model import User
+from util import find_prop
+import json
 
 auth = Blueprint('auth', __name__)
 
-CLIENT_ID = '905590247007-tmmromevhmghnve94lc1sqoh08itlhjf.apps.googleusercontent.com'
-CLIENT_SECRET = 'l-p5n0NQsBQNOl_naYVxgBFd'
-REDIRECT_URI = 'http://localhost:8080/api/auth/token'
-HD = 'dextra-sw.com'
-SCOPE = 'https://www.googleapis.com/auth/userinfo.email'
-URL = 'http://localhost:8080/'
-
-
+redirect_uri = find_prop('REDIRECT_URI')
+scope = find_prop('SCOPE')
+client_id = find_prop('CLIENT_ID')
+hd = find_prop('HD')
+client_id = find_prop('CLIENT_ID')
+client_secret = find_prop('CLIENT_SECRET')
 
 @auth.route('/', strict_slashes=False)
 def hello():
-	return redirect('https://accounts.google.com/AccountChooser?continue=https://accounts.google.com/o/oauth2/auth?scope%3D'+SCOPE+'%26response_type%3Dcode%26redirect_uri%3D'+REDIRECT_URI+'%26state%3Dsecurity_token%253D138r5719ru3e1%2526url%253D'+URL+'%26client_id%3D'+CLIENT_ID+'%26from_login%3D1%26as%3D-231db6e2ffa9ce49&btmpl=authsub&scc=1&oauth=1&hd='+HD)
+	if 'barzinganow.appspot.com' in request.url :
+		host_url = find_prop('HOST_URL_PROD')
+	else :
+		host_url = find_prop('HOST_URL_DEV')
+
+	url = 'https://accounts.google.com/AccountChooser?continue=https://accounts.google.com/o/oauth2/auth?scope%3D'+scope+'%26response_type%3Dcode%26redirect_uri%3D'+host_url+redirect_uri+'%26state%3Dsecurity_token%253D138r5719ru3e1%2526url%253D'+host_url+'%26client_id%3D'+client_id+'%26from_login%3D1%26as%3D-231db6e2ffa9ce49&btmpl=authsub&scc=1&oauth=1&hd='+hd
+	return redirect(url)
 
 @auth.route('/token', strict_slashes=False)
 def token():
+	if 'barzinganow.appspot.com' in request.url :
+		host_url = find_prop('HOST_URL_PROD')
+	else :
+		host_url = find_prop('HOST_URL_DEV')
+
 	code = request.args.get('code')
-	client_auth = requests.auth.HTTPBasicAuth(CLIENT_ID, CLIENT_SECRET)
+	client_auth = requests.auth.HTTPBasicAuth(client_id, client_secret)
 	post_data = {"grant_type": "authorization_code",
 				 "code": code,
-				 "redirect_uri": REDIRECT_URI}
+				 "redirect_uri": host_url+redirect_uri}
 	response = requests.post("https://accounts.google.com/o/oauth2/token",
 							 auth=client_auth,
 							 data=post_data)
@@ -46,3 +57,4 @@ def verifica_user():
 	if not user:
 		user = User(name = user_json['name'], email=user_json['email'], photo_url=user_json['picture'])
 		user.put()
+
