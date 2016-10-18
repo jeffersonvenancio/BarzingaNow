@@ -34,6 +34,7 @@ def add():
     bucket_name = os.environ.get('BUCKET_NAME', app_identity.get_default_gcs_bucket_name())
 
     description = request.form['description']
+    category = request.form['category']
     price = float(request.form['price'])
     quantity = int(request.form['quantity'])
 
@@ -52,7 +53,7 @@ def add():
 
         image_url =  get_serving_url(key)
 
-    product = Product(description=description, price=price, quantity=quantity, image_url=image_url)
+    product = Product(description=description, price=price, quantity=quantity, category=category, image_url=image_url)
     product.put()
 
     return '', 204
