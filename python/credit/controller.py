@@ -24,6 +24,6 @@ def add():
             credit.put()
             return 'Barzingas creditados', 204
         else :
-            return 'Usuario invalido', 202
+            return 'Usuario invalido', 406
     else :
-        return 'Precisa ser admin para incluir credito', 303
+        return 'Precisa ser admin para incluir credito', 401

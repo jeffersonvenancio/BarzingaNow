@@ -211,6 +211,11 @@ main ul.products li .product-quantity span {
     font-weight: bold;
 }
 
+main .form-credit .msg {
+    height: 45px;
+    width: 250px;
+}
+
 main .form-credit, main .form-product {
     width: 250px;
     margin: 0 auto;
