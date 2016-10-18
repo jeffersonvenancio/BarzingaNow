@@ -6,7 +6,7 @@ app.controller('CreditCtrl', ['$scope', '$timeout', 'CreditService', function($s
     };
 
     $scope.clear = function(response) {
-        jQuery('.msg span').show().text(response.data);
+        jQuery('.msg span').show().text('Sucesso');
         $timeout(function(){jQuery('.msg span').hide(1000);}, 3000);
         $scope.credit = {};
     };
