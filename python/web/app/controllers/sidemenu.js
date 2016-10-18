@@ -1,4 +1,4 @@
-app.controller('SideMenuCtrl', ['$scope', '$location', function($scope, $location) {
+app.controller('SideMenuCtrl', ['$scope', '$location', 'UserService', function($scope, $location, userService) {
     var $menuArrow = jQuery('nav .nav-arrow');
 
     var animateMenu = function($elementMenu) {
@@ -21,4 +21,21 @@ app.controller('SideMenuCtrl', ['$scope', '$location', function($scope, $locatio
         animateMenu($event.target);
         $location.path('/product/new').search({});
     };
+
+    $scope.openPageCredit = function($event) {
+        animateMenu($event.target);
+        $location.path('/credit/add').search({});
+    };
+
+
+    $scope.user = {};
+    $scope.user.photo_url = '#';
+
+    $scope.refreshUser = function() {
+        userService.getLogged(function(user) {
+            $scope.user = user.data;
+        });
+    };
+
+    $scope.refreshUser();
 }]);

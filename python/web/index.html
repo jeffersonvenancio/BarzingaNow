@@ -19,9 +19,12 @@
 
     <script src="web/app/app.js"></script>
     
+
+    <script src="web/app/services/credit.js"></script>
     <script src="web/app/services/product.js"></script>
     <script src="web/app/services/user.js"></script>
 
+    <script src="web/app/controllers/credit.js"></script>
     <script src="web/app/controllers/home.js"></script>
     <script src="web/app/controllers/header.js"></script>
     <script src="web/app/controllers/sidemenu.js"></script>
@@ -44,7 +47,10 @@
     </header>
     <nav ng-controller="SideMenuCtrl">
         <ul>
-            <li><a ng-click="openPageProduct($event)" class="add-product" href="javascript:;">CADASTRAR PRODUTO</a></li>
+            <div ng-if="user.admin">
+                <li><a ng-click="openPageProduct($event)" class="add-product" href="javascript:;">CADASTRAR PRODUTO</a></li>
+                <li><a ng-click="openPageCredit($event)" class="add-product" href="javascript:;">INCLUIR BARZINGAS</a></li>
+            </div>
             <li><a ng-click="selectCategory('bebidas', $event)" class="bebidas" href="javascript:;">Bebidas</a></li>
             <li><a ng-click="selectCategory('doces', $event)" class="doces" href="javascript:;">Doces</a></li>
             <li><a ng-click="selectCategory('naturebas', $event)" class="naturebas" href="javascript:;">Naturebas</a></li>

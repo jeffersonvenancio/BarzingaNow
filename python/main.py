@@ -6,6 +6,7 @@ from flask_cors import CORS
 appengine.monkeypatch()
 
 from auth.controller import auth as auth_controller
+from credit.controller import credit as credit_controller
 from user.controller import user as user_controller
 from product.controller import product as product_controller
 from transaction.controller import transaction as transaction_controller
@@ -18,6 +19,7 @@ app.secret_key = 'super secret key'
 app.config['SESSION_TYPE'] = 'filesystem'
 
 app.register_blueprint(auth_controller, url_prefix='/api/auth')
+app.register_blueprint(credit_controller, url_prefix='/api/credit')
 app.register_blueprint(user_controller, url_prefix='/api/user')
 app.register_blueprint(product_controller, url_prefix='/api/product')
 app.register_blueprint(transaction_controller, url_prefix='/api/transaction')

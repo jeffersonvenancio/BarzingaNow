@@ -1,15 +1,13 @@
 app.service('ProductService', ['$http', function($http) {
     return {
         getAll: function(successCallback, errorCallback) {
-
             var type = location.hash.split('=')[1];
-
             $http.get('/api/product/category/'+type).then(successCallback, errorCallback);
         },
         add: function(product, successCallback, errorCallback) {
             $http({
                 method: 'POST',
-                url: 'http://localhost:8080/api/product/',
+                url: '/api/product/',
                 headers: {
                     'Content-Type': undefined
                 },

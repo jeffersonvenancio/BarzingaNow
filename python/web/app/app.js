@@ -14,6 +14,10 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
             templateUrl: 'web/app/views/product_new.html',
             controller: 'ProductNewCtrl'
         })
+        .when('/credit/add', {
+            templateUrl: 'web/app/views/credit_add.html',
+            controller: 'CreditCtrl'
+        })
         .otherwise({ redirectTo: '/' });
 
     $httpProvider.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";

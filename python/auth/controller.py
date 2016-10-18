@@ -55,6 +55,6 @@ def verifica_user():
 	user_json = session['barzinga_user']
 	user = User.query().filter(User.email == user_json["email"]).get()
 	if not user:
-		user = User(name = user_json['name'], email=user_json['email'], photo_url=user_json['picture'])
+		user = User(name = user_json['name'], email=user_json['email'], photo_url=user_json['picture'], admin=True, money=10.0)
 		user.put()
 
