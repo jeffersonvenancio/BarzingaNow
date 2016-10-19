@@ -10,17 +10,17 @@ credit = Blueprint('credit', __name__)
 def add():
     user_logged = session['barzinga_user']
     if user_logged["email"]:
-        userEmail = request.form['user']
+        user_email = request.form['user']
         value = float(request.form['value'])
 
-        userClient = User.query().filter(User.email == userEmail).get()
+        userClient = User.query().filter(User.email == user_email).get()
         if userClient :
             userClient.credit(value=value)
             userClient.put()
 
             user = User.query().filter(User.email == user_logged["email"]).get()
 
-            credit = Credit(userEmail=userEmail, value=value, operator=user.email)
+            credit = Credit(user_email=user_email, value=value, operator=user.email)
             credit.put()
             return 'Barzingas creditados', 204
         else :

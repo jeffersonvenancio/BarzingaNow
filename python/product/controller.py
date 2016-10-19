@@ -16,7 +16,6 @@ product = Blueprint('product', __name__)
 
 @product.route('/category/<string:category>', methods=['GET'])
 def get_all(category):
-    print category
     if category:
         products = [p.to_dict() for p in Product.query(Product.category == category).fetch()]
     else :
