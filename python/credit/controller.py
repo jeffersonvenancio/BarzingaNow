@@ -12,14 +12,13 @@ def add():
     if user_logged["email"]:
         user_email = request.form['user']
         value = float(request.form['value'])
-
+        user_email = user_email.split('@')[0] + "@dextra-sw.com"
         userClient = User.query().filter(User.email == user_email).get()
         if userClient :
             userClient.credit(value=value)
             userClient.put()
 
             user = User.query().filter(User.email == user_logged["email"]).get()
-
             credit = Credit(user_email=user_email, value=value, operator=user.email)
             credit.put()
             return 'Barzingas creditados', 204
