@@ -1,5 +1,5 @@
 <ul class="products">
-    <li ng-repeat="product in products">
+    <li ng-repeat="product in products" ng-click="addProductToCart(product)">
         <a class="product-image" href="javascript:;">
             <img src="{{ product.image_url }}" alt="">
         </a>
