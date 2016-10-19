@@ -7,6 +7,10 @@ app.controller('ProductNewCtrl', ['$scope', 'ProductService', function($scope, s
 
     $scope.clear = function() {
         $scope.product = {};
+
+        jQuery('.form-product .product-image .add-image').show();
+        jQuery('.form-product .product-image .new-image').hide();
+        jQuery('.form-product .product-image .new-image img').attr('src', '#');
     };
 
     $scope.addImage = function() {
@@ -14,14 +18,14 @@ app.controller('ProductNewCtrl', ['$scope', 'ProductService', function($scope, s
     };
 
     jQuery('.form-product .product-image input[type=file]').change(function() {
-        jQuery('.form-product .product-image .add-image').css('display', 'none');
-        jQuery('.form-product .product-image .new-image').css('display', 'block');
+        jQuery('.form-product .product-image .add-image').hide();
+        jQuery('.form-product .product-image .new-image').show();
 
         input = this;
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
-                $('.form-product .product-image .new-image').attr('src', e.target.result);
+                jQuery('.form-product .product-image .new-image img').attr('src', e.target.result);
             };
             reader.readAsDataURL(input.files[0]);
         }

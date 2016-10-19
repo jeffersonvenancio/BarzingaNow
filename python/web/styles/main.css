@@ -95,7 +95,6 @@ nav .nav-arrow {
     position: absolute;
     width: 30px;
     height: 30px;
-    /*top: 127px;*/
     right: -15px;
 
     background-color: #FFFFFF;
@@ -282,6 +281,16 @@ main .form-product ul li.product-image .icon-camera {
 
 main .form-product ul li.product-image .new-image {
     display: none;
+    width: 100%;
+    /* TODO: ALINHAR VERTICALMENTE  */
+    height: 200px;
+    line-height: 200px;
+}
+
+main .form-product ul li.product-image .new-image img {
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0 auto;
 }
 
 main .form-credit ul li.credit-user,
