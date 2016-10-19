@@ -34,7 +34,6 @@ app.controller('SideMenuCtrl', ['$scope', '$location', 'UserService', function($
     $scope.refreshUser = function() {
         userService.getLogged(function(user) {
             $scope.user = user.data;
-            $scope.user.admin = true; /*MOCK ADMIN*/
         });
     };
 
