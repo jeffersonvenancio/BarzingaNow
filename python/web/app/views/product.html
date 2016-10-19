@@ -14,3 +14,11 @@
         </div>
     </li>
 </ul>
+<ul class="cart" ng-if="selectedProducts.length">
+    <li ng-repeat="product in selectedProducts" ng-click="removeProductFromCart(product)">
+        {{ product.quantity }} - {{ product.description }}
+    </li>
+    <li class="separator"></li>
+    <li><a href="javascript:;" class="finalize">FINALIZAR COMPRA</a></li>
+    <li><a href="javascript:;" class="cancel">CANCELAR COMPRA</a></li>
+</ul>

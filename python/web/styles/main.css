@@ -17,6 +17,10 @@ html, body {
     color: #333333;
 }
 
+a {
+    text-decoration: none;
+}
+
 .hidden {
     display: none !important;
 }
@@ -117,7 +121,6 @@ nav ul li {
 
 nav ul li a {
     position: relative;
-    text-decoration: none;
     color: #333333;
     padding-left: 50px;
 }
@@ -169,6 +172,7 @@ main {
     width: calc(100% - 350px);
     height: 100%;
     text-align: center;
+    position: relative;
 }
 
 main ul.products {
@@ -332,4 +336,60 @@ main .form-product .btn-confirm:hover {
     color: #FFFFFF;
     background-color: #2BB035;
     cursor: pointer;
+}
+
+main .cart {
+    position: fixed;
+    width: 200px;
+    top: 150px;
+    right: 30px;
+    text-align: center;
+    padding: 20px 0;
+
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #FFFFFF;
+}
+
+main .cart li .finalize,
+main .cart li .cancel {
+    display: block;
+    text-align: center;
+    width: 170px;
+    height: 24px;
+    line-height: 24px;
+    margin: 5px auto;
+
+    font-size: 14px;
+    border: 1px solid;
+    border-radius: 20px;
+
+    -webkit-transition: color .5s, background-color .5s;
+    transition: color .5s, background-color .5s;
+}
+
+main .cart li.separator {
+    width: 150px;
+    
+    margin: 20px auto;
+    border-bottom: 1px solid #777777;
+}
+
+main .cart li .finalize {
+    color: #89E215;
+    border-color: #89E215;
+}
+
+main .cart li .finalize:hover {
+    color: #FFFFFF;
+    background-color: #89E215;
+}
+
+main .cart li .cancel {
+    color: #FF3B3B;
+    border-color: #FF3B3B;
+}
+
+main .cart li .cancel:hover {
+    color: #FFFFFF;
+    background-color: #FF3B3B;
 }
