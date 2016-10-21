@@ -89,7 +89,7 @@ nav {
     position: fixed;
     top: 150px;
     width: 300px;
-    height: 100%;
+    height: calc(100% - 200px);
     vertical-align: top;
 
     border-right: 1px solid #CCCCCC;
@@ -172,7 +172,7 @@ nav ul li a.add-product.active, nav ul li a.add-product:hover {
 main {
     display: inline-block;
     width: calc(100% - 450px);
-    height: 100%;
+    /*height: 100%;*/
     text-align: center;
     position: relative;
     margin: 150px 100px 0 300px;
@@ -202,6 +202,8 @@ main ul.products li  {
 main ul.products li a {
     display: block;
     position: relative;
+
+    margin-bottom: 20px;
 }
 
 main ul.products li a img.product-image {
@@ -278,16 +280,16 @@ main .form-credit ul li select,
 main .form-product ul li input, 
 main .form-product ul li select {
     width: 100%;
-    height: 30px;
-    line-height: 30px;
+    height: 36px;
+    line-height: 36px;
     text-align: left;
     margin-top: 5px;
-    padding: 0 10px;
+    padding: 0 15px;
     box-sizing: border-box;
 
     color: #888888;
     border: 1px solid #888888;
-    border-radius: 15px;
+    border-radius: 19px;
 }
 
 main .form-credit ul li.product-image,
@@ -360,14 +362,14 @@ main .form-credit .btn-confirm,
 main .form-product .btn-confirm {
     display: inline-block;
     width: 100%;
-    height: 30px;
-    margin-top: 30px;
+    height: 36px;
+    margin-top: 36px;
 
     font-size: 14px;
     background: none;
     color: #2BB035;
     border: 1px solid #2BB035;
-    border-radius: 15px;
+    border-radius: 19px;
 }
 
 main .form-credit .btn-confirm:hover,
