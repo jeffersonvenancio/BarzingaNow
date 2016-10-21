@@ -36,15 +36,11 @@ def meu_ip():
 
 @app.before_request
 def filter():
-    ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+    if '/api/auth' not in request.url and '/api/auth/token' not in request.url and '/meuIp' not in request.url:
+        if not 'barzinga_user' in session:
+            return redirect('/api/auth/')
 
-    if ip not in '127.0.0.1' :
-        if '/api/auth' not in request.url and '/api/auth/token' not in request.url and '/meuIp' not in request.url:
-            if not 'barzinga_user' in session:
-                return redirect('/api/auth/')
 
-    else :
-        return app.send_static_file('web/index_self.html')
 
 
 @app.errorhandler(404)
