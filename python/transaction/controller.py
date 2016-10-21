@@ -1,6 +1,7 @@
 import json
 
-from flask import Blueprint, request
+from flask import Blueprint, request, session
+from google.appengine.ext import ndb
 
 from transaction.model import Transaction
 from user.model import User
@@ -24,18 +25,24 @@ def get_by_id(transaction_id):
 
 @transaction.route('/', methods=['POST'])
 def add():
-    user = User.get_by_id(int(request.form['user_id']))
+    logged_user = session['barzinga_user']
+    logged_user = User.query().filter(User.email == logged_user["email"]).get()
 
-    if not user:
-        return 'User id %s not found' % (user_id), 404
+    products = json.loads(request.form['products'])
 
-    if 'product_id' in request.form:
-        product = Product.get_by_id(int(request.form['product_id']))
-        value = None
-    else:
-        value = request.form['value']
+    ids_list = []
+    quantity_table = {}
 
-    transaction = Transaction(user=user, product=product, value=value)
-    transaction.put()
+    for product in products:
+        quantity_table[product['id']] = product['quantity']
+        ids_list.append(product['id'])
+
+    products = ndb.get_multi([ndb.Key(Product, k) for k in ids_list])
+
+    try:
+        transaction = Transaction.new(logged_user, products, quantity_table)
+        transaction.put()
+    except Exception as e:
+        return str(e), 400
 
     return '', 204

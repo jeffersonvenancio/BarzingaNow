@@ -1,19 +1,42 @@
 from google.appengine.ext import ndb
+from functools import reduce
+
 from user.model import User
 from product.model import Product
 
-class Transaction(ndb.Model):
-    value = ndb.FloatProperty()
-    user = ndb.KeyProperty(kind=User)
+class TransactionItem(ndb.Model):
     product = ndb.KeyProperty(kind=Product)
+    quantity = ndb.IntegerProperty()
 
-    def __init__(self, user, product, value):
-        ndb.Model.__init__(self)
+class Transaction(ndb.Model):
+    user = ndb.KeyProperty(kind=User)
+    items = ndb.KeyProperty(kind=TransactionItem, repeated=True)
+    value = ndb.FloatProperty()
 
-        self.user = user.key
-        self.product = product.key
 
-        if product:
-            self.value = product.price
-        else: 
-            self.value = value
+    @staticmethod
+    @ndb.transactional(xg=True)
+    def new(user, products, quantity_table):
+        transactionItems = []
+        value = 0
+        try:
+            for product in products:
+                quantity = quantity_table[product.key.id()]
+
+                product.buy(quantity)
+                product.put()
+
+                transactionItem = TransactionItem(product=product.key, quantity=quantity)
+                transactionItem.put()
+
+                transactionItems.append(transactionItem.key)
+
+                value += product.price * quantity
+
+            user.debit(value)
+            user.put()
+        except Exception:
+            ndb.Rollback()
+            raise
+
+        return Transaction(user=user.key, items=transactionItems, value=value)

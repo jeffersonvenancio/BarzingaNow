@@ -15,10 +15,12 @@
     </li>
 </ul>
 <ul class="cart" ng-if="selectedProducts.length">
-    <li ng-repeat="product in selectedProducts" ng-click="removeProductFromCart(product)">
-        {{ product.quantity }} - {{ product.description }}
+    <li class="product-item" ng-repeat="product in selectedProducts" ng-click="removeProductFromCart(product)">
+        <span class="quantity">{{ product.quantity }}x</span>
+        <span class="description">{{ product.description }}</span>
     </li>
+    <li class="total"><span>Total</span> <span>{{ cartTotal | currency : '' : 2 }} BZG</span></li>
     <li class="separator"></li>
-    <li><a href="javascript:;" class="finalize">FINALIZAR COMPRA</a></li>
-    <li><a href="javascript:;" class="cancel">CANCELAR COMPRA</a></li>
+    <li><a ng-click="finalize()" href="javascript:;" class="finalize">FINALIZAR COMPRA</a></li>
+    <li><a ng-click="cleaningCart()" href="javascript:;" class="cancel">CANCELAR COMPRA</a></li>
 </ul>

@@ -8,6 +8,8 @@ class User(ndb.Model):
     admin = ndb.BooleanProperty()
 
     def debit(self, value):
+        if value > self.money:
+            raise Exception('Saldo insuficiente')
         self.money -= value
 
     def credit(self, value):

@@ -2,6 +2,7 @@ from flask import Flask, request, session, url_for
 from werkzeug.utils import redirect
 from requests_toolbelt.adapters import appengine
 from flask_cors import CORS
+from google.appengine.ext import ndb
 
 appengine.monkeypatch()
 

@@ -1,11 +1,21 @@
-app.controller('ProductCtrl', ['$scope', 'ProductService', function($scope, service) {
+app.controller('ProductCtrl', ['$scope', '$timeout', 'ProductService', 'TransactionService', function($scope, $timeout, productService, transactionService) {
     $scope.selectedProducts = [];
+    
+    $scope.cartTotal = 0;
+
+    var refreshCart = function() {
+        $scope.cartTotal = $scope.selectedProducts.map(function(e) {
+            return e.price * e.quantity
+        }).reduce(function(prev, curr) {
+            return prev + curr;
+        });
+    };
 
     $scope.addProductToCart = function(product) {
-        console.log(product.id);
         var product = {
             id: product.id,
             description: product.description,
+            price: product.price,
             quantity: 1
         };
 
@@ -16,6 +26,8 @@ app.controller('ProductCtrl', ['$scope', 'ProductService', function($scope, serv
         } else {
             $scope.selectedProducts.push(product);
         }
+
+        refreshCart();
     };
 
     $scope.removeProductFromCart = function(product) {
@@ -26,9 +38,29 @@ app.controller('ProductCtrl', ['$scope', 'ProductService', function($scope, serv
         } else {
             $scope.selectedProducts.removeById(product.id);
         }
+
+        refreshCart();
     };
 
-    service.getAll(function(response) {
-        $scope.products = response.data;
-    });
+    $scope.finalize = function() {
+        transactionService.add($scope.selectedProducts, function() {
+            $timeout($scope.listProducts, 1000);
+            $scope.cleaningCart();
+        }, function(e) {
+            console.log(e);
+        });
+    };
+
+    $scope.cleaningCart = function() {
+        $scope.selectedProducts = [];
+    };
+
+    $scope.listProducts = function() {
+        productService.getAll(function(response) {
+            $scope.products = response.data;
+        });
+    };
+
+    $scope.listProducts();
+
 }]);

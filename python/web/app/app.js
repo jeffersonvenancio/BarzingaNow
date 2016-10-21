@@ -20,19 +20,17 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
         })
         .otherwise({ redirectTo: '/' });
 
-    $httpProvider.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
+    $httpProvider.defaults.headers.post["Content-Type"] = undefined;
     $httpProvider.defaults.transformRequest.unshift(function (data, headersGetter) {
-        var key, result = [];
+        var formData = new FormData();
+        angular.forEach(data, function (value, key) {
+            formData.append(key, value);
+        });
 
-        if (typeof data === "string")
-            return data;
+        var headers = headersGetter();
+        delete headers['Content-Type'];
 
-        for (key in data) {
-            if (data.hasOwnProperty(key))
-                result.push(encodeURIComponent(key) + "=" + encodeURIComponent(data[key]));
-        }
-
-        return result.join("&");
+        return formData;
     });
 });
 

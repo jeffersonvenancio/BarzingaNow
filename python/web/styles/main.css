@@ -350,6 +350,18 @@ main .cart {
     color: #FFFFFF;
 }
 
+main .cart .product-item,
+main .cart .total {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 20px;
+}
+
+main .cart .total {
+    margin: 20px 0 10px;
+    color: #FF3B3B;
+}
+
 main .cart li .finalize,
 main .cart li .cancel {
     display: block;
@@ -370,7 +382,7 @@ main .cart li .cancel {
 main .cart li.separator {
     width: 150px;
     
-    margin: 20px auto;
+    margin: 0 auto 20px;
     border-bottom: 1px solid #777777;
 }
 
