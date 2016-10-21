@@ -1,14 +1,14 @@
-app.controller('HeaderCtrl', ['$scope', 'UserService', function($scope, userService) {
-    $scope.user = {};
-    $scope.user.photo_url = '#';
+app.controller('HeaderCtrl', ['$rootScope', 'UserService', function($rootScope, userService) {
+    $rootScope.user = {};
+    $rootScope.user.photo_url = '#';
 
-    $scope.refreshUser = function() {
+    $rootScope.refreshUser = function() {
         userService.getLogged(function(user) {
-            $scope.user = user.data;
+            $rootScope.user = user.data;
 
-            jQuery('.avatar img').attr('src', $scope.user.photo_url);
+            jQuery('.avatar img').attr('src', $rootScope.user.photo_url);
         });
     };
 
-    $scope.refreshUser();
+    $rootScope.refreshUser();
 }]);

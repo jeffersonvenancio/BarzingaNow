@@ -1,7 +1,10 @@
 <ul class="products">
     <li ng-repeat="product in products" ng-click="addProductToCart(product)">
-        <a class="product-image" href="javascript:;">
-            <img src="{{ product.image_url }}" alt="">
+        <a href="javascript:;">
+            <img class="product-image" src="{{ product.image_url }}" alt="">
+            <div class="add-to-cart">
+                <span>Add ao carrinho</span><img class="icon-cart" src="/web/images/icone-carrinho.png" alt="">
+            </div>
         </a>
         <div class="product-description">
             {{ product.description }}

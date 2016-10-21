@@ -28,8 +28,9 @@ a {
 header {
     width: 100%;
     height: 100px;
-    position: relative;
+    position: fixed;
     margin-bottom: 50px;
+    z-index: 10;
 
     background-color: #333333;
     box-shadow: 0px 5px 10px 10px #333333;
@@ -85,7 +86,8 @@ header .user-container .avatar img {
 
 nav {
     display: inline-block;
-    position: relative;
+    position: fixed;
+    top: 150px;
     width: 300px;
     height: 100%;
     vertical-align: top;
@@ -169,10 +171,12 @@ nav ul li a.add-product.active, nav ul li a.add-product:hover {
 
 main {
     display: inline-block;
-    width: calc(100% - 350px);
+    width: calc(100% - 450px);
     height: 100%;
     text-align: center;
     position: relative;
+    margin: 150px 100px 0 300px;
+    box-sizing: border-box;
 }
 
 main ul.products {
@@ -182,7 +186,7 @@ main ul.products {
 main ul.products li {
     display: inline-block;
     width: 300px;
-    height: 300px;
+    height: 250px;
     text-align: center;
     overflow: auto;
     margin-bottom: 50px;
@@ -190,13 +194,48 @@ main ul.products li {
     color: #777777;
 }
 
-main ul.products li .product-image {
+main ul.products li  {
     display: inline-block;
     margin: 0 auto 20px;
 }
 
-main ul.products li .product-image img {
+main ul.products li a {
+    display: block;
+    position: relative;
+}
+
+main ul.products li a img.product-image {
     height: 105px;
+}
+
+main ul.products li a .add-to-cart {
+    display: flex;
+    justify-content: center;
+    width: 180px;
+    height: 30px;
+    line-height: 30px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -90px;
+    z-index: 9;
+
+    opacity: 0;
+    text-align: center;
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: rgba(0, 0, 0, 0.7);
+
+    -webkit-transition: opacity .5s;
+    transition: opacity .5s;
+}
+
+main ul.products li a:hover .add-to-cart {
+    opacity: 1;
+}
+
+main ul.products li a .add-to-cart .icon-cart {
+    width: 30px;
 }
 
 main ul.products li .product-price {
@@ -355,6 +394,11 @@ main .cart .total {
     display: flex;
     justify-content: space-between;
     padding: 5px 20px;
+}
+
+main .cart .product-item .description {
+    max-width: 130px;
+    text-align: right;
 }
 
 main .cart .total {

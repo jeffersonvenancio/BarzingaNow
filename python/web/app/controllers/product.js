@@ -1,4 +1,4 @@
-app.controller('ProductCtrl', ['$scope', '$timeout', 'ProductService', 'TransactionService', function($scope, $timeout, productService, transactionService) {
+app.controller('ProductCtrl', ['$rootScope', '$scope', '$timeout', 'ProductService', 'TransactionService', function($rootScope, $scope, $timeout, productService, transactionService) {
     $scope.selectedProducts = [];
     
     $scope.cartTotal = 0;
@@ -45,6 +45,7 @@ app.controller('ProductCtrl', ['$scope', '$timeout', 'ProductService', 'Transact
     $scope.finalize = function() {
         transactionService.add($scope.selectedProducts, function() {
             $timeout($scope.listProducts, 1000);
+            $timeout($rootScope.refreshUser, 1000);
             $scope.cleaningCart();
         }, function(e) {
             console.log(e);
