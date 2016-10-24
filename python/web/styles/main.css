@@ -46,6 +46,11 @@ a {
     background-color: #FF3B3B;
 }
 
+
+.alert.alert-success {
+    background-color: #4a8700;
+}
+
 header {
     width: 100%;
     height: 100px;
