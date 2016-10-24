@@ -2,10 +2,6 @@ app = angular.module('app', ['ngRoute']);
 
 app.config(function($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
-        .when('/', {
-            templateUrl: 'web/app/views/home.html',
-            controller: 'HomeCtrl'
-        })
         .when('/product', {
             templateUrl: 'web/app/views/product.html',
             controller: 'ProductCtrl'
@@ -19,6 +15,15 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
             controller: 'CreditCtrl'
         })
         .otherwise({ redirectTo: '/' });
+
+    $httpProvider.interceptors.push(['$rootScope', '$q', function($rootScope, $q) {
+        return {
+            'responseError': function(response) {
+                $rootScope.showAlertMessage(response.data, 'error');
+                return $q.reject(response);
+            }
+        };
+    }]);
 
     $httpProvider.defaults.headers.post["Content-Type"] = undefined;
     $httpProvider.defaults.transformRequest.unshift(function (data, headersGetter) {
@@ -48,3 +53,36 @@ app.directive('file', function () {
         }
     };
 });
+
+// app.directive('message', ['$timeout', function($timeout) {
+//     return {
+//         restrict: 'E',
+//         template: '<div class="alert alert-{{ type }}">{{ message }}</div>',
+//         scope: {
+//             control: '='
+//         },
+//         link: function($scope, element, attrs) {
+//             $scope.message = 'XABLAU';
+//             $scope.isVisible = true;
+
+//             $scope.$watch('isVisible', function(newValue) {
+//                 if (newValue) {
+//                     element[0].style.display = 'block';
+//                 } else {
+//                     element[0].style.display = 'none';
+//                 }
+//             });
+
+//             $scope.internalControl = {}
+//             $scope.internalControl.showMessage = function(message) {
+//                 $scope.isVisible = true;
+//                 $scope.message = message.text;
+//                 $scope.type = message.type;
+
+//                 $timeout(function() {
+//                     $scope.isVisible = false;
+//                 }, 5000);
+//             }
+//         }
+//     };
+// }]);

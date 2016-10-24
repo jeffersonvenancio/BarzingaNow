@@ -47,8 +47,6 @@ app.controller('ProductCtrl', ['$rootScope', '$scope', '$timeout', 'ProductServi
             $timeout($scope.listProducts, 1000);
             $timeout($rootScope.refreshUser, 1000);
             $scope.cleaningCart();
-        }, function(e) {
-            console.log(e);
         });
     };
 

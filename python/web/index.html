@@ -13,9 +13,10 @@
     <link href="web/styles/main.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 
+    <script src="web/lib/jquery.js"></script>
     <script src="web/lib/angular.js"></script>
     <script src="web/lib/angular-route.js"></script>
-    <script src="web/lib/jquery.js"></script>
+    <script src="web/lib/angular-autocomplete.js"></script>
 
     <script src="web/app/utils/array.js"></script>
 
@@ -35,7 +36,8 @@
 
 </head>
 
-<body>
+<body ng-controller="HomeCtrl">
+    <div ng-if="alert.visible" class="alert alert-{{ alert.type }}">{{ alert.message }}</div>
     <header ng-controller="HeaderCtrl">
         <img class="logo" src="web/images/logo-barzinga.png">
         <div class="user-container">

@@ -14,11 +14,14 @@ gcs.set_default_retry_params(my_default_retry_params)
 
 product = Blueprint('product', __name__)
 
+@product.route('/category', defaults={'category': None}, methods=['GET'], strict_slashes=False)
 @product.route('/category/<string:category>', methods=['GET'])
-def get_all(category):
+def get_all(category=None):
     if category:
+        print "OW MALUCO 1"
         products = [p.to_dict() for p in Product.query(Product.category == category).fetch()]
     else :
+        print "OW MALUCO 2"
         products = [p.to_dict() for p in Product.query().fetch()]
 
     return json.dumps(products)
