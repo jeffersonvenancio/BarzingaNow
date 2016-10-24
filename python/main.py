@@ -37,7 +37,7 @@ def meu_ip():
 
 @app.before_request
 def filter():
-    if '/api/auth' not in request.url and '/api/auth/token' not in request.url and '/meuIp' not in request.url:
+    if '/api/auth' not in request.url and '/api/auth/token' not in request.url and '/user' not in request.url:
         if not 'barzinga_user' in session:
             return redirect('/api/auth/')
 

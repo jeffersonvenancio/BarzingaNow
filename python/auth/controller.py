@@ -49,4 +49,8 @@ def verifica_user():
 	if not user:
 		user = User(name = user_json['name'], email=user_json['email'], photo_url=user_json['picture'], money=0.0)
 		user.put()
+	elif not user.photo_url:
+		user.photo_url = user_json['picture']
+		user.put()
+
 
