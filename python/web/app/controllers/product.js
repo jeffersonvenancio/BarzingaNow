@@ -44,6 +44,7 @@ app.controller('ProductCtrl', ['$rootScope', '$scope', '$timeout', 'ProductServi
 
     $scope.finalize = function() {
         transactionService.add($scope.selectedProducts, function() {
+            $rootScope.showAlertMessage('Compra efetuada com sucesso!', 'success');
             $timeout($scope.listProducts, 1000);
             $timeout($rootScope.refreshUser, 1000);
             $scope.cleaningCart();

@@ -1,8 +1,11 @@
-app.controller('ProductNewCtrl', ['$scope', 'ProductService', function($scope, service) {
+app.controller('ProductNewCtrl', ['$rootScope','$scope', 'ProductService', function($rootScope, $scope, service) {
     $scope.product = {};
 
     $scope.new = function() {
-        service.add($scope.product, $scope.clear);
+        service.add($scope.product, function() {
+            $rootScope.showAlertMessage('Produto cadastrado com sucesso!', 'success');
+            $scope.clear();
+        });
     };
 
     $scope.clear = function() {

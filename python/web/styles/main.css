@@ -46,6 +46,10 @@ a {
     background-color: #FF3B3B;
 }
 
+.alert.alert-success {
+    background-color: #2BB035;
+}
+
 header {
     width: 100%;
     height: 100px;
@@ -383,15 +387,15 @@ main .form-product .btn-confirm {
 
     font-size: 14px;
     background: none;
-    color: #2BB035;
-    border: 1px solid #2BB035;
+    color: #89E215;
+    border: 1px solid #89E215;
     border-radius: 19px;
 }
 
 main .form-credit .btn-confirm:hover,
 main .form-product .btn-confirm:hover {
     color: #FFFFFF;
-    background-color: #2BB035;
+    background-color: #89E215;
     cursor: pointer;
 }
 
