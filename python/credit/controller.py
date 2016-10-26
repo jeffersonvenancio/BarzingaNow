@@ -9,7 +9,9 @@ credit = Blueprint('credit', __name__)
 @credit.route('/add', methods=['POST'], strict_slashes=False)
 def add():
     user_logged = session['barzinga_user']
-    if user_logged["email"]:
+    user_operator = User.query().filter(User.email == user_logged["email"]).get()
+
+    if user_operator.admin:
         user_email = request.form['user']
         value = float(request.form['value'])
         user_email = user_email.split('@')[0] + "@dextra-sw.com"
@@ -17,9 +19,7 @@ def add():
         if userClient :
             userClient.credit(value=value)
             userClient.put()
-
-            user = User.query().filter(User.email == user_logged["email"]).get()
-            credit = Credit(user_email=user_email, value=value, operator=user.email)
+            credit = Credit(user_email=user_email, value=value, operator=user_operator.email)
             credit.put()
             return 'Barzingas creditados', 204
         else :
