@@ -28,16 +28,16 @@ def filter():
     name = request.form['name']
 
     index = search.Index(name='user')
-    users = index.search(name)
+    users = [[f.__dict__ for f in user.fields] for user in index.search(name)]
 
-    for user in users:
-        # print user.fields
-        fields = [f.__dict__ for f in user.fields]
-        print fields
-    # users = [u.to_dict() for u in ]
+    user_list = []
+    for u in users:
+        user_list.append({
+                'name': u[0]['_value'],
+                'email': u[1]['_value']
+            })
 
-    # return json.dumps(users)
-    return '', 204
+    return json.dumps(user_list)
 
 @user.route('/', methods=['POST'], strict_slashes=False)
 def add():

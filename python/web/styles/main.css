@@ -47,7 +47,8 @@ a {
 }
 
 .alert.alert-success {
-    background-color: #2BB035;
+    /*background-color: #2BB035;*/
+    background-color: #4a8700;
 }
 
 header {

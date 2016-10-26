@@ -4,11 +4,15 @@ app.controller('ProductCtrl', ['$rootScope', '$scope', '$timeout', 'ProductServi
     $scope.cartTotal = 0;
 
     var refreshCart = function() {
-        $scope.cartTotal = $scope.selectedProducts.map(function(e) {
-            return e.price * e.quantity
-        }).reduce(function(prev, curr) {
-            return prev + curr;
-        });
+        if ($scope.selectedProducts.length) {
+            $scope.cartTotal = $scope.selectedProducts.map(function(e) {
+                return e.price * e.quantity
+            }).reduce(function(prev, curr) {
+                return prev + curr;
+            });
+        } else {
+            $scope.cartTotal = 0;
+        }
     };
 
     $scope.addProductToCart = function(product) {
