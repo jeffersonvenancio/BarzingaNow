@@ -35,32 +35,38 @@ def get_by_id(product_id):
 
 @product.route('/', methods=['POST'])
 def add():
-    bucket_name = os.environ.get('BUCKET_NAME', app_identity.get_default_gcs_bucket_name())
+    user_logged = session['barzinga_user']
+    user_operator = User.query().filter(User.email == user_logged["email"]).get()
 
-    description = request.form['description']
-    category = request.form['category']
-    price = float(request.form['price'])
-    quantity = int(request.form['quantity'])
+    if user_operator.admin:
+        bucket_name = os.environ.get('BUCKET_NAME', app_identity.get_default_gcs_bucket_name())
 
-    image = request.files['image']
-    image_url = None
+        description = request.form['description']
+        category = request.form['category']
+        price = float(request.form['price'])
+        quantity = int(request.form['quantity'])
 
-    if image:
-        write_retry_params = gcs.RetryParams(backoff_factor=1.1)
-        filename = '/' + bucket_name + '/' + image.filename
-        gcs_file = gcs.open(filename, 'w', content_type=image.content_type, retry_params=write_retry_params)
-        gcs_file.write(image.read())
-        gcs_file.close()
+        image = request.files['image']
+        image_url = None
 
-        blobstore_filename = '/gs' + filename
-        key = blobstore.create_gs_key(blobstore_filename)
+        if image:
+            write_retry_params = gcs.RetryParams(backoff_factor=1.1)
+            filename = '/' + bucket_name + '/' + image.filename
+            gcs_file = gcs.open(filename, 'w', content_type=image.content_type, retry_params=write_retry_params)
+            gcs_file.write(image.read())
+            gcs_file.close()
 
-        image_url =  get_serving_url(key)
+            blobstore_filename = '/gs' + filename
+            key = blobstore.create_gs_key(blobstore_filename)
 
-    product = Product(description=description, price=price, quantity=quantity, category=category, image_url=image_url)
-    product.put()
+            image_url =  get_serving_url(key)
 
-    return '', 204
+        product = Product(description=description, price=price, quantity=quantity, category=category, image_url=image_url)
+        product.put()
+
+        return '', 204
+    else :
+        return 'Precisa ser admin para cadastrar produtos', 401
 
 @product.route('/<int:product_id>', methods=['PUT'])
 def modify(product_id):
