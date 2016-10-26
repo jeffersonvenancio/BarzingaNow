@@ -30,6 +30,7 @@ app.controller('SideMenuCtrl', ['$scope', '$location', 'UserService', function($
 
     $scope.user = {};
     $scope.user.photo_url = '#';
+    $scope.user.admin = false;
 
     $scope.refreshUser = function() {
         userService.getLogged(function(user) {
