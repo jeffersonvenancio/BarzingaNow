@@ -2,7 +2,8 @@ import json
 import requests
 import requests.auth
 
-from flask import Blueprint, request, session, redirect
+from flask import Blueprint, request, session, redirect, current_app
+from flask_principal import Identity, identity_changed, RoleNeed
 from google.appengine.api import search
 
 from user.model import User
@@ -63,3 +64,9 @@ def verifica_user():
     elif not user.photo_url:
         user.photo_url = user_json['picture']
         user.put()
+
+    identity = Identity(user.key.id())
+    identity_changed.send(current_app._get_current_object(), identity=identity)
+
+    if user.admin:
+        identity.provides.add(RoleNeed('admin'))
