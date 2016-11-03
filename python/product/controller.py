@@ -2,12 +2,13 @@ import os
 import json
 import cloudstorage as gcs
 
-from flask import Blueprint, request
+from flask import Blueprint, request, session
 from google.appengine.api import app_identity
 from google.appengine.api.images import get_serving_url
 from google.appengine.ext import blobstore
 
 from product.model import Product
+from user.model import User
 
 my_default_retry_params = gcs.RetryParams(initial_delay=0.2, max_delay=5.0, backoff_factor=2, max_retry_period=15)
 gcs.set_default_retry_params(my_default_retry_params)
