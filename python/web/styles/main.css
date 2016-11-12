@@ -66,6 +66,7 @@ header .logo {
     position: absolute;
     top: 30px;
     left: 50px;
+    cursor: pointer;
 }
 
 header .user-container {
