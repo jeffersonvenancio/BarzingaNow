@@ -2,6 +2,10 @@ app.controller('SideMenuCtrl', ['$scope', '$location', 'UserService', function($
     var $menuArrow = jQuery('nav .nav-arrow');
 
     var animateMenu = function($elementMenu) {
+        if (window.matchMedia("(max-device-width: 480px)").matches) {
+            jQuery('nav').hide();
+        }
+
         $menuArrow.css('display', 'block');
 
         $menuArrow.animate({
