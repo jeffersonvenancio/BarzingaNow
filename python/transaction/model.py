@@ -12,6 +12,7 @@ class Transaction(ndb.Model):
     user = ndb.KeyProperty(kind=User)
     items = ndb.KeyProperty(kind=TransactionItem, repeated=True)
     value = ndb.FloatProperty()
+    date = ndb.DateTimeProperty(auto_now_add=True)
 
 
     @staticmethod

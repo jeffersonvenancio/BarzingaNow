@@ -38,10 +38,8 @@ def get_by_id(product_id):
 def add():
     user_logged = session['barzinga_user']
     user_operator = User.query().filter(User.email == user_logged["email"]).get()
-
     if user_operator.admin:
         bucket_name = os.environ.get('BUCKET_NAME', app_identity.get_default_gcs_bucket_name())
-
         description = request.form['description']
         category = request.form['category']
         price = float(request.form['price'])
@@ -54,7 +52,9 @@ def add():
             write_retry_params = gcs.RetryParams(backoff_factor=1.1)
             filename = '/' + bucket_name + '/' + image.filename
             gcs_file = gcs.open(filename, 'w', content_type=image.content_type, retry_params=write_retry_params)
+            print 'asdfasdfasdfasdfasd 77777777777'
             gcs_file.write(image.read())
+            print 'asdfasdfasdfasdfasd 66666666666'
             gcs_file.close()
 
             blobstore_filename = '/gs' + filename

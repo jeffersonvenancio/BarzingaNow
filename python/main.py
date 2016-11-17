@@ -1,9 +1,10 @@
 from flask import Flask, request, session, url_for
 from flask_cors import CORS
-from flask_principal import Principal
+from flask_principal import Principal, identity_loaded, RoleNeed
 from werkzeug.utils import redirect
 from requests_toolbelt.adapters import appengine
 from google.appengine.ext import ndb
+from user.model import User
 
 appengine.monkeypatch()
 
@@ -17,7 +18,8 @@ from transaction.controller import transaction as transaction_controller
 
 app = Flask(__name__, static_folder='web')
 
-Principal(app)
+principals = Principal(app)
+principals._init_app(app)
 
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
@@ -51,3 +53,13 @@ def page_not_found(e):
 @app.errorhandler(500)
 def application_error(e):
     return 'Sorry, unexpected error: {}'.format(e), 500
+
+@identity_loaded.connect_via(app)
+def on_identity_loaded(sender, identity):
+    user_json = session['barzinga_user']
+    user = User.query().filter(User.email == user_json["email"]).get()
+
+    identity.user = user.key.id()
+
+    if user.admin :
+        identity.provides.add(RoleNeed('admin'))
