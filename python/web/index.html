@@ -38,7 +38,7 @@
 <body ng-controller="HomeCtrl">
     <div ng-if="alert.visible" class="alert alert-{{ alert.type }}">{{ alert.message }}</div>
     <header ng-controller="HeaderCtrl">
-        <img class="logo" src="web/images/logo-barzinga.png">
+        <img ng-click="goHome()" class="logo" src="web/images/logo-barzinga.png">
         <div class="user-container">
             <div class="money">
                 BZG <span>{{ (user.money || 0) | currency : '' : 2  }}</span>
