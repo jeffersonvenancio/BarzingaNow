@@ -10,5 +10,9 @@ app.controller('HeaderCtrl', ['$rootScope', 'UserService', function($rootScope, 
         });
     };
 
+    $rootScope.toggleMenu = function () {
+        jQuery('nav').toggle();
+    };
+
     $rootScope.refreshUser();
 }]);

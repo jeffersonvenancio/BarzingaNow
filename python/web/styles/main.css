@@ -153,8 +153,10 @@ nav ul li a {
     padding-left: 50px;
 }
 
-nav ul li a.active {
+@media not screen and (max-device-width: 480px) {
+  nav ul li a.active {
     color: #FFAE00;
+  }
 }
 
 nav ul li a:before {
@@ -168,10 +170,12 @@ nav ul li a.doces:before { content: url(../images/icone-doces.png); }
 nav ul li a.naturebas:before { content: url(../images/icone-naturebas.png); }
 nav ul li a.salgados:before { content: url(../images/icone-salgados.png); }
 
-nav ul li a.bebidas.active:before { content: url(../images/icone-bebidas-ativo.png); }
-nav ul li a.doces.active:before { content: url(../images/icone-doces-ativo.png); }
-nav ul li a.naturebas.active:before { content: url(../images/icone-naturebas-ativo.png); }
-nav ul li a.salgados.active:before { content: url(../images/icone-salgados-ativo.png); }
+@media not screen and (max-device-width: 480px) {
+  nav ul li a.bebidas.active:before { content: url(../images/icone-bebidas-ativo.png); }
+  nav ul li a.doces.active:before { content: url(../images/icone-doces-ativo.png); }
+  nav ul li a.naturebas.active:before { content: url(../images/icone-naturebas-ativo.png); }
+  nav ul li a.salgados.active:before { content: url(../images/icone-salgados-ativo.png); }
+}
 
 nav ul li a.add-product {
     display: block;
@@ -499,3 +503,88 @@ main .cart li .cancel:hover {
     color: #FFFFFF;
     background-color: #FF3B3B;
 }
+
+header .user-container .menu {
+    display: none;
+}
+
+@media only screen and (max-device-width: 480px) {
+
+header {
+    height: 75px;
+    margin-bottom: 0;
+}
+
+header .logo {
+    top: 10px;
+    left: 10px;
+    width: 35%;
+}
+
+header .user-container {
+    top: 10px;
+    right: 10px;
+    margin: 0;
+    padding :0;
+}
+
+header .user-container .money {
+    border: 0;
+    margin: 0;
+    padding :0;
+}
+
+header .user-container .avatar {
+    display: none;
+}
+
+body nav {
+    display: none;
+    position: fixed;
+    right: 0;
+    top: 75px;
+    z-index: 100;
+    border: 2px solid black;
+    border-radius: 2px;
+    background-color: #333333;
+    height: 100%;
+}
+
+body nav ul li a {
+    color: white;
+}
+
+body main {
+    top: 100px;
+    margin: 0;
+    width: 100%;
+}
+
+body main ul {
+    margin: 0;
+}
+
+header .user-container .menu {
+    display: block;
+    margin-left: 10px;
+}
+
+header .user-container .menu img {
+    width: 32px;
+    height: 32px;
+}
+
+nav ul li a:before {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 48px;
+    height: 48px;
+    text-align: center;
+    border-radius: 50%;
+    border 2px solid #333;
+    background-color: white;
+}
+
+}
+
