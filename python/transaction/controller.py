@@ -30,17 +30,17 @@ def add():
 
     products = json.loads(request.form['products'])
 
-    ids_list = []
+    products_list = []
     quantity_table = {}
 
     for product in products:
         quantity_table[product['id']] = product['quantity']
-        ids_list.append(product['id'])
+        products_list.append(ndb.Key(Product, product['id']).get())
 
-    products = ndb.get_multi([ndb.Key(Product, k) for k in ids_list])
+    print products_list
 
     try:
-        transaction = Transaction.new(logged_user, products, quantity_table)
+        transaction = Transaction.new(logged_user, products_list, quantity_table)
         transaction.put()
     except Exception as e:
         return str(e), 400
