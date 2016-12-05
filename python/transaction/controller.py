@@ -74,3 +74,29 @@ def transactions_user():
         trans.append(transa)
 
     return json.dumps(trans)
+
+
+@transaction.route('/extract_all', methods=['GET'])
+def transactions_all():
+    transactions = Transaction.query().fetch()
+
+    trans = [];
+
+    for t in transactions:
+        transa = {}
+        transa['id'] = str(t.key)
+        transa['user'] = str(t.user.get().name)
+        transa['value'] = str(t.value)
+        transa['date'] = str(t.date)
+        itens = []
+        for it in t.items :
+            item = {}
+            transaction_item = it.get()
+            item['product'] = transaction_item.product.get().description
+            item['quantity'] = transaction_item.quantity
+            itens.append(item)
+
+        transa['itens'] = itens
+        trans.append(transa)
+
+    return json.dumps(trans)
