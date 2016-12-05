@@ -14,6 +14,11 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
             templateUrl: 'web/app/views/credit_add.html',
             controller: 'CreditCtrl'
         })
+        .when('/extract', {
+            templateUrl: 'web/app/views/extract.html',
+            controller: 'TransactionCtrl'
+        })
+
         .otherwise({ redirectTo: '/' });
 
     $httpProvider.interceptors.push(['$rootScope', '$q', function($rootScope, $q) {

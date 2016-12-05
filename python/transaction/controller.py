@@ -3,7 +3,7 @@ import json
 from flask import Blueprint, request, session
 from google.appengine.ext import ndb
 
-from transaction.model import Transaction
+from transaction.model import Transaction, TransactionItem
 from user.model import User
 from product.model import Product
 
@@ -46,3 +46,31 @@ def add():
         return str(e), 400
 
     return '', 204
+
+@transaction.route('/extract', methods=['GET'])
+def transactions_user():
+    logged_user = session['barzinga_user']
+    logged_user = User.query().filter(User.email == logged_user["email"]).get()
+
+    transactions = Transaction.query().filter(Transaction.user == logged_user.key).fetch()
+
+    trans = [];
+
+    for t in transactions:
+        transa = {}
+        transa['id'] = str(t.key)
+        transa['user'] = logged_user.name
+        transa['value'] = str(t.value)
+        transa['date'] = str(t.date)
+        itens = []
+        for it in t.items :
+            item = {}
+            transaction_item = it.get()
+            item['product'] = transaction_item.product.get().description
+            item['quantity'] = transaction_item.quantity
+            itens.append(item)
+
+        transa['itens'] = itens
+        trans.append(transa)
+
+    return json.dumps(trans)

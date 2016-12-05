@@ -178,6 +178,8 @@ nav ul li a.salgados:before { content: url(../images/icone-salgados.png); }
   nav ul li a.salgados.active:before { content: url(../images/icone-salgados-ativo.png); }
 }
 
+
+
 nav ul li a.add-product {
     display: block;
     height: 36px;
@@ -403,6 +405,11 @@ main .form-product .btn-confirm:hover {
     color: #FFFFFF;
     background-color: #89E215;
     cursor: pointer;
+}
+
+
+main ul.extracts {
+    display: inline-block;
 }
 
 main .cart {

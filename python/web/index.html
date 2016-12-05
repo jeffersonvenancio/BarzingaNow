@@ -32,6 +32,7 @@
     <script src="web/app/controllers/sidemenu.js"></script>
     <script src="web/app/controllers/product.js"></script>
     <script src="web/app/controllers/product_new.js"></script>
+    <script src="web/app/controllers/transaction.js"></script>
 
 </head>
 
@@ -57,6 +58,7 @@
                 <li><a ng-click="openPageProduct($event)" class="add-product" href="javascript:;">CADASTRAR PRODUTO</a></li>
                 <li><a ng-click="openPageCredit($event)" class="add-product" href="javascript:;">INCLUIR BARZINGAS</a></li>
             </div>
+            <li><a ng-click="openPageExtract($event)" class="add-product" href="javascript:;">Extrato</a></li>
             <li><a ng-click="selectCategory('BEBIDAS', $event)" class="bebidas" href="javascript:;">Bebidas</a></li>
             <li><a ng-click="selectCategory('DOCES', $event)" class="doces" href="javascript:;">Doces</a></li>
             <li><a ng-click="selectCategory('NATUREBAS', $event)" class="naturebas" href="javascript:;">Naturebas</a></li>

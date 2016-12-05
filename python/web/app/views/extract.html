@@ -1,0 +1,17 @@
+<ul class="extracts">
+    <li ng-repeat="extract in extracts">
+        <div class="date">
+            {{ extract.date }}
+        </div>
+        <div class="value">
+            {{ extract.value }}
+        </div>
+        <ul>
+            <li ng-repeat="opa in extract.itens">
+                <div class="product-description">
+                {{ opa.product }}
+                </div>
+            </li>
+        </ul>
+    </li>
+</ul>

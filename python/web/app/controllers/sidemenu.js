@@ -31,6 +31,11 @@ app.controller('SideMenuCtrl', ['$scope', '$location', 'UserService', function($
         $location.path('/credit/add').search({});
     };
 
+    $scope.openPageExtract = function($event) {
+        animateMenu($event.target);
+        $location.path('/extract').search({});
+    };
+
 
     $scope.user = {};
     $scope.user.photo_url = '#';
