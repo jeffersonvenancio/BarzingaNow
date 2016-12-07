@@ -12,9 +12,6 @@
         <div class="product-price">
             BZG <span>{{ product.price | currency : '' : 2 }}</span>
         </div>
-        <div class="product-quantity">
-            Qtde. Dispon&iacute;vel <span>{{ product.quantity }}</span>
-        </div>
     </li>
 </ul>
 <ul class="cart" ng-if="selectedProducts.length">
