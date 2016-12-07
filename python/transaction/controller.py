@@ -59,7 +59,7 @@ def transactions_user():
     for t in transactions:
         transa = {}
         transa['id'] = str(t.key)
-        transa['user'] = logged_user.name
+        transa['user'] = logged_user.name.encode('utf-8').strip()
         transa['value'] = str(t.value)
         transa['date'] = str(t.date)
         itens = []
@@ -85,7 +85,7 @@ def transactions_all():
     for t in transactions:
         transa = {}
         transa['id'] = str(t.key)
-        transa['user'] = str(t.user.get().name)
+        transa['user'] = t.user.get().name.encode('utf-8').strip()
         transa['value'] = str(t.value)
         transa['date'] = str(t.date)
         itens = []
