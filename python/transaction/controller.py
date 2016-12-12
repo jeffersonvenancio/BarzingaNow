@@ -100,3 +100,41 @@ def transactions_all():
         trans.append(transa)
 
     return json.dumps(trans)
+
+@transaction.route('/dispatch', methods=['GET'])
+def dispatch_task():
+    from google.appengine.api import taskqueue
+    task = taskqueue.add(url='/api/transaction/post_recommender')
+    return str(task), 200
+
+@transaction.route('/post_recommender', methods=['POST'])
+def post_recommender_task():
+    transactions = Transaction.query().fetch()
+
+    for t in transactions:
+        user = t.user.get()
+        for it in t.items :
+            transaction_item = it.get()
+            product = transaction_item.product.get()
+
+            params = {'user_id': user.key.id(), 'item_id': product.key.id(), 'app_cod': 'BZG'}
+            execute_post(params)
+
+    return '', 200
+
+def execute_post(params):
+    url = 'http://recomendador-dot-relacionadosites-qa.appspot.com/api/register_access'
+
+    import urllib
+    from google.appengine.api import urlfetch
+
+    data = json.dumps(params)
+
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+    result = urlfetch.fetch(
+        url=url,
+        payload=data,
+        method=urlfetch.POST,
+        headers=headers)
+
+    print result.content

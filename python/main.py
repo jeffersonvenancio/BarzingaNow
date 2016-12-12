@@ -42,6 +42,9 @@ def meu_ip():
 
 @app.before_request
 def filter():
+    if 'post_recommender' in request.url:
+        return
+
     if '/api/auth' not in request.url and '/api/auth/token' not in request.url and '/user' not in request.url:
         if not 'barzinga_user' in session:
             return redirect('/api/auth/')
