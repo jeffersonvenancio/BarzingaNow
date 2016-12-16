@@ -101,6 +101,15 @@ def transactions_all():
 
     return json.dumps(trans)
 
+@transaction.route('/sumarize_all', methods=['GET'])
+def sumarize_all():
+    transactions = Transaction.query().fetch()
+    value =  0
+    for t in transactions:
+        value +=t.value
+
+    return json.dumps(value)
+
 @transaction.route('/dispatch', methods=['GET'])
 def dispatch_task():
     from google.appengine.api import taskqueue
