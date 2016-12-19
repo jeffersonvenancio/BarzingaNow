@@ -60,8 +60,20 @@ app.controller('ProductCtrl', ['$rootScope', '$scope', '$timeout', 'ProductServi
     };
 
     $scope.listProducts = function() {
+        // $scope.products = [];
+        // for (var i = 1; i <= 21; i++) {
+        //     $scope.products.push({
+        //         id: i,
+        //         description: 'Teste ' + i,
+        //         price: 1.5,
+        //         image_url: 'http://pngimg.com/upload/coca_cola_PNG8899.png'
+        //     });
+        // }
+
+        // $scope.recommendedProducts = $scope.products.slice(0, 6);
         productService.getAll(function(response) {
             $scope.products = response.data;
+            $scope.recommendedProducts = response.data.slice(0, 6);
         });
     };
 

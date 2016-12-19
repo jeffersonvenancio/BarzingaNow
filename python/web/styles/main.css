@@ -208,28 +208,43 @@ main {
     /*height: 100%;*/
     text-align: center;
     position: relative;
-    margin: 150px 100px 0 300px;
+    margin: 150px 100px 0 340px;
     box-sizing: border-box;
 }
 
+main h2 {
+    text-align: left;
+    margin-left: 20px;
+}
+
+main h2 span {
+    background-color: #FFFFFF;
+    color: #67D1E4;
+    padding: 0 15px;
+}
+
 main ul.products {
-    margin-top: 50px;
+    /*margin-top: 50px;*/
+}
+
+main ul.products.recommended {
+    padding: 40px 15px 0;
+    margin-top: -15px;
+    margin-bottom: 50px;
+    border: 1px solid #CCCCCC;
+    border-radius: 10px;
 }
 
 main ul.products li {
     display: inline-block;
-    width: 300px;
-    height: 250px;
+    width: 33.3%;
+    /*width: 300px;*/
+    /*height: 250px;*/
     text-align: center;
     overflow: auto;
-    margin-bottom: 50px;
+    margin: 0 auto 20px;
 
     color: #777777;
-}
-
-main ul.products li  {
-    display: inline-block;
-    margin: 0 auto 20px;
 }
 
 main ul.products li a {
