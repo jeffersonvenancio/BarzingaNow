@@ -1,4 +1,5 @@
-app.controller('ProductCtrl', ['$rootScope', '$scope', '$timeout', 'ProductService', 'TransactionService', function($rootScope, $scope, $timeout, productService, transactionService) {
+app.controller('ProductCtrl', ['$rootScope', '$scope', '$timeout', 'ProductService', 'TransactionService', 'RecommenderService',
+        function($rootScope, $scope, $timeout, productService, transactionService, recommenderService) {
     $scope.selectedProducts = [];
     
     $scope.cartTotal = 0;
@@ -60,21 +61,25 @@ app.controller('ProductCtrl', ['$rootScope', '$scope', '$timeout', 'ProductServi
     };
 
     $scope.listProducts = function() {
-        // $scope.products = [];
-        // for (var i = 1; i <= 21; i++) {
-        //     $scope.products.push({
-        //         id: i,
-        //         description: 'Teste ' + i,
-        //         price: 1.5,
-        //         image_url: 'http://pngimg.com/upload/coca_cola_PNG8899.png'
-        //     });
-        // }
-
-        // $scope.recommendedProducts = $scope.products.slice(0, 6);
         productService.getAll(function(response) {
             $scope.products = response.data;
-            $scope.recommendedProducts = response.data.slice(0, 6);
+
+            recommenderService.getRecommendations($rootScope.user.id, function(response) {
+                $scope.recommendedProducts = [];
+                
+                var recommendations = response.data.data.slice(0, 6);
+                recommendations.forEach(function(item) {
+                    var product = $scope.products.filter(function (product) {
+                        return product.id == item;
+                    })[0];
+
+                    $scope.recommendedProducts.push(product);
+                });
+
+            });
         });
+
+        // recommenderService.getRecommendations($rootScope.user.id, function(response) {
     };
 
     $scope.listProducts();

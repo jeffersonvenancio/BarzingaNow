@@ -7,6 +7,12 @@ class User(ndb.Model):
     photo_url = ndb.StringProperty()
     admin = ndb.BooleanProperty()
 
+    def to_dict(self):
+        result = super(User, self).to_dict()
+        result['id'] = self.key.id()
+
+        return result
+
     def debit(self, value):
         if value > self.money:
             raise Exception('Saldo insuficiente')
