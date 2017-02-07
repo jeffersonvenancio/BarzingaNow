@@ -1,7 +1,7 @@
 app.controller('ProductCtrl', ['$rootScope', '$scope', '$timeout', 'ProductService', 'TransactionService', 'RecommenderService',
         function($rootScope, $scope, $timeout, productService, transactionService, recommenderService) {
     $scope.selectedProducts = [];
-    
+
     $scope.cartTotal = 0;
 
     var refreshCart = function() {
@@ -66,7 +66,7 @@ app.controller('ProductCtrl', ['$rootScope', '$scope', '$timeout', 'ProductServi
 
             recommenderService.getRecommendations($rootScope.user.id, function(response) {
                 $scope.recommendedProducts = [];
-                
+
                 var recommendations = response.data.data.slice(0, 6);
                 recommendations.forEach(function(item) {
                     var product = $scope.products.filter(function (product) {
@@ -78,6 +78,9 @@ app.controller('ProductCtrl', ['$rootScope', '$scope', '$timeout', 'ProductServi
 
             });
         });
+
+        console.info('TEXTO');
+        $('.product-price span').each(function(){console.info($(this).text())});
 
         // recommenderService.getRecommendations($rootScope.user.id, function(response) {
     };

@@ -1,4 +1,5 @@
 import json
+import datetime
 
 from flask import Blueprint, request, session
 from google.appengine.ext import ndb
@@ -77,7 +78,7 @@ def transactions_user():
 
 
 @transaction.route('/extract_all', methods=['GET'])
-def transactions_all():
+def transactions_alll():
     transactions = Transaction.query().fetch()
 
     trans = [];
@@ -100,6 +101,32 @@ def transactions_all():
         trans.append(transa)
 
     return json.dumps(trans)
+
+@transaction.route('/transactions_all/<string:start>/<string:end>', methods=['GET'], strict_slashes=False)
+def transactions_all(start=None, end=None):
+    splitStart = start.split('-')
+    splitEnd = end.split('-')
+    print 'Transaction All'
+    # credits = Credit.query().fetch()
+    from_date = datetime.datetime(year=int(splitStart[0]), month=int(splitStart[1]), day=int(splitStart[2]))
+    to_date = datetime.datetime(year=int(splitEnd[0]), month=int(splitEnd[1]), day=int(splitEnd[2]))
+    transactions = Transaction.query().filter(Transaction.date <= to_date, Transaction.date >= from_date).fetch()
+    # workbook = xlsxwriter.Workbook('tmp/Report.xlsx')
+    # worksheet = workbook.add_worksheet()
+
+    values = []
+    # row = 0
+    print 'Compras'
+    for t in transactions:
+        print str(t.value)
+        for i in t.items:
+            print ' ' + str(i.get().quantity) + 'x Item: ' + str(i.get().product.get().description)
+        # worksheet.write(row, 0, str(c.value))
+        # row += 1
+
+    # workbook.close()
+
+    return 'Transacoes reportados', 204
 
 @transaction.route('/sumarize_all', methods=['GET'])
 def sumarize_all():

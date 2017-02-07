@@ -6,6 +6,7 @@
 # Note: The `lib` directory is added to `sys.path` by `appengine_config.py`.
 Flask
 Flask-Principal
+Flask-Excel
 flask-cors
 urllib3[secure]
 urlfetch
@@ -16,3 +17,4 @@ requests
 idna
 requests-toolbelt
 GoogleAppEngineCloudStorageClient
+xlsxwriter
