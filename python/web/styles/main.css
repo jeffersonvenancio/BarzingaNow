@@ -427,6 +427,10 @@ main ul.extracts {
     display: inline-block;
 }
 
+main ul.report {
+    display: inline-block;
+}
+
 main .cart {
     position: fixed;
     width: 200px;

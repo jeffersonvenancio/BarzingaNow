@@ -1,0 +1,30 @@
+<div class=""> Créditos </div>
+<ul class="report">
+    <li ng-repeat="c in credits">
+        <div class="value">
+            {{ c.value }}
+        </div>
+    </li>
+</ul>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class=""> Compras </div>
+<ul class="report">
+    <li ng-repeat="t in transactions">
+        <div class="value">
+            {{ t.value }}
+        </div>
+        <ul>
+            <li ng-repeat="item in t.itens">
+                <div class="">
+                {{ item }}
+                </div>
+            </li>
+        </ul>
+    </li>
+</ul>

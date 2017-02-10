@@ -40,21 +40,16 @@ def credits_all(start=None, end=None):
     splitStart = start.split('-')
     splitEnd = end.split('-')
     print 'Credits All'
-    # credits = Credit.query().fetch()
     from_date = datetime.datetime(year=int(splitStart[0]), month=int(splitStart[1]), day=int(splitStart[2]))
     to_date = datetime.datetime(year=int(splitEnd[0]), month=int(splitEnd[1]), day=int(splitEnd[2]))
     credits = Credit.query().filter(Credit.date <= to_date, Credit.date >= from_date).fetch()
-    # workbook = xlsxwriter.Workbook('tmp/Report.xlsx')
-    # worksheet = workbook.add_worksheet()
 
-    values = []
-    # row = 0
+    creditsJson = []
     print 'Creditos'
     for c in credits:
-        print str(c.value)
-        # worksheet.write(row, 0, str(c.value))
-        # row += 1
+        creditJson = {}
+        creditJson['value'] = str(c.value)
+        
+        creditsJson.append(creditJson)
 
-    # workbook.close()
-
-    return 'Creditos reportados', 204
+    return json.dumps(creditsJson)

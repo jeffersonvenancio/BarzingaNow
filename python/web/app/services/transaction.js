@@ -6,6 +6,5 @@ app.service('TransactionService', ['$http', function($http) {
         extract: function(successCallback) {
             $http.get('/api/transaction/extract').then(successCallback);
         }
-
     };
 }]);

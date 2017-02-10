@@ -107,26 +107,22 @@ def transactions_all(start=None, end=None):
     splitStart = start.split('-')
     splitEnd = end.split('-')
     print 'Transaction All'
-    # credits = Credit.query().fetch()
     from_date = datetime.datetime(year=int(splitStart[0]), month=int(splitStart[1]), day=int(splitStart[2]))
     to_date = datetime.datetime(year=int(splitEnd[0]), month=int(splitEnd[1]), day=int(splitEnd[2]))
     transactions = Transaction.query().filter(Transaction.date <= to_date, Transaction.date >= from_date).fetch()
-    # workbook = xlsxwriter.Workbook('tmp/Report.xlsx')
-    # worksheet = workbook.add_worksheet()
 
-    values = []
-    # row = 0
-    print 'Compras'
+    transactionsJson = [];
     for t in transactions:
-        print str(t.value)
+        transactionJson = {}
+        transactionJson['value'] = str(t.value)
+        itensJson = [];
         for i in t.items:
-            print ' ' + str(i.get().quantity) + 'x Item: ' + str(i.get().product.get().description)
-        # worksheet.write(row, 0, str(c.value))
-        # row += 1
+            itensJson.append(str(i.get().quantity) + 'x Item: ' + str(i.get().product.get().description))
+        transactionJson["itens"] = itensJson
 
-    # workbook.close()
+        transactionsJson.append(transactionJson)
 
-    return 'Transacoes reportados', 204
+    return json.dumps(transactionsJson)
 
 @transaction.route('/sumarize_all', methods=['GET'])
 def sumarize_all():

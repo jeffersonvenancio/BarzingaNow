@@ -36,6 +36,11 @@ app.controller('SideMenuCtrl', ['$scope', '$location', 'UserService', function($
         $location.path('/extract').search({});
     };
 
+    $scope.openPageReport = function($event) {
+        animateMenu($event.target);
+        $location.path('/report').search({});
+    };
+
 
     $scope.user = {};
     $scope.user.photo_url = '#';

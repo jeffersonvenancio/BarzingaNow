@@ -18,6 +18,10 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
             templateUrl: 'web/app/views/extract.html',
             controller: 'TransactionCtrl'
         })
+        .when('/report', {
+            templateUrl: 'web/app/views/report.html',
+            controller: 'ReportCtrl'
+        })
 
         .otherwise({ redirectTo: '/' });
 
