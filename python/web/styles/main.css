@@ -25,6 +25,35 @@ a {
     display: none !important;
 }
 
+div .report {
+    width: 100%;
+}
+
+table .report{
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+}
+
+table .report td {
+    text-align: center;
+    vertical-align: center;
+    width: 25%;
+}
+
+table .report td, th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    vertical-align: center;
+    padding: 10px;
+    width: 25%;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
 .alert {
     width: 700px;
     height: 50px;

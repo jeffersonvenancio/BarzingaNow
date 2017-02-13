@@ -35,20 +35,27 @@ def add():
     else :
         return 'Usuario invalido', 406
 
-@credit.route('/credits_all/<string:start>/<string:end>', methods=['GET'], strict_slashes=False)
+@credit.route('/credits_all', methods=['GET'], strict_slashes=True)
+@credit.route('/credits_all/<string:start>/<string:end>', methods=['GET'], strict_slashes=True)
 def credits_all(start=None, end=None):
-    splitStart = start.split('-')
-    splitEnd = end.split('-')
-    print 'Credits All'
-    from_date = datetime.datetime(year=int(splitStart[0]), month=int(splitStart[1]), day=int(splitStart[2]))
-    to_date = datetime.datetime(year=int(splitEnd[0]), month=int(splitEnd[1]), day=int(splitEnd[2]))
-    credits = Credit.query().filter(Credit.date <= to_date, Credit.date >= from_date).fetch()
+    if start is None or end is None:
+        credits = Credit.query().fetch()
+    else:
+        splitStart = start.split('-')
+        from_date = datetime.datetime(year=int(splitStart[2]), month=int(splitStart[1]), day=int(splitStart[0]))
+        splitEnd = end.split('-')
+        to_date = datetime.datetime(year=int(splitEnd[2]), month=int(splitEnd[1]), day=int(splitEnd[0]))
+
+        credits = Credit.query().filter(Credit.date <= to_date, Credit.date >= from_date).fetch()
 
     creditsJson = []
     print 'Creditos'
     for c in credits:
         creditJson = {}
+        creditJson['date'] = c.date.strftime('%d/%m/%y - %H:%M')
         creditJson['value'] = str(c.value)
+        creditJson['operator'] = str(c.operator).split('@')[0]
+        creditJson['user'] = str(c.user_email).split('@')[0]
         
         creditsJson.append(creditJson)
 

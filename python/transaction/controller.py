@@ -102,23 +102,31 @@ def transactions_alll():
 
     return json.dumps(trans)
 
-@transaction.route('/transactions_all/<string:start>/<string:end>', methods=['GET'], strict_slashes=False)
+@transaction.route('/transactions_all', methods=['GET'], strict_slashes=True)
+@transaction.route('/transactions_all/<string:start>/<string:end>', methods=['GET'], strict_slashes=True)
 def transactions_all(start=None, end=None):
-    splitStart = start.split('-')
-    splitEnd = end.split('-')
-    print 'Transaction All'
-    from_date = datetime.datetime(year=int(splitStart[0]), month=int(splitStart[1]), day=int(splitStart[2]))
-    to_date = datetime.datetime(year=int(splitEnd[0]), month=int(splitEnd[1]), day=int(splitEnd[2]))
-    transactions = Transaction.query().filter(Transaction.date <= to_date, Transaction.date >= from_date).fetch()
+    if start is None or end is None:
+        transactions = Transaction.query().fetch()
+    else:
+        splitStart = start.split('-')
+        from_date = datetime.datetime(year=int(splitStart[2]), month=int(splitStart[1]), day=int(splitStart[0]))
+        splitEnd = end.split('-')
+        to_date = datetime.datetime(year=int(splitEnd[2]), month=int(splitEnd[1]), day=int(splitEnd[0]))
+
+        transactions = Transaction.query().filter(Transaction.date <= to_date, Transaction.date >= from_date).fetch()
 
     transactionsJson = [];
     for t in transactions:
         transactionJson = {}
+        transactionJson['date'] = t.date.strftime('%d/%m/%y - %H:%M')
         transactionJson['value'] = str(t.value)
+        transactionJson['user'] = str(t.user.get().email).split('@')[0]
         itensJson = [];
         for i in t.items:
-            itensJson.append(str(i.get().quantity) + 'x Item: ' + str(i.get().product.get().description))
+            itensJson.append(str(i.get().quantity) + ' x ' + str(i.get().product.get().description))
         transactionJson["itens"] = itensJson
+
+
 
         transactionsJson.append(transactionJson)
 

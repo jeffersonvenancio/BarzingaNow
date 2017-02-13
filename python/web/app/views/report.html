@@ -1,11 +1,35 @@
-<div class=""> Créditos </div>
-<ul class="report">
-    <li ng-repeat="c in credits">
-        <div class="value">
-            {{ c.value }}
-        </div>
-    </li>
-</ul>
+<div class="form-credit">
+    <ul>
+        <li class="credit-user">
+            <label for="">Data inicial</label>
+            <input type="text" ng-model="startDate">
+        </li>
+        <li class="credit-user">
+            <label for="">Data final</label>
+            <input type="text" ng-model="endDate">
+        </li>
+    </ul>
+    <input type="button" class="btn-confirm" value="FILTRAR" ng-click='report()'/>
+</div>
+
+<div class='report'>
+    <h1>Créditos</h1>
+    <br>
+    <table class='report'>
+      <tr>
+        <th>Data</th>
+        <th>Valor</th>
+        <th>De</th>
+        <th>Para</th>
+      </tr>
+      <tr ng-repeat='c in credits'>
+        <td>{{ c.date }}</td>
+        <td>{{ c.value }}</td>
+        <td>{{ c.operator }}</td>
+        <td>{{ c.user }}</td>
+      </tr>
+    </table>
+</div>
 
 <br>
 <br>
@@ -13,18 +37,27 @@
 <br>
 <br>
 
-<div class=""> Compras </div>
-<ul class="report">
-    <li ng-repeat="t in transactions">
-        <div class="value">
-            {{ t.value }}
-        </div>
-        <ul>
-            <li ng-repeat="item in t.itens">
-                <div class="">
-                {{ item }}
-                </div>
-            </li>
-        </ul>
-    </li>
-</ul>
+<div class='report'>
+    <h1>Compras</h1>
+    <br>
+    <table class='report'>
+      <tr>
+        <th>Data</th>
+        <th>Valor</th>
+        <th>Itens</th>
+        <th>Por</th>
+      </tr>
+      <tr ng-repeat="t in transactions">
+        <td>{{ t.date }}</td>
+        <td>{{ t.value }}</td>
+        <td>
+            <table class="report">
+                <tr ng-repeat="item in t.itens">
+                    <td>{{ item }}</td>
+                </tr>
+            </table>
+        </td>
+        <td>{{ t.user }}</td>
+      </tr>
+    </table>
+</div>
