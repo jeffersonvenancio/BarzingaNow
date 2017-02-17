@@ -123,10 +123,9 @@ def transactions_all(start=None, end=None):
         transactionJson['user'] = str(t.user.get().email).split('@')[0]
         itensJson = [];
         for i in t.items:
-            itensJson.append(str(i.get().quantity) + ' x ' + str(i.get().product.get().description))
+            transaction_item = i.get()
+            itensJson.append(transaction_item.quantity + ' x ' + transaction_item.product.get().description)
         transactionJson["itens"] = itensJson
-
-
 
         transactionsJson.append(transactionJson)
 
