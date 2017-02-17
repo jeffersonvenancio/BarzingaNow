@@ -102,7 +102,6 @@ def transactions_alll():
 
     return json.dumps(trans)
 
-@transaction.route('/transactions_all', methods=['GET'], strict_slashes=True)
 @transaction.route('/transactions_all/<string:start>/<string:end>', methods=['GET'], strict_slashes=True)
 def transactions_all(start=None, end=None):
     if start is None or end is None:
@@ -126,10 +125,13 @@ def transactions_all(start=None, end=None):
         transactionJson['user'] = str(t.user.get().email).split('@')[0]
         itensJson = [];
         for i in t.items:
+            itemJson = {}
             transaction_item = i.get()
-            itensJson.append(transaction_item.product.get().description)
+            itemJson['product'] = transaction_item.product.get().description
+            itemJson['quantity'] = transaction_item.quantity
+            itensJson.append(itemJson)
+            
         transactionJson["itens"] = itensJson
-
         transactionsJson.append(transactionJson)
 
     return json.dumps(transactionsJson)
