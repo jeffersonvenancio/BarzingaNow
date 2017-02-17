@@ -17,4 +17,3 @@ requests
 idna
 requests-toolbelt
 GoogleAppEngineCloudStorageClient
-xlsxwriter
