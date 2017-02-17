@@ -199,14 +199,14 @@ nav ul li a.bebidas:before { content: url(../images/icone-bebidas.png); }
 nav ul li a.doces:before { content: url(../images/icone-doces.png); }
 nav ul li a.naturebas:before { content: url(../images/icone-naturebas.png); }
 nav ul li a.salgados:before { content: url(../images/icone-salgados.png); }
-nav ul li a.possocomprar:before { content: url(../images/icone-salgados.png); }
+nav ul li a.possocomprar:before { content: url(../images/icone-cabe.png); }
 
 @media not screen and (max-device-width: 480px) {
   nav ul li a.bebidas.active:before { content: url(../images/icone-bebidas-ativo.png); }
   nav ul li a.doces.active:before { content: url(../images/icone-doces-ativo.png); }
   nav ul li a.naturebas.active:before { content: url(../images/icone-naturebas-ativo.png); }
   nav ul li a.salgados.active:before { content: url(../images/icone-salgados-ativo.png); }
-  nav ul li a.possocomprar.active:before { content: url(../images/icone-salgados-ativo.png); }
+  nav ul li a.possocomprar.active:before { content: url(../images/icone-cabe-ativo.png); }
 }
 
 
