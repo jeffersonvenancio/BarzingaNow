@@ -78,10 +78,6 @@ app.controller('ProductCtrl', ['$rootScope', '$scope', '$timeout', 'ProductServi
 
             });
         });
-
-        console.info('TEXTO');
-        $('.product-price span').each(function(){console.info($(this).text())});
-
         // recommenderService.getRecommendations($rootScope.user.id, function(response) {
     };
 
