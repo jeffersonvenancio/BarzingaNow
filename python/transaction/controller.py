@@ -118,7 +118,10 @@ def transactions_all(start=None, end=None):
     transactionsJson = [];
     for t in transactions:
         transactionJson = {}
-        transactionJson['date'] = str(t.date.strftime('%d/%m/%y - %H:%M'))
+        if t.date is not None:
+            transactionJson['date'] = str(t.date.strftime('%d/%m/%y - %H:%M'))
+        else:
+            transactionJson['date'] = ''
         transactionJson['value'] = str(t.value)
         transactionJson['user'] = str(t.user.get().email).split('@')[0]
         itensJson = [];

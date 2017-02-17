@@ -50,7 +50,10 @@ def credits_all(start=None, end=None):
     print 'Creditos'
     for c in credits:
         creditJson = {}
-        creditJson['date'] = str(c.date.strftime('%d/%m/%y - %H:%M'))
+        if c.date is not None:
+            creditJson['date'] = str(c.date.strftime('%d/%m/%y - %H:%M'))
+        else: 
+            creditJson['date'] = ''
         creditJson['value'] = str(c.value)
         creditJson['operator'] = str(c.operator).split('@')[0]
         creditJson['user'] = str(c.user_email).split('@')[0]
