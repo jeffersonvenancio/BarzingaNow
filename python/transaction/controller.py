@@ -67,8 +67,8 @@ def transactions_user():
         for it in t.items :
             item = {}
             transaction_item = it.get()
-            item['product'] = transaction_item.product.get().description
-            item['quantity'] = transaction_item.quantity
+            item['product'] = str(transaction_item.product.get().description)
+            item['quantity'] = str(transaction_item.quantity)
             itens.append(item)
 
         transa['itens'] = itens
@@ -118,7 +118,7 @@ def transactions_all(start=None, end=None):
     transactionsJson = [];
     for t in transactions:
         transactionJson = {}
-        transactionJson['date'] = t.date.strftime('%d/%m/%y - %H:%M')
+        transactionJson['date'] = str(t.date.strftime('%d/%m/%y - %H:%M'))
         transactionJson['value'] = str(t.value)
         transactionJson['user'] = str(t.user.get().email).split('@')[0]
         itensJson = [];
