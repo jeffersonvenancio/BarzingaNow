@@ -124,7 +124,7 @@ def transactions_all(start=None, end=None):
         itensJson = [];
         for i in t.items:
             transaction_item = i.get()
-            itensJson.append(str(transaction_item.quantity + ' x ' + transaction_item.product.get().description))
+            itensJson.append(str(transaction_item.quantity) + ' x ' + str(transaction_item.product.get().description))
         transactionJson["itens"] = itensJson
 
         transactionsJson.append(transactionJson)
