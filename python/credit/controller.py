@@ -16,7 +16,6 @@ admin_permission = Permission(RoleNeed('admin'))
 @credit.route('/add', methods=['POST'], strict_slashes=False)
 @admin_permission.require(http_exception=Forbidden())
 def add():
-    print 'add credit'
     user_logged = session['barzinga_user']
     user_operator = User.query().filter(User.email == user_logged['email']).get()
 
@@ -47,7 +46,7 @@ def credits_all(start=None, end=None):
         credits = Credit.query().filter(Credit.date <= to_date, Credit.date >= from_date).fetch()
 
     creditsJson = []
-    print 'Creditos'
+    
     for c in credits:
         creditJson = {}
         if c.date is not None:
