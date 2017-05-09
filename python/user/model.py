@@ -1,4 +1,5 @@
 from google.appengine.ext import ndb
+import math
 
 class User(ndb.Model):
     name = ndb.StringProperty()
@@ -14,7 +15,9 @@ class User(ndb.Model):
         return result
 
     def debit(self, value):
-        if value > self.money:
+        money = math.ceil(self.money)
+
+        if value > money:
             raise Exception('Saldo insuficiente')
         self.money -= value
 

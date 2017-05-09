@@ -14,6 +14,6 @@ class Product(ndb.Model):
         return result
 
     def buy(self, quantity):
-        #if quantity > self.quantity:
-            #raise Exception('Quantidade indisponivel')
+        if quantity > self.quantity:
+            raise Exception('Quantidade indisponivel')
         self.quantity -= quantity
