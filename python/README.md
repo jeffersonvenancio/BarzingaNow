@@ -1,6 +1,13 @@
 # Barzinga Now 
-Repositório para a solucção devo ir almoçar?
+Repositório para a solução do BarzingaNow?
 
+Antes de tudo... use python 2.7...
+
+RODE ESTES COMANDOS PARA ATUALIZAR AS LIBS DE SUPORTE DO PYTHON:
+ - sudo apt-get install libffi-dev
+ - sudo apt-get install libssl-dev
+ - sudo apt-get install python-dev
+ - pip install setuptools
 
 QUER INTALAR AS DEPENDENCIAS???
  - pip install -t ./lib -r requirements.txt --upgrade
