@@ -127,7 +127,12 @@ def transactions_all(start=None, end=None):
         for i in t.items:
             itemJson = {}
             transaction_item = i.get()
-            itemJson['product'] = transaction_item.product.get().description
+            prod = transaction_item.product.get()
+            itemJson['product'] = 'Nao Existe Mais'
+
+            if prod :
+                itemJson['product'] = prod.description
+
             itemJson['quantity'] = transaction_item.quantity
             itensJson.append(itemJson)
             

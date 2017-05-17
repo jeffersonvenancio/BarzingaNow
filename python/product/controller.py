@@ -29,9 +29,9 @@ def get_all(category=None):
         if category == 'POSSOCOMPRAR':
             user_logged = session['barzinga_user']
             user = User.query().filter(User.email == user_logged["email"]).get()
-            products = [p.to_dict() for p in Product.query(Product.quantity > 0, Product.price <= user.money).fetch()]
+            products = [p.to_dict() for p in Product.query(Product.price <= user.money).fetch()]
         else:
-            products = [p.to_dict() for p in Product.query(Product.quantity > 0, Product.category == category).fetch()]
+            products = [p.to_dict() for p in Product.query(Product.quantity > 0).filter(Product.category == category).fetch()]
     else :
         products = [p.to_dict() for p in Product.query(Product.quantity > 0).fetch()]
 
