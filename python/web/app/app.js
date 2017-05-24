@@ -22,6 +22,10 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
             templateUrl: 'web/app/views/report.html',
             controller: 'ReportCtrl'
         })
+        .when('/report_user', {
+            templateUrl: 'web/app/views/report_user.html',
+            controller: 'ReportCtrl'
+        })
 
         .otherwise({ redirectTo: '/' });
 

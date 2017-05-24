@@ -10,7 +10,31 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
+
+- kind: Credit
+  properties:
+  - name: operator
+  - name: date
+    direction: desc
+
+- kind: Credit
+  properties:
+  - name: user_email
+  - name: date
+    direction: desc
+
 - kind: Product
   properties:
   - name: category
   - name: quantity
+
+- kind: Transaction
+  properties:
+  - name: user
+  - name: date
+
+- kind: Transaction
+  properties:
+  - name: user
+  - name: date
+    direction: desc

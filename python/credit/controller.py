@@ -32,6 +32,30 @@ def add():
     else :
         return 'Usuario invalido', 406
 
+@credit.route('/all', methods=['GET'], strict_slashes=False)
+def all():
+    user_logged = session['barzinga_user']
+    if user_logged :
+        credits = Credit.query().filter(Credit.user_email == user_logged['email']).order(-Credit.date).fetch(10)
+
+        creditsJson = []
+
+        for c in credits:
+            creditJson = {}
+            if c.date is not None:
+                creditJson['date'] = str(c.date.strftime('%d/%m/%y - %H:%M'))
+            else:
+                creditJson['date'] = ''
+            creditJson['value'] = str(c.value)
+            creditJson['operator'] = str(c.operator).split('@')[0]
+            creditJson['user'] = str(c.user_email).split('@')[0]
+
+            creditsJson.append(creditJson)
+
+        return json.dumps(creditsJson)
+    else :
+        return 'Usuario invalido', 406
+
 @credit.route('/credits_all', methods=['GET'], strict_slashes=True)
 @credit.route('/credits_all/<string:start>/<string:end>', methods=['GET'], strict_slashes=True)
 def credits_all(start=None, end=None):

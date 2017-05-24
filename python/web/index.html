@@ -42,7 +42,7 @@
 <body ng-controller="HomeCtrl">
     <div ng-if="alert.visible" class="alert alert-{{ alert.type }}">{{ alert.message }}</div>
     <header ng-controller="HeaderCtrl">
-        <img ng-click="goHome()" class="logo" src="web/images/logo-barzinga.png">
+        <img ng-click="goHome($event)" class="logo" src="web/images/logo-barzinga.png">
         <div class="user-container">
             <div class="money">
                 BZG <span>{{ (user.money || 0) | currency : '' : 2  }}</span>
@@ -66,6 +66,7 @@
             <li><a ng-click="selectCategory('DOCES', $event)" class="doces" href="javascript:;">Doces</a></li>
             <li><a ng-click="selectCategory('NATUREBAS', $event)" class="naturebas" href="javascript:;">Naturebas</a></li>
             <li><a ng-click="selectCategory('SALGADOS', $event)" class="salgados" href="javascript:;">Salgados</a></li>
+            <li><a ng-click="openPageReportUser($event)" class="add-product" href="javascript:;">COMPRAS&CR&Eacute;DITOS</a></li>
             <!--<li><a ng-click="selectCategory('POSSOCOMPRAR', $event)" class="possocomprar" href="javascript:;">Cabe no bolso</a></li>-->
         </ul>
         <div class="nav-arrow"></div>

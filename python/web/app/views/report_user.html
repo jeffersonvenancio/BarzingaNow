@@ -1,0 +1,44 @@
+<div class='report'>
+    <h1>Créditos</h1>
+    <br>
+    <table class='report'>
+      <tr>
+        <th>Data</th>
+        <th>Valor</th>
+        <th>De</th>
+      </tr>
+      <tr ng-repeat='c in credits_user'>
+        <td>{{ c.date }}</td>
+        <td>{{ c.value }}</td>
+        <td>{{ c.operator }}</td>
+      </tr>
+    </table>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+
+<div class='report'>
+    <h1>Compras</h1>
+    <br>
+    <table class='report'>
+      <tr>
+        <th>Data</th>
+        <th>Valor</th>
+        <th>Itens</th>
+      </tr>
+      <tr ng-repeat="t in transactions_user">
+        <td>{{ t.date }}</td>
+        <td>{{ t.value }}</td>
+        <td>
+            <table class="report">
+                <tr ng-repeat="item in t.itens">
+                    <td>{{ item.quantity }} x {{item.product}}</td>
+                </tr>
+            </table>
+        </td>
+      </tr>
+    </table>
+</div>

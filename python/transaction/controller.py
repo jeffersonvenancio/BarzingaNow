@@ -53,7 +53,7 @@ def transactions_user():
     logged_user = session['barzinga_user']
     logged_user = User.query().filter(User.email == logged_user["email"]).get()
 
-    transactions = Transaction.query().filter(Transaction.user == logged_user.key).fetch()
+    transactions = Transaction.query().filter(Transaction.user == logged_user.key).order(-Transaction.date).fetch(10)
 
     trans = [];
 
@@ -62,12 +62,19 @@ def transactions_user():
         transa['id'] = str(t.key)
         transa['user'] = logged_user.name.encode('utf-8').strip()
         transa['value'] = str(t.value)
-        transa['date'] = str(t.date)
+        transa['date'] = str(t.date.strftime('%d/%m/%y - %H:%M'))
         itens = []
         for it in t.items :
             item = {}
             transaction_item = it.get()
-            item['product'] = str(transaction_item.product.get().description)
+
+            prod = transaction_item.product.get()
+            item['product'] = 'Nao Existe Mais'
+
+            if prod:
+                item['product'] = prod.description
+
+
             item['quantity'] = str(transaction_item.quantity)
             itens.append(item)
 

@@ -2,8 +2,19 @@ app.controller('HeaderCtrl', ['$rootScope', 'UserService', '$location', function
     $rootScope.user = {};
     $rootScope.user.photo_url = '#';
 
-    $rootScope.goHome = function() {
+    var $menuArrow = jQuery('nav .nav-arrow');
+
+    var animateMenu = function($elementMenu) {
+        if (window.matchMedia("(max-device-width: 480px)").matches) {
+            jQuery('nav').hide();
+        }
+
+        $menuArrow.css('display', 'none');
+    }
+
+    $rootScope.goHome = function($event) {
         $location.path('/product').search({});
+        animateMenu($event.target);
     };
 
     $rootScope.refreshUser = function() {
