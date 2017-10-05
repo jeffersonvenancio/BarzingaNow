@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Barzinga Now</string>
+
+    <!--Fonts-->
+    <string name="regular">regular</string>
+    <string name="bold">bold</string>
+    <string name="semibold">semibold</string>
+    <string name="light">light</string>
+    <string name="awesome">awesome</string>
+    <string name="line_awesome">line_awesome</string>
+
+    <string name="invalid_email_error">E-mail inválido</string>
+    <string name="invalid_user_error">Usuário inválido</string>
+</resources>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/clMainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/deci_margin"
+    android:paddingRight="@dimen/deci_margin">
+
+    <ImageView
+        android:id="@+id/mProductImage"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginLeft="@dimen/centi_margin"
+        android:layout_marginBottom="@dimen/centi_margin"
+        android:layout_marginTop="@dimen/centi_margin" />
+
+
+    <TextView
+        android:id="@+id/mProductDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/hecto_margin"
+        android:paddingRight="@dimen/centi_margin"
+        android:textSize="@dimen/centi_text" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.bigburger.customViews.BigBurgerTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/hecto_margin"
+            android:paddingRight="@dimen/centi_margin"
+            android:textSize="@dimen/centi_text" />
+
+        <com.bigburger.customViews.BigBurgerTextView
+            android:id="@+id/mPrice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/hecto_margin"
+            android:paddingRight="@dimen/centi_margin"
+            android:textSize="@dimen/centi_text" />
+
+    </LinearLayout>
+
+</LinearLayout>
