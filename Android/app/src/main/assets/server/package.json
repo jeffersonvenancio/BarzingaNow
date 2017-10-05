@@ -1,0 +1,13 @@
+{
+  "name": "lanchonete",
+  "description": "Simple Server for Test Proposes",
+  "version": "1.0.0",
+  "author": {
+    "name": "T Queiroga",
+    "email": "tomas.queiroga@dextra-sw.com"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3"
+  }
+}
