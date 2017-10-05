@@ -42,6 +42,9 @@ def meu_ip():
 
 @app.before_request
 def filter():
+    if verifyHeader(request):
+        return
+
     if 'post_recommender' in request.url:
         return
 
@@ -66,3 +69,7 @@ def on_identity_loaded(sender, identity):
 
     if user.admin :
         identity.provides.add(RoleNeed('admin'))
+
+def verifyHeader(request):
+    print request.headers.get('Bearer') == 'Token Diego'
+    return request.headers.get('Bearer') == 'Token Diego';

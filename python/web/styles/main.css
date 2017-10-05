@@ -334,7 +334,7 @@ main ul.products li .product-quantity span {
     font-weight: bold;
 }
 
-main .form-credit, main .form-product, main .form-report {
+main .form-user-pin, main .form-credit, main .form-product, main .form-report {
     width: 250px;
     margin: 0 auto;
 
@@ -342,13 +342,15 @@ main .form-credit, main .form-product, main .form-report {
     font-size: 18px;
 }
 
-main .form-credit ul li, main .form-product ul li, main .form-report ul li {
+main .form-user-pin ul li, main .form-credit ul li, main .form-product ul li, main .form-report ul li {
     display: flex;
     align-items: center;
     justify-content: space-between;
 
     margin-top: 10px;
 }
+
+main .form-user-pin ul li input,
 main .form-credit ul li input,
 main .form-credit ul li select,
 main .form-product ul li input, 
@@ -417,6 +419,7 @@ main .form-product ul li.product-description {
     display: block;
 }
 
+main .form-user-pin ul li.user-pin label,
 main .form-credit ul li.credit-value label,
 main .form-product ul li.product-price label {
     font-weight: bold;
@@ -426,12 +429,13 @@ main .form-product ul li.product-category select {
     width: 140px;
 }
 
+main .form-user-pin ul li input,
 main .form-credit ul li.credit-value input,
 main .form-product ul li.product-price input,
 main .form-product ul li.product-quantity input {
     width: 80px;
 }
-
+main .form-user-pin .btn-confirm,
 main .form-credit .btn-confirm,
 main .form-product .btn-confirm {
     display: inline-block;
@@ -446,6 +450,7 @@ main .form-product .btn-confirm {
     border-radius: 19px;
 }
 
+main .form-user-pin .btn-confirm:hover,
 main .form-credit .btn-confirm:hover,
 main .form-product .btn-confirm:hover {
     color: #FFFFFF;

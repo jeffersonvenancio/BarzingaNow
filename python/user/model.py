@@ -7,6 +7,7 @@ class User(ndb.Model):
     email = ndb.StringProperty()
     photo_url = ndb.StringProperty()
     admin = ndb.BooleanProperty()
+    pin = ndb.StringProperty()
 
     def to_dict(self):
         result = super(User, self).to_dict()

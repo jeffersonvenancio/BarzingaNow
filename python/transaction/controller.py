@@ -48,6 +48,33 @@ def add():
 
     return '', 204
 
+@transaction.route('/app', methods=['POST'])
+def add_app():
+    user_json = request.form['user']
+    user_pin = request.form['pin']
+    user = User.query().filter(User.email == user_json["email"]).get()
+    products = json.loads(request.form['products'])
+
+    if user_pin != user.pin :
+        return str('Pin Invalido'), 303
+
+    products_list = []
+    quantity_table = {}
+
+    for product in products:
+        quantity_table[product['id']] = product['quantity']
+        products_list.append(ndb.Key(Product, product['id']).get())
+
+    print products_list
+
+    try:
+        transaction = Transaction.new(user, products_list, quantity_table)
+        transaction.put()
+    except Exception as e:
+        return str(e), 400
+
+    return '', 204
+
 @transaction.route('/extract', methods=['GET'])
 def transactions_user():
     logged_user = session['barzinga_user']
