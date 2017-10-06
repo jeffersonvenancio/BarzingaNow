@@ -17,6 +17,13 @@ def get_by_id(user_id):
     user = User.get_by_id(user_id).to_dict()
     return json.dumps(user)
 
+@user.route('/email/<string:email>', methods=['GET'])
+def get_by_email(email):
+    email = email.split('@')[0] + '@dextra-sw.com'
+    userClient = User.query().filter(User.email == email).get()
+
+    return json.dumps(userClient.to_dict())
+
 @user.route('/logged', methods=['GET'])
 def get_logged():
     user_json = session['barzinga_user']
@@ -54,6 +61,19 @@ def add():
         ])
 
     search.Index(name='user').put(user_document)
+
+    return '', 204
+
+@user.route('/pin', methods=['POST'], strict_slashes=False)
+def put_pin():
+
+    user_json = session['barzinga_user']
+    user = User.query().filter(User.email == user_json["email"]).get()
+    pin = request.form['pin']
+    if user:
+        user.pin = pin
+
+    user.put()
 
     return '', 204
 

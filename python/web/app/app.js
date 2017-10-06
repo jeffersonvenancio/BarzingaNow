@@ -26,6 +26,10 @@ app.config(function($routeProvider, $locationProvider, $httpProvider) {
             templateUrl: 'web/app/views/report_user.html',
             controller: 'ReportCtrl'
         })
+        .when('/user_pin', {
+            templateUrl: 'web/app/views/user_pin.html',
+            controller: 'UserPinCtrl'
+        })
 
         .otherwise({ redirectTo: '/' });
 

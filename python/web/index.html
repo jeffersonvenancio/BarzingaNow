@@ -36,6 +36,7 @@
     <script src="web/app/controllers/product_new.js"></script>
     <script src="web/app/controllers/transaction.js"></script>
     <script src="web/app/controllers/report.js"></script>
+    <script src="web/app/controllers/user_pin.js"></script>
 
 </head>
 
@@ -66,6 +67,7 @@
             <li><a ng-click="selectCategory('DOCES', $event)" class="doces" href="javascript:;">Doces</a></li>
             <li><a ng-click="selectCategory('NATUREBAS', $event)" class="naturebas" href="javascript:;">Naturebas</a></li>
             <li><a ng-click="selectCategory('SALGADOS', $event)" class="salgados" href="javascript:;">Salgados</a></li>
+            <li><a ng-click="openPagePin($event)" class="add-product" href="javascript:;">Cadastrar PIN</a></li>
             <li><a ng-click="openPageReportUser($event)" class="add-product" href="javascript:;">COMPRAS&CR&Eacute;DITOS</a></li>
             <!--<li><a ng-click="selectCategory('POSSOCOMPRAR', $event)" class="possocomprar" href="javascript:;">Cabe no bolso</a></li>-->
         </ul>
