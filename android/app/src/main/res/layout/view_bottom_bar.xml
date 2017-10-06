@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="top"
+        android:background="@color/black"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="#99000000" />
+
+    <LinearLayout
+        android:id="@+id/llFinishOrder"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginRight="@dimen/kilo_margin"
+        android:background="@drawable/login_button"
+        android:clickable="true"
+        android:gravity="center"
+        android:layout_gravity="center_vertical|right"
+        android:orientation="horizontal">
+
+        <com.barzinga.customViews.BarzingaTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FINALIZAR COMPRA"
+            android:gravity="center"
+            android:textSize="22sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/kilo_margin"
+        android:layout_gravity="center_vertical|left">
+
+        <com.barzinga.customViews.BarzingaTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="bottom"
+            android:text="BZG"
+            android:paddingRight="@dimen/micro_margin"
+            app:typefaceOpenSans="@string/semibold"
+            android:textSize="@dimen/deca_text" />
+
+        <com.barzinga.customViews.BarzingaTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="bottom"
+            android:text="5.60"
+            app:typefaceOpenSans="@string/semibold"
+            android:textSize="@dimen/giga_text"/>
+
+    </LinearLayout>
+
+</FrameLayout>

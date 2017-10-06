@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.barzinga.viewmodel.ProductViewModel"/>
+
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/centi_margin">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:padding="@dimen/centi_margin"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/mProductImage"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"/>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="@dimen/centi_margin"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+
+                        <com.barzinga.customViews.BarzingaTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="BZG"
+                            app:typefaceOpenSans="@string/semibold"
+                            android:textSize="@dimen/centi_text"
+                            android:paddingRight="@dimen/nano_margin"
+                            android:layout_gravity="bottom"
+                            android:textColor="@color/black"/>
+
+                        <com.barzinga.customViews.BarzingaTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.price}"
+                            android:textSize="@dimen/mega_text"
+                            android:layout_gravity="bottom"
+                            app:typefaceOpenSans="@string/semibold"
+                            android:textColor="@color/black"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal">
+
+                        <com.barzinga.customViews.BarzingaTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="QTD"
+                            app:typefaceOpenSans="@string/semibold"
+                            android:textSize="@dimen/centi_text"
+                            android:paddingRight="@dimen/nano_margin"
+                            android:layout_gravity="bottom"
+                            android:textColor="@color/black"/>
+
+                        <com.barzinga.customViews.BarzingaTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{viewModel.quantity}"
+                            android:textSize="@dimen/centi_text"
+                            android:layout_gravity="bottom"
+                            app:typefaceOpenSans="@string/semibold"
+                            android:textColor="@color/black"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llQtde"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal">
+
+                        <com.barzinga.customViews.BarzingaTextView
+                            android:id="@+id/decreaseQtde"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="&#xf28f;"
+                            android:textSize="@dimen/tera_text"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="@color/black"
+                            app:typefaceOpenSans="@string/line_awesome"/>
+
+                        <com.barzinga.customViews.BarzingaTextView
+                            android:id="@+id/mQtde"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/centi_text"
+                            android:textColor="@color/white"
+                            android:gravity="center_vertical"
+                            android:layout_margin="@dimen/nano_margin"
+                            android:paddingTop="@dimen/micro_margin"
+                            android:paddingBottom="@dimen/micro_margin"
+                            android:paddingStart="@dimen/mili_margin"
+                            android:paddingEnd="@dimen/mili_margin"
+                            android:background="@drawable/background_rectangular"
+                            android:text="0"/>
+
+                        <com.barzinga.customViews.BarzingaTextView
+                            android:id="@+id/increaseQtde"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="&#xf2c3;"
+                            android:textSize="@dimen/tera_text"
+                            android:layout_gravity="center_vertical"
+                            android:textColor="@color/black"
+                            app:typefaceOpenSans="@string/line_awesome"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <com.barzinga.customViews.BarzingaTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.description}"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:textSize="@dimen/kilo_text"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+</layout>
