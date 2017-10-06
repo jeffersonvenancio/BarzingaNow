@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     android:padding="64dp">
 
-    <TextView
+    <com.barzinga.customViews.BarzingaTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="20sp"
-        android:text="Entre com seu usuário"
+        android:text="@string/enter_user_name"
         android:textStyle="bold"
         android:textColor="#000"
         android:layout_marginBottom="10dp"/>
@@ -20,13 +20,15 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textColor="#000"
+        android:inputType="text"
+        android:maxLines="1"
         android:layout_marginBottom="10dp"/>
 
     <Button
         android:id="@+id/rateApp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ENTRAR"
+        android:text="@string/sign_in"
         android:textSize="14sp"
         android:textColor="#000"
         android:layout_marginTop="10dp"

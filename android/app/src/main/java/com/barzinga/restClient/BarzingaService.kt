@@ -1,16 +1,11 @@
 package com.barzinga.restClient
 
 import com.barzinga.model.Product
+import com.barzinga.model.User
 import com.barzinga.viewmodel.Constants
-import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Headers
 import retrofit2.http.Path
 
 
@@ -23,6 +18,10 @@ interface BarzingaService {
     @retrofit2.http.Headers("Bearer: Token Diego")
     @retrofit2.http.GET("product/category/")
     fun listProducts(): io.reactivex.Observable<List<Product>>
+
+    @retrofit2.http.Headers("Bearer: Token Diego")
+    @retrofit2.http.GET("user/email/{user}")
+    fun getProfile(@retrofit2.http.Path("user") user: String): io.reactivex.Observable<User>
 
     companion object Factory {
         fun create(): BarzingaService {

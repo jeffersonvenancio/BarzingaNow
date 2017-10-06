@@ -17,11 +17,11 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="280dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:padding="@dimen/centi_margin"
-            >
+            android:onClick="@{() -> viewModel.onClick()}">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -106,7 +106,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="&#xf28f;"
-                            android:textSize="@dimen/tera_text"
+                            android:textSize="@dimen/yotta_text"
                             android:layout_gravity="center_vertical"
                             android:textColor="@color/black"
                             app:typefaceOpenSans="@string/line_awesome"/>
@@ -115,9 +115,10 @@
                             android:id="@+id/mQtde"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/centi_text"
+                            android:textSize="@dimen/hecto_text"
                             android:textColor="@color/white"
                             android:gravity="center_vertical"
+                            android:layout_gravity="center"
                             android:layout_margin="@dimen/nano_margin"
                             android:paddingTop="@dimen/micro_margin"
                             android:paddingBottom="@dimen/micro_margin"
@@ -131,7 +132,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="&#xf2c3;"
-                            android:textSize="@dimen/tera_text"
+                            android:textSize="@dimen/yotta_text"
                             android:layout_gravity="center_vertical"
                             android:textColor="@color/black"
                             app:typefaceOpenSans="@string/line_awesome"/>

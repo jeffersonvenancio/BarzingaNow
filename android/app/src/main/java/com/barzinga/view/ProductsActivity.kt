@@ -3,17 +3,25 @@ package com.barzinga.view
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.view.View.GONE
 import android.widget.Toast
 import com.barzinga.R
+import com.barzinga.databinding.ActivityOptionsBinding
+import com.barzinga.databinding.ActivityProductsBinding
 import com.barzinga.model.Product
+import com.barzinga.model.User
+import com.barzinga.util.ConvertObjectsUtil
 import com.barzinga.view.adapter.ProductsAdapter
+import com.barzinga.viewmodel.Constants
 import com.barzinga.viewmodel.ProductListViewModel
 import com.barzinga.viewmodel.ProductsListener
+import com.barzinga.viewmodel.UserViewModel
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.RequestOptions.bitmapTransform
 import jp.wasabeef.glide.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_products.*
@@ -21,6 +29,8 @@ import kotlinx.android.synthetic.main.view_top_bar.*
 
 
 class ProductsActivity : AppCompatActivity(), ProductsListener {
+
+    var user: User? = null
 
     override fun onProductsListGotten(products: List<Product>?) {
        if (products != null){
@@ -32,21 +42,30 @@ class ProductsActivity : AppCompatActivity(), ProductsListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_products)
+        val binding: ActivityProductsBinding = DataBindingUtil.setContentView(this, R.layout.activity_products)
 
         viewModel = ViewModelProviders.of(this).get(ProductListViewModel::class.java)
 
         viewModel.listProducts(this)
 
-        Glide.with(this)
-                .load("http://s2.glbimg.com/TbCBsuYDmw_um_YM8tBbq0G8RFA=/200x200/s.glbimg.com/et/gs/f/original/2015/07/30/camila-queiroz-verdades-secretas.jpg")
-                .apply(bitmapTransform(CropCircleTransformation()))
-                .into(mUserPhoto)
+        if (intent?.hasExtra(Constants.USER_EXTRA) == true){
+            val userJson = intent.getStringExtra(Constants.USER_EXTRA)
+
+            user = ConvertObjectsUtil.getUserFromJson(userJson)
+
+            Glide.with(this)
+                    .load(user?.photoUrl)
+                    .apply(RequestOptions.bitmapTransform(CropCircleTransformation()))
+                    .into(mUserPhoto)
+
+            binding.viewmodel = user?.let { UserViewModel(it) }
+        }
     }
 
     companion object {
-        fun start(context: Context) {
+        fun start(context: Context, userJson: String) {
             val starter = Intent(context, ProductsActivity::class.java)
+            starter.putExtra(Constants.USER_EXTRA, userJson)
             context.startActivity(starter)
         }
     }

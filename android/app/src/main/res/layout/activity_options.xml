@@ -1,43 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.barzinga.viewmodel.UserViewModel"/>
+
+    </data>
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="com.barzinga.view.MainActivity"
-        android:weightSum="3">
+        tools:context="com.barzinga.view.MainActivity">
+
+        <include
+            android:id="@+id/mTopBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:viewmodel="@{viewmodel}"
+            layout="@layout/view_top_bar"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".5"/>
+            android:layout_weight="1"/>
 
-        <ImageView
+        <com.barzinga.customViews.BarzingaTextView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:padding="10dp"
-            android:src="@drawable/logo_barzinga"/>
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/yotta_margin"
+            android:textSize="@dimen/peta_text"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:text="O QUE DESEJA FAZER?"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:padding="40dp"
-            android:weightSum="3">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:id="@+id/llBuyButton"
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/giga_margin"
                 android:background="@drawable/login_button"
                 android:clickable="true"
                 android:gravity="center"
+                android:padding="70dp"
                 android:orientation="horizontal">
 
                 <com.barzinga.customViews.BarzingaTextView
@@ -46,7 +60,7 @@
                     android:layout_height="wrap_content"
                     app:typefaceOpenSans="@string/line_awesome"
                     android:text="&#xf2fa;"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="@dimen/centi_margin"
                     android:textSize="@dimen/default_button_icon_text"/>
 
                 <com.barzinga.customViews.BarzingaTextView
@@ -62,7 +76,7 @@
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/kilo_margin"
                 android:background="@drawable/login_button"
                 android:clickable="true"
                 android:gravity="center"
@@ -74,7 +88,7 @@
                     android:layout_height="wrap_content"
                     app:typefaceOpenSans="@string/line_awesome"
                     android:text="&#xf1bb;"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="@dimen/centi_margin"
                     android:textSize="@dimen/default_button_icon_text"/>
 
                 <com.barzinga.customViews.BarzingaTextView
@@ -90,7 +104,8 @@
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/kilo_margin"
+                android:layout_marginRight="@dimen/giga_margin"
                 android:background="@drawable/login_button"
                 android:clickable="true"
                 android:gravity="center"
@@ -118,7 +133,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".5"/>
+            android:layout_weight="1"/>
 
     </LinearLayout>
 

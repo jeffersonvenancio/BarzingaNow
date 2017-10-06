@@ -1,49 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:gravity="center"
-    android:orientation="vertical"
-    tools:context="com.barzinga.view.ProductsActivity">
+<layout>
 
-    <include
-        android:id="@+id/mTopBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/view_top_bar"/>
+    <data>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black"/>
+        <variable
+            name="viewmodel"
+            type="com.barzinga.viewmodel.UserViewModel"/>
 
-    <FrameLayout
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/products_list"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:context="com.barzinga.view.ProductsActivity">
 
         <include
-            android:id="@+id/mBottomBar"
+            android:id="@+id/mTopBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            layout="@layout/view_bottom_bar"/>
+            layout="@layout/view_top_bar"
+            app:viewmodel="@{viewmodel}"/>
 
-        <ProgressBar
-            android:id="@+id/mLoadingProgress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:layout_gravity="center"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background">
 
-    </FrameLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/products_list"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
 
-</LinearLayout>
+            <include
+                android:id="@+id/mBottomBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                layout="@layout/view_bottom_bar"/>
+
+            <ProgressBar
+                android:id="@+id/mLoadingProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:layout_gravity="center"/>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</layout>

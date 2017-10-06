@@ -2,14 +2,11 @@ package com.barzinga.viewmodel
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
-import android.arch.lifecycle.LiveData
-import com.barzinga.model.Product
-import com.barzinga.restClient.ProductsRepositoryProvider
+import com.barzinga.restClient.RepositoryProvider
 
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import retrofit2.Call
 
 
 /**
@@ -20,7 +17,7 @@ class ProductListViewModel(application: Application) : AndroidViewModel(applicat
     fun listProducts(listener: ProductsListener) {
 
         val compositeDisposable: CompositeDisposable = CompositeDisposable()
-        val repository = ProductsRepositoryProvider.provideSearchRepository()
+        val repository = RepositoryProvider.provideProductsRepository()
 
         compositeDisposable.add(
                 repository.listProducts()

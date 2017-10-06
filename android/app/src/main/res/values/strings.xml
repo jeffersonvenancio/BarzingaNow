@@ -11,4 +11,6 @@
 
     <string name="invalid_email_error">E-mail inválido</string>
     <string name="invalid_user_error">Usuário inválido</string>
+    <string name="enter_user_name">Entre com seu usuário</string>
+    <string name="sign_in">ENTRAR</string>
 </resources>
