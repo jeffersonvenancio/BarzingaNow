@@ -53,11 +53,10 @@
             android:textSize="@dimen/deca_text" />
 
         <com.barzinga.customViews.BarzingaTextView
+            android:id="@+id/mOrderPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_gravity="bottom"
-            android:text="5.60"
             app:typefaceOpenSans="@string/semibold"
             android:textSize="@dimen/giga_text"/>
 

@@ -8,4 +8,5 @@ class Product(var category: String? = null,
               val price: Double? = null,
               var image_url: String? = null,
               var id: String? = null,
-              var quantity: String? = null)
+              var quantity: Int? = 0,
+              var quantityOrdered: Int? = 0)

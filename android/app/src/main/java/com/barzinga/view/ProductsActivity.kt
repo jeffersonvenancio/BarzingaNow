@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
 import com.barzinga.R
 import com.barzinga.databinding.ActivityOptionsBinding
@@ -25,6 +26,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.RequestOptions.bitmapTransform
 import jp.wasabeef.glide.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_products.*
+import kotlinx.android.synthetic.main.view_bottom_bar.*
 import kotlinx.android.synthetic.main.view_top_bar.*
 
 
@@ -60,6 +62,32 @@ class ProductsActivity : AppCompatActivity(), ProductsListener {
 
             binding.viewmodel = user?.let { UserViewModel(it) }
         }
+
+        llFinishOrder.setOnClickListener({
+            var products = (products_list.adapter as ProductsAdapter).getChosenProducts()
+            var transactionProducts = ArrayList<Product>()
+
+            var currentProduct: Product? = null
+
+            for (product in products.orEmpty()){
+
+                if (currentProduct == null){
+                    currentProduct = product
+                }
+
+                if (!currentProduct.description.equals(product.description)){
+
+                    product.quantity = product.quantityOrdered
+                    currentProduct.let { it1 -> transactionProducts.add(it1) }
+
+                    currentProduct = product
+
+                }
+            }
+
+            currentProduct?.quantity = currentProduct?.quantityOrdered
+            currentProduct?.let { it1 -> transactionProducts.add(it1) }
+        })
     }
 
     companion object {
@@ -72,7 +100,7 @@ class ProductsActivity : AppCompatActivity(), ProductsListener {
 
     private fun setupRecyclerView(products: List<Product>?) {
 
-        var productsAdapter = ProductsAdapter(this, products)
+        var productsAdapter = ProductsAdapter(this, products, this)
         productsAdapter.setClickListener {
             onItemClick(it)
         }
@@ -80,8 +108,8 @@ class ProductsActivity : AppCompatActivity(), ProductsListener {
         products_list.apply {
             adapter = productsAdapter
             setHasFixedSize(true)
-            val linearLayout = GridLayoutManager(context, 3)
-            layoutManager = linearLayout
+            val gridLayout = GridLayoutManager(context, 3)
+            layoutManager = gridLayout
         }
 
         mLoadingProgress.visibility = GONE
@@ -89,5 +117,21 @@ class ProductsActivity : AppCompatActivity(), ProductsListener {
 
     private fun onItemClick(product: Product) {
         Toast.makeText(this, "Product " + product.description, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onProductsQuantityChanged() {
+        val products = (products_list.adapter as ProductsAdapter).getChosenProducts()
+        var currentOrderPrice: Double? = 0.0
+
+        for (product in products.orEmpty()){
+            product.price?.let { currentOrderPrice = currentOrderPrice?.plus(it) }
+        }
+
+        if((currentOrderPrice ?: 0.0) > 0.0){
+            mOrderPrice.text = String.format("%.2f", currentOrderPrice)
+            mBottomBar.visibility = VISIBLE
+        }else{
+            mBottomBar.visibility = GONE
+        }
     }
 }

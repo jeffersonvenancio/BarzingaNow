@@ -11,4 +11,8 @@ class ProductsRepository(val apiService: BarzingaService) {
         return apiService.listProducts()
     }
 
+    fun buyProducts(transactionParameter: TransactionParameter): io.reactivex.Observable<Void> {
+        return apiService.buyProducts(transactionParameter)
+    }
+
 }

@@ -10,20 +10,24 @@ import com.barzinga.databinding.ItemProductBinding
 
 import com.barzinga.model.Product
 import com.barzinga.viewmodel.ProductViewModel
+import com.barzinga.viewmodel.ProductsListener
 import com.bumptech.glide.Glide
+import java.util.ArrayList
 
 /**
  * Created by diego.santos on 05/10/17.
  */
-class ProductsAdapter(val context: Context, var products: List<Product>?) : RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>(){
+class ProductsAdapter(val context: Context, var products: List<Product>?, val listener: ProductsListener) : RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>(){
 
     private var itemClick: ((Product) -> Unit)? = null
     companion object {
         var mProducts: List<Product>? = emptyList()
+        var mListener: ProductsListener? = null
     }
 
     init {
         mProducts = products
+        mListener = listener
     }
 
     override fun getItemCount(): Int = mProducts?.size ?: 0
@@ -66,7 +70,9 @@ class ProductsAdapter(val context: Context, var products: List<Product>?) : Recy
                 if (i > 0) {
                     i--
                     binding.mQtde.setText(i.toString())
-                    mProducts?.get(position)?.quantity = i.toString()
+                    mProducts?.get(position)?.quantityOrdered = i
+
+                    mListener?.onProductsQuantityChanged()
                 }
             })
 
@@ -75,12 +81,28 @@ class ProductsAdapter(val context: Context, var products: List<Product>?) : Recy
 
                 i++
                 binding.mQtde.setText(i.toString())
-                mProducts?.get(position)?.quantity = i.toString()
+                mProducts?.get(position)?.quantityOrdered = i
+
+                mListener?.onProductsQuantityChanged()
             })
         }
     }
 
     fun setClickListener(itemClick: ((Product) -> Unit)?) {
         this.itemClick = itemClick
+    }
+
+    fun getChosenProducts(): List<Product> {
+        val extraProducts = ArrayList<Product>()
+
+        for (product in products.orEmpty()) {
+            if ((product.quantityOrdered ?: 0) > 0) {
+                for (i in 0 until (product.quantityOrdered ?: 0)) {
+                    extraProducts.add(product)
+                }
+            }
+        }
+
+        return extraProducts
     }
 }

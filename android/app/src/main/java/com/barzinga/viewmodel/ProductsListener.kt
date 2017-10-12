@@ -7,4 +7,5 @@ import com.barzinga.model.Product
  */
 interface ProductsListener{
     fun onProductsListGotten(products: List<Product>?)
+    fun onProductsQuantityChanged()
 }
