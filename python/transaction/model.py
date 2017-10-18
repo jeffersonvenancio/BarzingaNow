@@ -32,6 +32,9 @@ class Transaction(ndb.Model):
 
                 transactionItems.append(transactionItem.key)
 
+                if quantity <= 0:
+                    quantity = quantity * -1
+
                 value += product.price * quantity
 
             user.debit(value)
