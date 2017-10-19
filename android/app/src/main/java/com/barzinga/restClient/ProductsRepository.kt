@@ -7,7 +7,7 @@ import com.barzinga.model.Product
  */
 class ProductsRepository(val apiService: BarzingaService) {
 
-    fun listProducts(): io.reactivex.Observable<List<Product>> {
+    fun listProducts(): io.reactivex.Observable<ArrayList<Product>> {
         return apiService.listProducts()
     }
 

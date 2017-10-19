@@ -13,6 +13,7 @@ import android.widget.Toast
 import com.barzinga.R
 import com.barzinga.databinding.ActivityOptionsBinding
 import com.barzinga.databinding.ActivityProductsBinding
+import com.barzinga.model.Item
 import com.barzinga.model.Product
 import com.barzinga.model.User
 import com.barzinga.util.ConvertObjectsUtil
@@ -28,13 +29,14 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_products.*
 import kotlinx.android.synthetic.main.view_bottom_bar.*
 import kotlinx.android.synthetic.main.view_top_bar.*
+import java.text.FieldPosition
 
 
-class ProductsActivity : AppCompatActivity(), ProductsListener {
+class ProductsActivity : AppCompatActivity(), ProductsListener, ItemsListFragment.OnItemSelectedListener {
 
     var user: User? = null
 
-    override fun onProductsListGotten(products: List<Product>?) {
+    override fun onProductsListGotten(products: ArrayList<Product>) {
        if (products != null){
            setupRecyclerView(products)
        }
@@ -98,7 +100,7 @@ class ProductsActivity : AppCompatActivity(), ProductsListener {
         }
     }
 
-    private fun setupRecyclerView(products: List<Product>?) {
+    private fun setupRecyclerView(products: ArrayList<Product>) {
 
         var productsAdapter = ProductsAdapter(this, products, this)
         productsAdapter.setClickListener {
@@ -113,6 +115,8 @@ class ProductsActivity : AppCompatActivity(), ProductsListener {
         }
 
         mLoadingProgress.visibility = GONE
+
+        determinePaneLayout(setCategories(products))
     }
 
     private fun onItemClick(product: Product) {
@@ -133,5 +137,41 @@ class ProductsActivity : AppCompatActivity(), ProductsListener {
         }else{
             mBottomBar.visibility = GONE
         }
+    }
+
+    private fun setCategories(products: List<Product>?) : ArrayList<Item>{
+
+        val products = products?.sortedBy { it.category }
+
+        var categories = ArrayList<Item>()
+        var categoryName = "";
+
+        for (product in products.orEmpty()){
+            if (categoryName.isEmpty()){
+                categoryName = product.category.toString()
+            }
+
+            if (!categoryName.equals(product.category)){
+                categories.add(Item(categoryName, ""))
+                categoryName = product.category.toString()
+            }
+        }
+
+        return categories
+    }
+
+    private fun determinePaneLayout(items: ArrayList<Item>) {
+
+        val fragmentItem = ItemsListFragment.newInstance(items)
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.fragmentItemsList, fragmentItem)
+        ft.commit()
+
+        (products_list.adapter as ProductsAdapter).setCategory(items.get(0).title)
+    }
+
+    override fun onItemSelected(item: Item) {
+        (products_list.adapter as ProductsAdapter).setCategory(item.title)
+        products_list.scrollToPosition(0)
     }
 }

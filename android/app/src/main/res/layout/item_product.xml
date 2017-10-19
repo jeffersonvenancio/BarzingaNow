@@ -13,7 +13,8 @@
     <android.support.v7.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/centi_margin">
+        android:layout_marginBottom="@dimen/centi_margin"
+        android:layout_marginRight="@dimen/centi_margin">
 
         <LinearLayout
             android:orientation="vertical"
@@ -34,7 +35,6 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_gravity="center_horizontal"/>
-
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -150,6 +150,8 @@
                 android:gravity="center"
                 android:layout_gravity="center_horizontal"
                 android:textSize="@dimen/kilo_text"
+                android:paddingRight="@dimen/centi_margin"
+                android:paddingLeft="@dimen/centi_margin"
                 android:textColor="@color/black"/>
 
         </LinearLayout>

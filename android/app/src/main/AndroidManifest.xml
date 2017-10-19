@@ -13,13 +13,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".view.ProductsActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".view.OptionsActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".view.MainActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,12 +21,22 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.CheckoutActivity"
+            android:name=".view.OptionsActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".view.MainActivity"
             android:screenOrientation="landscape">
 
         </activity>
-        <activity android:name=".view.TransactionFinishedActivity"
+        <activity
+            android:name=".view.CheckoutActivity"
             android:screenOrientation="landscape"></activity>
+        <activity
+            android:name=".view.TransactionFinishedActivity"
+            android:screenOrientation="landscape" />
+        <activity android:name=".view.ProductsListActivity">
+
+        </activity>
     </application>
 
 </manifest>

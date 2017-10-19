@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import android.widget.Toast
 import com.barzinga.R
 import com.barzinga.customViews.BarzingaEditText
 import com.barzinga.model.User
@@ -65,7 +66,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onUserRequestFailure() {
-
+        Toast.makeText(this, "Falha no login! Por favor tente novamente.", Toast.LENGTH_SHORT).show();
     }
 
     private fun onUserRequestSuccess(result: User?) {

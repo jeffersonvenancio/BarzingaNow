@@ -17,7 +17,7 @@ interface BarzingaService {
 
     @retrofit2.http.Headers("Bearer: Token Diego")
     @retrofit2.http.GET("product/category/")
-    fun listProducts(): io.reactivex.Observable<List<Product>>
+    fun listProducts(): io.reactivex.Observable<ArrayList<Product>>
 
     @retrofit2.http.Headers("Bearer: Token Diego")
     @retrofit2.http.GET("")
