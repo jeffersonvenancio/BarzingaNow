@@ -13,4 +13,5 @@
     <string name="invalid_user_error">Usuário inválido</string>
     <string name="enter_user_name">Entre com seu usuário</string>
     <string name="sign_in">ENTRAR</string>
+    <string name="login_failure">Falha no login! Por favor tente novamente.</string>
 </resources>
