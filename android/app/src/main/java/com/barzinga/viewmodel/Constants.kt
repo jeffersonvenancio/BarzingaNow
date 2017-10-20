@@ -6,4 +6,5 @@ package com.barzinga.viewmodel
 object Constants{
     val BASE_URL: String = "http://barzinganow.appspot.com/api/"
     val USER_EXTRA: String = "USER_EXTRA"
+    val TRANSACTION_EXTRA: String = "TRANSACTION_EXTRA"
 }

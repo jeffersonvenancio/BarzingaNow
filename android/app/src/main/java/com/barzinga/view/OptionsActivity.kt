@@ -26,7 +26,6 @@ class OptionsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_options)
         val binding: ActivityOptionsBinding = DataBindingUtil.setContentView(this, R.layout.activity_options)
 
         if (intent?.hasExtra(USER_EXTRA) == true){

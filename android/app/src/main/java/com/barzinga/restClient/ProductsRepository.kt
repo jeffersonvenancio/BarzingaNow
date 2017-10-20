@@ -1,6 +1,7 @@
 package com.barzinga.restClient
 
 import com.barzinga.model.Product
+import com.barzinga.restClient.parameter.TransactionParameter
 
 /**
  * Created by diego.santos on 04/10/17.

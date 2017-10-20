@@ -2,11 +2,10 @@ package com.barzinga.restClient
 
 import com.barzinga.model.Product
 import com.barzinga.model.User
+import com.barzinga.restClient.parameter.TransactionParameter
 import com.barzinga.viewmodel.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.http.Path
 
 
 /**
@@ -20,7 +19,7 @@ interface BarzingaService {
     fun listProducts(): io.reactivex.Observable<ArrayList<Product>>
 
     @retrofit2.http.Headers("Bearer: Token Diego")
-    @retrofit2.http.GET("")
+    @retrofit2.http.GET("transaction/app/")
     fun buyProducts(parameter: TransactionParameter): io.reactivex.Observable<Void>
 
     @retrofit2.http.Headers("Bearer: Token Diego")
