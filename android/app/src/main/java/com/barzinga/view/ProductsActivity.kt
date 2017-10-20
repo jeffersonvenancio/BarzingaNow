@@ -9,38 +9,29 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.Toast
 import com.barzinga.R
-import com.barzinga.databinding.ActivityOptionsBinding
 import com.barzinga.databinding.ActivityProductsBinding
 import com.barzinga.model.Item
 import com.barzinga.model.Product
 import com.barzinga.model.User
+import com.barzinga.restClient.parameter.TransactionParameter
 import com.barzinga.util.ConvertObjectsUtil
+import com.barzinga.util.ConvertObjectsUtil.Companion.getStringFromObject
 import com.barzinga.view.adapter.ProductsAdapter
 import com.barzinga.viewmodel.Constants
 import com.barzinga.viewmodel.ProductListViewModel
-import com.barzinga.viewmodel.ProductsListener
 import com.barzinga.viewmodel.UserViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.RequestOptions.bitmapTransform
 import jp.wasabeef.glide.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_products.*
 import kotlinx.android.synthetic.main.view_bottom_bar.*
 import kotlinx.android.synthetic.main.view_top_bar.*
-import java.text.FieldPosition
 
 
-class ProductsActivity : AppCompatActivity(), ProductsListener, ItemsListFragment.OnItemSelectedListener {
+class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedListener, ProductListViewModel.ProductsListener {
 
     var user: User? = null
-
-    override fun onProductsListGotten(products: ArrayList<Product>) {
-       if (products != null){
-           setupRecyclerView(products)
-       }
-    }
 
     lateinit var viewModel: ProductListViewModel
 
@@ -89,6 +80,11 @@ class ProductsActivity : AppCompatActivity(), ProductsListener, ItemsListFragmen
 
             currentProduct?.quantity = currentProduct?.quantityOrdered
             currentProduct?.let { it1 -> transactionProducts.add(it1) }
+
+            val transactionParameter = TransactionParameter(user, "", transactionProducts)
+            var transactionJson = getStringFromObject(transactionParameter)
+
+            CheckoutActivity.start(this, transactionJson)
         })
     }
 
@@ -120,7 +116,7 @@ class ProductsActivity : AppCompatActivity(), ProductsListener, ItemsListFragmen
     }
 
     private fun onItemClick(product: Product) {
-        Toast.makeText(this, "Product " + product.description, Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, "Product " + product.description, Toast.LENGTH_SHORT).show()
     }
 
     override fun onProductsQuantityChanged() {
@@ -173,5 +169,15 @@ class ProductsActivity : AppCompatActivity(), ProductsListener, ItemsListFragmen
     override fun onItemSelected(item: Item) {
         (products_list.adapter as ProductsAdapter).setCategory(item.title)
         products_list.scrollToPosition(0)
+    }
+
+    override fun onProductsListGotten(products: ArrayList<Product>) {
+        if (products != null){
+            setupRecyclerView(products)
+        }
+    }
+
+    override fun onProductsListError() {
+
     }
 }

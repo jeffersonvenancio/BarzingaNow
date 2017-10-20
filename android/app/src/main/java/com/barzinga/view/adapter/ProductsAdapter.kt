@@ -10,20 +10,20 @@ import com.barzinga.R
 import com.barzinga.databinding.ItemProductBinding
 
 import com.barzinga.model.Product
+import com.barzinga.viewmodel.ProductListViewModel
 import com.barzinga.viewmodel.ProductViewModel
-import com.barzinga.viewmodel.ProductsListener
 import com.bumptech.glide.Glide
 import kotlin.collections.ArrayList
 
 /**
  * Created by diego.santos on 05/10/17.
  */
-class ProductsAdapter(val context: Context, var products: ArrayList<Product>, val listener: ProductsListener) : RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>(){
+class ProductsAdapter(val context: Context, var products: ArrayList<Product>, val listener: ProductListViewModel.ProductsListener) : RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>(){
 
     private var itemClick: ((Product) -> Unit)? = null
     companion object {
         var mProducts = ArrayList<Product>()
-        var mListener: ProductsListener? = null
+        var mListener: ProductListViewModel.ProductsListener? = null
     }
 
     init {
