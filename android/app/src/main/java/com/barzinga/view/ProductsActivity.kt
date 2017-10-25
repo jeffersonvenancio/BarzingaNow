@@ -1,5 +1,6 @@
 package com.barzinga.view
 
+import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
@@ -19,6 +20,7 @@ import com.barzinga.util.ConvertObjectsUtil
 import com.barzinga.util.ConvertObjectsUtil.Companion.getStringFromObject
 import com.barzinga.view.adapter.ProductsAdapter
 import com.barzinga.viewmodel.Constants
+import com.barzinga.viewmodel.Constants.CHECKOUT_REQUEST
 import com.barzinga.viewmodel.ProductListViewModel
 import com.barzinga.viewmodel.UserViewModel
 import com.bumptech.glide.Glide
@@ -84,7 +86,7 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
             val transactionParameter = TransactionParameter(user, "", transactionProducts)
             var transactionJson = getStringFromObject(transactionParameter)
 
-            CheckoutActivity.start(this, transactionJson)
+            startActivityForResult(CheckoutActivity.startIntent(this, transactionJson), CHECKOUT_REQUEST)
         })
     }
 
@@ -179,5 +181,13 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
 
     override fun onProductsListError() {
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == CHECKOUT_REQUEST && resultCode == Activity.RESULT_OK){
+            finish()
+        }
     }
 }

@@ -112,6 +112,7 @@
                     android:orientation="horizontal">
 
                     <com.barzinga.customViews.BarzingaTextView
+                        android:id="@+id/btFinishOrder"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="CONCLUIR"

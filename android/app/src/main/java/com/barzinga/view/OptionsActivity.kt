@@ -43,6 +43,7 @@ class OptionsActivity : AppCompatActivity() {
 
         llBuyButton.setOnClickListener({
             ProductsActivity.start(this, getStringFromObject(user))
+            finish()
         })
     }
 

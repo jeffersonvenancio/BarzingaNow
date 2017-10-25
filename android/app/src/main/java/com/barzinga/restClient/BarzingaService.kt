@@ -5,7 +5,9 @@ import com.barzinga.model.User
 import com.barzinga.restClient.parameter.TransactionParameter
 import com.barzinga.viewmodel.Constants
 import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Response
 
 
 /**
@@ -19,8 +21,8 @@ interface BarzingaService {
     fun listProducts(): io.reactivex.Observable<ArrayList<Product>>
 
     @retrofit2.http.Headers("Bearer: Token Diego")
-    @retrofit2.http.GET("transaction/app/")
-    fun buyProducts(parameter: TransactionParameter): io.reactivex.Observable<Void>
+    @retrofit2.http.POST("transaction/app")
+    fun buyProducts(@retrofit2.http.Body parameter: TransactionParameter): io.reactivex.Observable<Response<ResponseBody>>
 
     @retrofit2.http.Headers("Bearer: Token Diego")
     @retrofit2.http.GET("user/email/{user}")

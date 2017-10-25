@@ -7,6 +7,8 @@ import com.barzinga.restClient.parameter.TransactionParameter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import okhttp3.ResponseBody
+import retrofit2.Response
 
 /**
  * Created by diego.santos on 12/10/17.
@@ -23,7 +25,7 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribeOn(Schedulers.io())
                             .subscribe ({ result ->
-                                    listener.onTransactionSuccess()
+                                    listener.onTransactionSuccess(result)
                             }, { error ->
                                 error.printStackTrace()
                                 listener.onTransactionFailure()
@@ -34,7 +36,7 @@ class TransactionViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     interface TransactionListener{
-        fun onTransactionSuccess()
+        fun onTransactionSuccess(response: Response<ResponseBody>)
         fun onTransactionFailure()
     }
 }

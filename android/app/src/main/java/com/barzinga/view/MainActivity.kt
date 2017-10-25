@@ -2,6 +2,7 @@ package com.barzinga.view
 
 import android.app.Dialog
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.opengl.Visibility
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -22,6 +23,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import android.view.KeyEvent.KEYCODE_BACK
 import android.content.DialogInterface
+import android.content.Intent
 import android.view.KeyEvent
 
 
@@ -41,6 +43,13 @@ class MainActivity : AppCompatActivity(), UserManager.DataListener {
             disableButton()
             logUser()
         })
+    }
+
+    companion object {
+        fun start(context: Context) {
+            val starter = Intent(context, MainActivity::class.java)
+            context.startActivity(starter)
+        }
     }
 
     private fun disableButton() {

@@ -1,11 +1,14 @@
 package com.barzinga.view
 
+import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 
 import com.barzinga.R
 import com.barzinga.databinding.ActivityCheckoutBinding
@@ -20,6 +23,8 @@ import com.bumptech.glide.request.RequestOptions
 import jp.wasabeef.glide.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_checkout.*
 import kotlinx.android.synthetic.main.view_top_bar.*
+import okhttp3.ResponseBody
+import retrofit2.Response
 
 class CheckoutActivity : AppCompatActivity(), TransactionViewModel.TransactionListener {
 
@@ -46,6 +51,8 @@ class CheckoutActivity : AppCompatActivity(), TransactionViewModel.TransactionLi
 
         llFinishOrder.setOnClickListener({
             if (userToken.text.isNotEmpty()){
+                disableButton()
+                transactionParameter?.pin = userToken.text.toString()
                 viewModel.buyProducts(transactionParameter, this)
             }else{
                 userToken.error = getString(R.string.invalid_token)
@@ -59,13 +66,41 @@ class CheckoutActivity : AppCompatActivity(), TransactionViewModel.TransactionLi
             starter.putExtra(TRANSACTION_EXTRA, transactionJson)
             context.startActivity(starter)
         }
+
+        fun startIntent(context: Context, transactionJson: String) : Intent{
+            val starter = Intent(context, CheckoutActivity::class.java)
+            starter.putExtra(TRANSACTION_EXTRA, transactionJson)
+            return starter
+        }
     }
 
-    override fun onTransactionSuccess() {
-        TransactionFinishedActivity.start(this)
+    override fun onTransactionSuccess(response: Response<ResponseBody>) {
+        if (response.code() == 200){
+            var response = response.body()?.string()
+            TransactionFinishedActivity.start(this)
+            enableButton()
+            setResult(Activity.RESULT_OK)
+            finish()
+        }else{
+            userToken.error = getString(R.string.invalid_token)
+            enableButton()
+        }
     }
 
     override fun onTransactionFailure() {
+        enableButton()
+    }
 
+    private fun disableButton() {
+        btFinishOrder.visibility = View.INVISIBLE
+        pbLoading.visibility = View.VISIBLE
+        llFinishOrder.isEnabled = false
+    }
+
+    private fun enableButton() {
+        btFinishOrder.visibility = View.VISIBLE
+        pbLoading.visibility = View.INVISIBLE
+
+        llFinishOrder.isEnabled = true
     }
 }
