@@ -102,7 +102,7 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         currentProduct?.let { it1 -> transactionProducts.add(it1) }
 
         val transactionParameter = TransactionParameter(user, "", transactionProducts)
-        var transactionJson = getStringFromObject(transactionParameter)
+        val transactionJson = getStringFromObject(transactionParameter)
 
         startActivityForResult(CheckoutActivity.startIntent(this, transactionJson), CHECKOUT_REQUEST)
     }
