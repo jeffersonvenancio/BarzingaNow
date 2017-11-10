@@ -25,6 +25,7 @@ import android.view.KeyEvent.KEYCODE_BACK
 import android.content.DialogInterface
 import android.content.Intent
 import android.view.KeyEvent
+import com.barzinga.util.launchActivity
 
 
 class MainActivity : AppCompatActivity(), UserManager.DataListener {
@@ -41,7 +42,8 @@ class MainActivity : AppCompatActivity(), UserManager.DataListener {
         llStart.setOnClickListener({
 
             disableButton()
-            logUser()
+            launchActivity<OptionsActivity> ()
+            finish()
         })
     }
 
@@ -58,36 +60,6 @@ class MainActivity : AppCompatActivity(), UserManager.DataListener {
         llStart.isEnabled = false
     }
 
-    private fun logUser() {
-        val dialog = Dialog(this, R.style.MyDialogTheme)
-        dialog.setContentView(R.layout.dialog_login)
-
-        dialog.findViewById<View>(R.id.rateApp).setOnClickListener {
-            if (!(dialog.findViewById<View>(R.id.userEmail) as BarzingaEditText).text.toString().isEmpty()) {
-                viewModel.logUser((dialog.findViewById<View>(R.id.userEmail) as BarzingaEditText).text.toString());
-                dialog.dismiss()
-
-            } else {
-                (dialog.findViewById<View>(R.id.userEmail) as EditText).error = getString(R.string.invalid_user_error)
-            }
-        }
-
-        dialog.setOnKeyListener(object : DialogInterface.OnKeyListener {
-
-            override fun onKey(arg0: DialogInterface, keyCode: Int,
-                               event: KeyEvent): Boolean {
-
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    enableButton()
-
-                    dialog.dismiss()
-                }
-                return true
-            }
-        })
-
-        dialog.show()
-    }
 
     override fun onLogInSuccess(user: User) {
         OptionsActivity.start(this, ConvertObjectsUtil.getStringFromObject(user))
