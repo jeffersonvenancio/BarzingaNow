@@ -9,13 +9,8 @@ import android.arch.lifecycle.AndroidViewModel
  * Created by diego.santos on 03/10/17.
  */
 class MainViewModel(application: Application) : AndroidViewModel(application), UserManager.DataListener {
-    internal var userManager: UserManager
+    private var userManager: UserManager = UserManager(this)
     var mListener: UserManager.DataListener? = null
-
-    init {
-
-        userManager = UserManager(this)
-    }
 
     fun setListener(listener: UserManager.DataListener){
         mListener = listener
