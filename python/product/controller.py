@@ -65,9 +65,7 @@ def add():
             write_retry_params = gcs.RetryParams(backoff_factor=1.1)
             filename = '/' + bucket_name + '/' + image.filename
             gcs_file = gcs.open(filename, 'w', content_type=image.content_type, retry_params=write_retry_params)
-            print 'asdfasdfasdfasdfasd 77777777777'
             gcs_file.write(image.read())
-            print 'asdfasdfasdfasdfasd 66666666666'
             gcs_file.close()
 
             blobstore_filename = '/gs' + filename
@@ -84,6 +82,7 @@ def add():
 
 @product.route('/<int:product_id>', methods=['PUT'])
 def modify(product_id):
+    print product_id
     product = Product.get_by_id(product_id)
 
     if not product:
@@ -92,6 +91,7 @@ def modify(product_id):
     try:
         product.description = request.form['description']
         product.price = float(request.form['price'])
+        product.quantity = int(request.form['quantity'])
 
         product.put()
     except:
@@ -100,7 +100,18 @@ def modify(product_id):
     return '', 204
 
 @product.route('/<int:product_id>/quantity', methods=['PUT'])
+def update_quantity(product_id):
+    print product_id
+    product = Product.get_by_id(product_id)
+
+    product.quantity = int(request.form['quantity'])
+    product.put()
+
+    return '', 204
+
+@product.route('/<int:product_id>/add', methods=['PUT'])
 def add_quantity(product_id):
+    print product_id
     product = Product.get_by_id(product_id)
 
     product.quantity += int(request.form['quantity'])

@@ -62,34 +62,33 @@ def add_app():
     user = User.query().filter(User.email == user_json.get('email')).get()
 
     products = json_data.get('products')
-    print "asdfasdfasdf"
-    print user, user_pin
+
     if user_pin != user.pin :
         return str('Pin Invalido'), 303
 
-    # products_list = []
-    # quantity_table = {}
+    products_list = []
+    quantity_table = {}
 
-    # for product in products:
-    #     quantity_table[product['id']] = product['quantity']
-    #     products_list.append(ndb.Key(Product, product['id']).get())
-    #
-    # print products_list
-    #
-    # try:
-    #     transaction = Transaction.new(user, products_list, quantity_table)
-    #     transaction.put()
-    # except Exception as e:
-    #     return str(e), 400
+    for product in products:
+        quantity_table[product['id']] = product['quantity']
+        products_list.append(ndb.Key(Product, product['id']).get())
 
-    return 'Deu Certo', 204
+    print products_list
+
+    try:
+        transaction = Transaction.new(user, products_list, quantity_table)
+        transaction.put()
+    except Exception as e:
+        return str(e), 400
+
+    return str('ok'), 200
 
 @transaction.route('/extract', methods=['GET'])
 def transactions_user():
     logged_user = session['barzinga_user']
     logged_user = User.query().filter(User.email == logged_user["email"]).get()
 
-    transactions = Transaction.query().filter(Transaction.user == logged_user.key).order(-Transaction.date).fetch(10)
+    transactions = Transaction.query().filter(Transaction.user == logged_user.key).order(-Transaction.date).fetch(20)
 
     trans = [];
 

@@ -48,6 +48,7 @@ app.controller('ProductCtrl', ['$rootScope', '$scope', '$timeout', 'ProductServi
     };
 
     $scope.finalize = function() {
+        $('.finalize').unbind('click').text('AGUARDE...');
         transactionService.add($scope.selectedProducts, function() {
             $rootScope.showAlertMessage('Compra efetuada com sucesso!', 'success');
             $timeout($scope.listProducts, 1000);
