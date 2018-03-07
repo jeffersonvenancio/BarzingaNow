@@ -7,12 +7,23 @@ import android.os.Bundle
 
 import com.barzinga.R
 import com.barzinga.viewmodel.Constants
+import java.util.*
+import kotlin.concurrent.timerTask
 
 class TransactionFinishedActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transaction_finished)
+
+        val timer = Timer()
+        timer.schedule(timerTask {
+
+            MainActivity.start(this@TransactionFinishedActivity)
+            finish()
+
+        }, 4000)
+
     }
 
     companion object {

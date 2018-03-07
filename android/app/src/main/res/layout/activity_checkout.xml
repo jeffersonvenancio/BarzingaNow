@@ -94,27 +94,42 @@
                 android:padding="70dp"
                 android:orientation="horizontal"/>
 
-            <LinearLayout
-                android:id="@+id/llFinishOrder"
+            <FrameLayout
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_marginLeft="@dimen/giga_margin"
-                android:layout_marginRight="@dimen/giga_margin"
-                android:background="@drawable/login_button"
-                android:clickable="true"
-                android:gravity="center"
-                android:padding="70dp"
-                android:orientation="horizontal">
+                android:layout_weight="1">
 
-                <com.barzinga.customViews.BarzingaTextView
+                <LinearLayout
+                    android:id="@+id/llFinishOrder"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="@dimen/giga_margin"
+                    android:layout_marginRight="@dimen/giga_margin"
+                    android:background="@drawable/login_button"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:padding="70dp"
+                    android:orientation="horizontal">
+
+                    <com.barzinga.customViews.BarzingaTextView
+                        android:id="@+id/btFinishOrder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CONCLUIR"
+                        android:gravity="center"
+                        android:textSize="@dimen/default_button_text"/>
+
+                </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/pbLoading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="CONCLUIR"
-                    android:gravity="center"
-                    android:textSize="@dimen/default_button_text"/>
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    android:indeterminate="true"/>
 
-            </LinearLayout>
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_height="match_parent"

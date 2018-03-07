@@ -5,28 +5,29 @@ import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
 import com.barzinga.R
 import com.barzinga.databinding.ItemProductBinding
 
 import com.barzinga.model.Product
+import com.barzinga.viewmodel.ProductListViewModel
 import com.barzinga.viewmodel.ProductViewModel
-import com.barzinga.viewmodel.ProductsListener
 import com.bumptech.glide.Glide
-import java.util.ArrayList
+import kotlin.collections.ArrayList
 
 /**
  * Created by diego.santos on 05/10/17.
  */
-class ProductsAdapter(val context: Context, var products: List<Product>?, val listener: ProductsListener) : RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>(){
+class ProductsAdapter(val context: Context, var products: ArrayList<Product>, val listener: ProductListViewModel.ProductsListener) : RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>(){
 
     private var itemClick: ((Product) -> Unit)? = null
     companion object {
-        var mProducts: List<Product>? = emptyList()
-        var mListener: ProductsListener? = null
+        var mProducts = ArrayList<Product>()
+        var mListener: ProductListViewModel.ProductsListener? = null
     }
 
     init {
-        mProducts = products
+        mProducts.addAll(products)
         mListener = listener
     }
 
@@ -57,6 +58,9 @@ class ProductsAdapter(val context: Context, var products: List<Product>?, val li
 
     class ProductViewHolder(val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root) {
 
+        var animation1 = AlphaAnimation(0.2f, 1.0f)
+        var animation2 = AlphaAnimation(0.2f, 1.0f)
+
         fun setClickListener(callback: ((Product) -> Unit)?){
             binding.viewModel.clicks().subscribe {
                 callback?.invoke(binding.viewModel.product)
@@ -64,7 +68,17 @@ class ProductsAdapter(val context: Context, var products: List<Product>?, val li
         }
 
         init {
+
+            animation1.setDuration(1500)
+            animation1.setFillAfter(true)
+
+            animation2.setDuration(1500)
+            animation2.setFillAfter(true)
+
             binding.decreaseQtde.setOnClickListener({
+
+                binding.decreaseQtde.startAnimation(animation1)
+
                 var i = Integer.parseInt(binding.mQtde.getText().toString())
 
                 if (i > 0) {
@@ -77,6 +91,9 @@ class ProductsAdapter(val context: Context, var products: List<Product>?, val li
             })
 
             binding.increaseQtde.setOnClickListener({
+
+                binding.increaseQtde.startAnimation(animation2)
+
                 var i = Integer.parseInt(binding.mQtde.getText().toString())
 
                 i++
@@ -104,5 +121,17 @@ class ProductsAdapter(val context: Context, var products: List<Product>?, val li
         }
 
         return extraProducts
+    }
+
+    fun setCategory(category: String){
+        mProducts.clear()
+
+        for (product in products){
+            if (product.category?.toUpperCase().equals(category.toUpperCase())){
+                mProducts.add(product)
+            }
+        }
+
+        notifyDataSetChanged()
     }
 }

@@ -1,36 +1,34 @@
 package com.barzinga.viewmodel
 
 import com.barzinga.manager.UserManager
+import com.barzinga.model.User
+import android.app.Application
+import android.arch.lifecycle.AndroidViewModel
 
 /**
  * Created by diego.santos on 03/10/17.
  */
-class MainViewModel(internal var mListener: DataListener) : ViewModel, UserManager.DataListener {
-    internal var userManager: UserManager
+class MainViewModel(application: Application) : AndroidViewModel(application), UserManager.DataListener {
+    private var userManager: UserManager = UserManager(this)
+    var mListener: UserManager.DataListener? = null
 
-    init {
-
-        userManager = UserManager(this)
+    fun setListener(listener: UserManager.DataListener){
+        mListener = listener
     }
 
-    override fun onViewDestroy() {
-        userManager.onViewDestroy()
+//    override fun onViewDestroy() {
+//        userManager.onViewDestroy()
+//    }
+
+    fun logUser(user: String) {
+        userManager.logIn(user)
     }
 
-    fun logUser() {
-        userManager.logIn()
-    }
-
-    override fun onLogInSuccess() {
-        mListener.onLogInSuccess()
+    override fun onLogInSuccess(user: User) {
+        mListener?.onLogInSuccess(user)
     }
 
     override fun onLogInFailure() {
-        mListener.onLogInFailure()
-    }
-
-    interface DataListener {
-        fun onLogInSuccess()
-        fun onLogInFailure()
+        mListener?.onLogInFailure()
     }
 }

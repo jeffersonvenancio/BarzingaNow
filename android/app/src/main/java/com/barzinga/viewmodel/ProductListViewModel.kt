@@ -2,6 +2,7 @@ package com.barzinga.viewmodel
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
+import com.barzinga.model.Product
 import com.barzinga.restClient.RepositoryProvider
 
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -29,9 +30,16 @@ class ProductListViewModel(application: Application) : AndroidViewModel(applicat
 //                                updateUi(result)
                         }, { error ->
                             error.printStackTrace()
+                                listener.onProductsListError()
 //                                updateUi(null)
                         })
         )
 
+    }
+
+    interface ProductsListener{
+        fun onProductsListGotten(products: ArrayList<Product>)
+        fun onProductsListError()
+        fun onProductsQuantityChanged()
     }
 }
