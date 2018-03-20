@@ -47,6 +47,18 @@ def token():
 
     return redirect('/')
 
+@auth.route('/oauth', strict_slashes=False)
+def token_oauth():
+    token = request.args.get('token')
+    verifica_token(token, session)
+    return ("Logged in as %s" % session['barzinga_user']['email']), 200
+
+def verifica_token(token, session):
+    authorization_header = {"Authorization": "Bearer %s" % token}
+    r = requests.get("https://www.googleapis.com/oauth2/v2/userinfo", headers=authorization_header)
+    session['barzinga_user'] = r.json()
+    verifica_user()
+
 def verifica_user():
     user_json = session['barzinga_user']
     user = User.query().filter(User.email == user_json["email"]).get()
