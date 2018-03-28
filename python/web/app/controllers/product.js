@@ -55,6 +55,7 @@ app.controller('ProductCtrl', ['$rootScope', '$scope', '$timeout', 'ProductServi
             $timeout($rootScope.refreshUser, 1000);
             $scope.cleaningCart();
         });
+        $scope.cleaningCart();
     };
 
     $scope.cleaningCart = function() {
