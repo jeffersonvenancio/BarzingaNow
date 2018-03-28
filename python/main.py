@@ -9,8 +9,10 @@ from user.model import User
 appengine.monkeypatch()
 
 import json
+import re
 
 from auth.controller import auth as auth_controller
+from auth.controller import verifica_token
 from credit.controller import credit as credit_controller
 from user.controller import user as user_controller
 from product.controller import product as product_controller
@@ -47,6 +49,12 @@ def filter():
 
     if 'post_recommender' in request.url:
         return
+
+    if not 'barzinga_user' in session:
+        auth = request.headers['Authorization']
+        if (auth):
+            token = re.search('Bearer (.*)', auth).group(1)
+            verifica_token(token, session)
 
     if '/api/auth' not in request.url and '/api/auth/token' not in request.url and '/user' not in request.url:
         if not 'barzinga_user' in session:
