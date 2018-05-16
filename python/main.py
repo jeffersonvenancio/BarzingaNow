@@ -47,18 +47,6 @@ def filter():
     if verifyCronHeader(request):
         return
 
-    if verifyHeader(request):
-        return
-
-    if 'post_recommender' in request.url:
-        return
-
-    if not 'barzinga_user' in session:
-        auth = request.headers['Authorization']
-        if (auth):
-            token = re.search('Bearer (.*)', auth).group(1)
-            verifica_token(token, session)
-
     if '/api/auth' not in request.url and '/api/auth/token' not in request.url and '/user' not in request.url:
         if not 'barzinga_user' in session:
             return redirect('/api/auth/')
@@ -70,19 +58,6 @@ def page_not_found(e):
 @app.errorhandler(500)
 def application_error(e):
     return 'Sorry, unexpected error: {}'.format(e), 500
-
-@identity_loaded.connect_via(app)
-def on_identity_loaded(sender, identity):
-    user_json = session['barzinga_user']
-    user = User.query().filter(User.email == user_json["email"]).get()
-
-    identity.user = user.key.id()
-
-    if user.admin :
-        identity.provides.add(RoleNeed('admin'))
-
-def verifyHeader(request):
-    return request.headers.get('Bearer') == 'Token Diego'
 
 def verifyCronHeader(request):
     return request.headers.get('X-Appengine-Cron')
