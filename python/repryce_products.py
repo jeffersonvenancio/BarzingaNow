@@ -5,10 +5,10 @@ X = []
 Y = []
 with open('products.csv', 'rb') as data:
     reader = csv.reader(data, delimiter=',')
-    headers = {'content-type' : 'application/x-www-form-urlencoded', 'Bearer' : 'Token Diego'}
+    headers = {'content-type' : 'application/x-www-form-urlencoded', 'X-Appengine-Cron' : 'true'}
     params = {'sessionKey': '9ebbd0b25760557393a43064a92bae539d962103', 'format': 'xml', 'platformId': 1}
     for line in reader:
-        url = "https://v7-dot-barzinganow.appspot.com/api/product/"
+        url = "https://cron-dot-barzinganow.appspot.com/api/product/"
         # url = "http://localhost:8080/api/product/"
         url += line[0]
         url += "/repryce"
