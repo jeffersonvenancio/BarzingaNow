@@ -1,6 +1,7 @@
 import os
 import json
 import cloudstorage as gcs
+import datetime
 
 from flask import Blueprint, request, session
 from google.appengine.api import search
@@ -104,26 +105,19 @@ def delete_all_in_index(index):
 def allCredits():
     users = User.query().fetch()
 
-    usersJson = []
+    usersJson = 'email,valor \n'
 
     for u in users:
-        userJson = {}
-        if c.name is not None:
-            userJson['name'] = str(u.name)
-        else:
-            userJson['name'] = ''
-        userJson['money'] = str(u.money)
-        userJson['email'] = str(u.email)
-
-        usersJson.append(userJson)
+        usersJson += str(u.email)+','+str(u.money)+' \n'
 
     make_blob_public(usersJson)
     return json.dumps(usersJson)
 
 def make_blob_public(usersJson):
+    mydate = datetime.datetime.now()
     bucket_name = os.environ.get('BUCKET_NAME', app_identity.get_default_gcs_bucket_name())
     write_retry_params = gcs.RetryParams(backoff_factor=1.1)
-    filename = '/' + bucket_name + '/00_Reports/Test.json'
-    gcs_file = gcs.open(filename, 'w', content_type='json', retry_params=write_retry_params)
-    gcs_file.write(json.dumps(usersJson))
+    filename = '/' + bucket_name + '/00_Reports/'+mydate.strftime("%b")+'.csv'
+    gcs_file = gcs.open(filename, 'w', content_type='csv', retry_params=write_retry_params)
+    gcs_file.write(usersJson)
     gcs_file.close()
