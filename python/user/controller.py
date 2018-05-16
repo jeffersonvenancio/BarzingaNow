@@ -108,7 +108,7 @@ def allCredits():
     usersJson = 'email,valor \n'
 
     for u in users:
-        usersJson += str(u.email)+','+str(u.money)+' \n'
+        usersJson += str(u.email)+','+str("%.2f" % round(u.money,2))+' \n'
 
     make_blob_public(usersJson)
     return json.dumps(usersJson)

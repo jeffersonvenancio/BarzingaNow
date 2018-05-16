@@ -119,6 +119,16 @@ def add_quantity(product_id):
 
     return '', 204
 
+@product.route('/<int:product_id>/repryce', methods=['PUT'])
+def repryce(product_id):
+    print product_id
+    product = Product.get_by_id(product_id)
+
+    product.price = float(request.form['price'])
+    product.put()
+
+    return '', 204
+
 @product.route('/<int:product_id>', methods=['DELETE'])
 def delete(product_id):
     product = Product.get_by_id(product_id)
