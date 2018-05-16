@@ -44,6 +44,9 @@ def meu_ip():
 
 @app.before_request
 def filter():
+    if verifyCronHeader(request):
+        return
+
     if verifyHeader(request):
         return
 
@@ -79,5 +82,7 @@ def on_identity_loaded(sender, identity):
         identity.provides.add(RoleNeed('admin'))
 
 def verifyHeader(request):
-    print request.headers.get('Bearer') == 'Token Diego'
-    return request.headers.get('Bearer') == 'Token Diego';
+    return request.headers.get('Bearer') == 'Token Diego'
+
+def verifyCronHeader(request):
+    return request.headers.get('X-Appengine-Cron')
