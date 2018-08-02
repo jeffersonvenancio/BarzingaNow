@@ -51,7 +51,7 @@ def filter():
         return
 
     if not 'barzinga_user' in session:
-        auth = request.headers['Authorization']
+        auth = request.headers.get('Authorization')
         if (auth):
             token = re.search('Bearer (.*)', auth).group(1)
             verifica_token(token, session)
