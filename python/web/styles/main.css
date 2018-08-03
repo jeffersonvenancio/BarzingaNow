@@ -645,9 +645,24 @@ nav ul li a:before {
     height: 48px;
     text-align: center;
     border-radius: 50%;
-    border 2px solid #333;
+    border: 2px solid #333;
     background-color: white;
 }
 
 }
 
+.play_store_badge, .app_store_badge {
+    display: block;
+    line-height: 36px;
+    text-align: center;
+    padding-left: 0;
+}
+
+.play_store_badge img {
+    width: 200px;
+}
+
+.app_store_badge img {
+    padding-top: 20px;
+    width: 175px;
+}
