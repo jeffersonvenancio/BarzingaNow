@@ -47,6 +47,9 @@ def filter():
     if verifyCronHeader(request):
         return
 
+    if verifyHeader(request):
+        return
+
     if '/api/auth' not in request.url and '/api/auth/token' not in request.url and '/user' not in request.url:
         if not 'barzinga_user' in session:
             return redirect('/api/auth/')
@@ -61,3 +64,6 @@ def application_error(e):
 
 def verifyCronHeader(request):
     return request.headers.get('X-Appengine-Cron')
+
+def verifyHeader(request):
+    return request.headers.get('Authorization') == 'Bearer: Update'
