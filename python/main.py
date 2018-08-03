@@ -50,6 +50,15 @@ def filter():
     if verifyHeader(request):
         return
 
+    if not 'barzinga_user' in session:
+        auth = request.headers.get('Authorization')
+        if (auth):
+            regex = re.search('Bearer (.*)', auth)
+            if (regex):
+                token = regex.group(1)
+                print('Loggining in %s' % token)
+                verifica_token(token, session)
+
     if '/api/auth' not in request.url and '/api/auth/token' not in request.url and '/user' not in request.url:
         if not 'barzinga_user' in session:
             return redirect('/api/auth/')
