@@ -51,7 +51,7 @@ def add():
     name = request.form['name']
     email = request.form['email']
 
-    user = User(name=name, email=email, admin=False, photo_url='', money=0)
+    user = User(name=name, email=email, admin=False, photo_url='', money=0, rfid=str(''))
     user.put()
 
     user_document = search.Document(
@@ -76,6 +76,18 @@ def put_pin():
     user.put()
 
     return '', 204
+
+@user.route('/rfid', methods=['PUT'], strict_slashes=False)
+def put_rfid():
+    print 'ESTIVE AQUI'
+    user = User.query().filter(User.email == request.form['email']).get()
+    rfid = request.form['rfid']
+    if user:
+        user.rfid = rfid
+        user.put()
+        return '', 204
+
+    return '', 404
 
 @user.route('/index', methods=['DELETE'])
 def remove_indexes():
