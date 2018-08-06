@@ -6,6 +6,7 @@ class Product(ndb.Model):
     quantity = ndb.IntegerProperty()
     category = ndb.StringProperty()
     image_url = ndb.StringProperty()
+    bar_code = ndb.StringProperty()
 
     def to_dict(self):
         result = super(Product, self).to_dict()

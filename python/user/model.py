@@ -8,6 +8,7 @@ class User(ndb.Model):
     photo_url = ndb.StringProperty()
     admin = ndb.BooleanProperty()
     pin = ndb.StringProperty()
+    rfid = ndb.StringProperty()
 
     def to_dict(self):
         result = super(User, self).to_dict()

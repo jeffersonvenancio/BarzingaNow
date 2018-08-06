@@ -73,7 +73,7 @@ def add():
 
             image_url =  get_serving_url(key)
 
-        product = Product(description=description, price=price, quantity=quantity, category=category, image_url=image_url)
+        product = Product(description=description, price=price, quantity=quantity, category=category, image_url=image_url, bar_code=str(''))
         product.put()
 
         return '', 204
@@ -119,12 +119,24 @@ def add_quantity(product_id):
 
     return '', 204
 
+
 @product.route('/<int:product_id>/repryce', methods=['PUT'])
 def repryce(product_id):
     print product_id
     product = Product.get_by_id(product_id)
 
     product.price = float(request.form['price'])
+    product.put()
+
+    return '', 204
+
+@product.route('/<int:product_id>/bar_code', methods=['PUT'])
+def update_bar_code(product_id):
+    print product_id
+    product = Product.get_by_id(product_id)
+
+    product.bar_code = str(request.form['bar_code'])
+
     product.put()
 
     return '', 204
