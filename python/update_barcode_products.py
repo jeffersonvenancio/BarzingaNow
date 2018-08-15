@@ -11,7 +11,7 @@ with open('update_products.csv', 'rb') as data:
         # url = "https://v7-dot-barzinganow.appspot.com/api/product/"
         url = "http://localhost:8080/api/product/"
         url += line[0]
-        url += "/add"
-        data = {"quantity": str(line[2])}
+        url += "/bar_code"
+        data = {"bar_code": str(line[3])}
         print data
         print requests.put(url, data=data, headers=headers, params=params)
