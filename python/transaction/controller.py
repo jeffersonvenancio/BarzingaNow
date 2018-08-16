@@ -183,9 +183,28 @@ def transactions_all(start=None, end=None):
 
     return json.dumps(transactionsJson)
 
-@transaction.route('/sumarize_all', methods=['GET'])
+@transaction.route('/sumarize/', methods=['GET'])
 def sumarize_all():
     transactions = Transaction.query().fetch()
+    value =  0
+    for t in transactions:
+        value +=t.value
+
+    return json.dumps(value)
+
+@transaction.route('/sum/<string:start>/<string:end>', methods=['GET'], strict_slashes=True)
+def sum_value(start=None, end=None):
+
+    if start is None or end is None:
+        return 'No start or end date use: sum/01-01-1970/02-02-1970', 404
+    else:
+        splitStart = start.split('-')
+        from_date = datetime.datetime(year=int(splitStart[2]), month=int(splitStart[1]), day=int(splitStart[0]))
+        splitEnd = end.split('-')
+        to_date = datetime.datetime(year=int(splitEnd[2]), month=int(splitEnd[1]), day=int(splitEnd[0]))
+
+        transactions = Transaction.query().filter(Transaction.date <= to_date, Transaction.date >= from_date).fetch()
+
     value =  0
     for t in transactions:
         value +=t.value
