@@ -55,7 +55,7 @@ def add_app():
 
     user_json = json_data.get('user')
 
-    user_pin = json_data.get('pin')
+    # user_pin = json_data.get('pin')
 
     print user_json.get('email')
 
@@ -63,8 +63,8 @@ def add_app():
 
     products = json_data.get('products')
 
-    if user_pin != user.pin :
-        return str('Pin Invalido'), 303
+    # if user_pin != user.pin :
+    #     return str('Pin Invalido'), 303
 
     products_list = []
     quantity_table = {}
