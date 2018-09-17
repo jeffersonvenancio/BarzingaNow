@@ -33,7 +33,7 @@ def get_all(category=None):
         else:
             products = [p.to_dict() for p in Product.query(Product.category == category).fetch()]
     else :
-        products = [p.to_dict() for p in Product.fetch()]
+        products = [p.to_dict() for p in Product.query().fetch()]
 
     return json.dumps(products)
 
