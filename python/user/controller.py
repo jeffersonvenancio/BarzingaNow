@@ -79,7 +79,6 @@ def put_pin():
 
 @user.route('/rfid', methods=['PUT'], strict_slashes=False)
 def put_rfid():
-    print 'ESTIVE AQUI'
     user = User.query().filter(User.email == request.form['email']).get()
     rfid = request.form['rfid']
     if user:
@@ -87,6 +86,13 @@ def put_rfid():
         user.put()
         return '', 204
 
+    return '', 404
+
+@user.route('/rfid/<string:rfid>', methods=['GET'], strict_slashes=False)
+def get_by_rfid(rfid):
+    user = User.query().filter(User.rfid == rfid).get()
+    if user:
+        return json.dumps(user)
     return '', 404
 
 @user.route('/index', methods=['DELETE'])
