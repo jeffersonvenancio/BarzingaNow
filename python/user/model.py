@@ -17,10 +17,10 @@ class User(ndb.Model):
         return result
 
     def debit(self, value):
-        money = math.ceil(self.money) + 20
-
-        if value > money:
-            raise Exception('Saldo insuficiente')
+        # money = math.ceil(self.money) + 20
+        #
+        # if value > money:
+        #     raise Exception('Saldo insuficiente')
         self.money -= value
 
     def credit(self, value):
