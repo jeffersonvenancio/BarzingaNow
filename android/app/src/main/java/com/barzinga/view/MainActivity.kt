@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         llStart.setOnClickListener({
-            launchActivity<IdentifyRfid>()
+            launchActivity<IdentifyRfidActivity>()
         })
     }
 
