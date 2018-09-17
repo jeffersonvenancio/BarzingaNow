@@ -62,8 +62,8 @@ class ProductsAdapter(val context: Context, var products: ArrayList<Product>, va
         var animation2 = AlphaAnimation(0.2f, 1.0f)
 
         fun setClickListener(callback: ((Product) -> Unit)?){
-            binding.viewModel.clicks().subscribe {
-                callback?.invoke(binding.viewModel.product)
+            binding.viewModel!!.clicks().subscribe {
+                callback?.invoke(binding.viewModel!!.product)
             }
         }
 
