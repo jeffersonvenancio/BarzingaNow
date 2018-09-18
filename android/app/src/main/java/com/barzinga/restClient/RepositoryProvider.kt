@@ -10,6 +10,6 @@ object RepositoryProvider {
     }
 
     fun provideUserRepository(): UserRepository {
-        return UserRepository(BarzingaService.Factory.create())
+        return UserRepository(BarzingaService.Factory.create(), RfidService.Factory.create())
     }
 }
