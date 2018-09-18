@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
+import android.widget.Filter
+import android.widget.Filterable
 import com.barzinga.R
 import com.barzinga.databinding.ItemProductBinding
 
@@ -18,17 +20,52 @@ import kotlin.collections.ArrayList
 /**
  * Created by diego.santos on 05/10/17.
  */
-class ProductsAdapter(val context: Context, var products: ArrayList<Product>, val listener: ProductListViewModel.ProductsListener) : RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>(){
+class ProductsAdapter(val context: Context, var products: ArrayList<Product>, val listener: ProductListViewModel.ProductsListener) : RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>(), Filterable{
+    override fun getFilter(): Filter {
+        return ProductFilter()
+    }
 
     private var itemClick: ((Product) -> Unit)? = null
+
     companion object {
         var mProducts = ArrayList<Product>()
         var mListener: ProductListViewModel.ProductsListener? = null
+        var mProductsFiltered = ArrayList<Product>()
+        var ctx: ProductsAdapter? = null
+        var allProducts = ArrayList<Product>()
     }
 
     init {
         mProducts.addAll(products)
         mListener = listener
+        ctx = this
+        allProducts = products
+    }
+
+    class ProductFilter() : Filter(){
+        override fun performFiltering(p0: CharSequence?): FilterResults {
+            if (p0.isNullOrEmpty()){
+                mProductsFiltered = allProducts
+            } else {
+                var filteredList = ArrayList<Product>()
+                for (product in allProducts) {
+                    if (product.description!!.toLowerCase().contains(p0.toString().toLowerCase())) {
+                        filteredList.add(product);
+                    }
+                    mProductsFiltered = filteredList
+                }
+            }
+
+            var filterResults = FilterResults()
+            filterResults.values = mProductsFiltered
+            return filterResults
+        }
+
+        override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
+            mProducts = p1!!.values as ArrayList<Product>
+            ctx!!.notifyDataSetChanged()
+        }
+
     }
 
     override fun getItemCount(): Int = mProducts?.size ?: 0

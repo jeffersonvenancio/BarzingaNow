@@ -15,4 +15,6 @@
     <string name="sign_in">ENTRAR</string>
     <string name="invalid_token">Token inválido</string>
     <string name="login_failure">Falha no login! Por favor tente novamente.</string>
+    <string name="action_search">Procurar</string>
+
 </resources>

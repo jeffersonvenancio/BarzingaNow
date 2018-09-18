@@ -2,6 +2,7 @@ package com.barzinga.view
 
 import android.app.Activity
 import android.app.Dialog
+import android.app.SearchManager
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.databinding.DataBindingUtil
@@ -9,6 +10,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
+import android.view.Menu
 import android.view.MotionEvent
 import android.view.View
 import android.view.View.GONE
@@ -37,6 +39,12 @@ import kotlinx.android.synthetic.main.activity_products.*
 import kotlinx.android.synthetic.main.dialog_login.*
 import kotlinx.android.synthetic.main.view_bottom_bar.*
 import kotlinx.android.synthetic.main.view_top_bar.*
+import  android.support.v7.widget.SearchView
+import android.databinding.adapters.SearchViewBindingAdapter.setOnQueryTextListener
+import android.content.Context.SEARCH_SERVICE
+import android.R.menu
+import android.content.Context
+import android.support.v7.widget.Toolbar
 
 
 class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedListener, ProductListViewModel.ProductsListener,  UserManager.DataListener {
@@ -45,12 +53,15 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
 
     lateinit var viewModel: ProductListViewModel
     lateinit var viewModelMain: MainViewModel
-    private lateinit var noActionHandler: Handler
-    private lateinit var noActionRunnable: Runnable
+    var searchView: SearchView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityProductsBinding = DataBindingUtil.setContentView(this, R.layout.activity_products)
+
+        var mToolbar = findViewById<Toolbar>(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        getSupportActionBar()!!.setDisplayShowTitleEnabled(false);
 
         viewModel = ViewModelProviders.of(this).get(ProductListViewModel::class.java)
         viewModelMain = ViewModelProviders.of(this).get(MainViewModel::class.java)
@@ -64,14 +75,41 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
             logUser()
         })
 
-        createNoActionHandler()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu):Boolean {
+        getMenuInflater().inflate(R.menu.product_menus, menu)
+
+        // Associate searchable configuration with the SearchView
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        searchView = menu.findItem(R.id.action_search)
+                .actionView as SearchView
+        searchView?.setSearchableInfo(searchManager
+                .getSearchableInfo(getComponentName()))
+        searchView?.setMaxWidth(Integer.MAX_VALUE)
+
+        // listening to search query text change
+        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                // filter recycler view when query submitted
+                (products_list.adapter as ProductsAdapter).getFilter().filter(query)
+                return false
+            }
+
+            override fun onQueryTextChange(query: String): Boolean {
+                // filter recycler view when text is changed
+                (products_list.adapter as ProductsAdapter).getFilter().filter(query)
+                return false
+            }
+        })
+        return true
     }
 
     private fun getUser(binding: ActivityProductsBinding) {
         if (intent?.hasExtra(Constants.USER_EXTRA) == true) {
             val userJson = intent.getStringExtra(Constants.USER_EXTRA)
             user = ConvertObjectsUtil.getUserFromJson(userJson)
-            mUserPhoto.loadUrl(user?.photoUrl)
+            mUserPhotoProduct.loadUrl(user?.photoUrl)
             binding.viewmodel = user?.let { UserViewModel(it) }
         }
     }
@@ -105,15 +143,6 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         val transactionJson = getStringFromObject(transactionParameter)
 
         startActivityForResult(CheckoutActivity.startIntent(this, transactionJson), CHECKOUT_REQUEST)
-    }
-
-    private fun createNoActionHandler() {
-        noActionHandler = Handler()
-        noActionRunnable = Runnable {
-            launchActivity<MainActivity>()
-            finish()
-        }
-        noActionHandler.postDelayed(noActionRunnable, 6000)
     }
 
     private fun logUser() {
@@ -216,18 +245,21 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         }
     }
 
-    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        noActionHandler.removeCallbacks(noActionRunnable)
-        noActionHandler.postDelayed(noActionRunnable,60000)
-        return super.dispatchTouchEvent(ev)
-    }
-
     override fun onLogInSuccess(user: User) {
         openCheckout()
     }
 
     override fun onLogInFailure() {
         Toast.makeText(this, getString(R.string.login_failure), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onBackPressed() {
+        // close search view on back button pressed
+        if (!searchView?.isIconified()!!) {
+            searchView?.setIconified(true)
+            return
+        }
+        super.onBackPressed()
     }
 
 }
