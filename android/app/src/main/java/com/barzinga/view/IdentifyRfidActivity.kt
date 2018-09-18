@@ -26,13 +26,6 @@ class IdentifyRfidActivity : AppCompatActivity(), RfidManager.DataListener {
 
         viewModelMain.setListener(this)
         viewModelMain.getRfid()
-
-
-//        val timer = Timer()
-//        timer.schedule(timerTask {
-//            MainActivity.start(this@IdentifyRfidActivity)
-//            finish()
-//        }, 10000)
     }
 
     companion object {

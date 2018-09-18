@@ -73,6 +73,26 @@
                                 app:typefaceOpenSans="@string/semibold"
                                 android:textSize="@dimen/giga_text"/>
 
+                            <com.barzinga.customViews.BarzingaTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/black"
+                                android:layout_gravity="bottom"
+                                android:text="Name"
+                                android:paddingRight="@dimen/micro_margin"
+                                app:typefaceOpenSans="@string/semibold"
+                                android:textSize="@dimen/deca_text" />
+
+                            <com.barzinga.customViews.BarzingaTextView
+                                android:id="@+id/userName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@{viewmodel.user.name > 0 ? @color/black : @color/red}"
+                                android:layout_gravity="bottom"
+                                android:text="@{viewmodel.name}"
+                                app:typefaceOpenSans="@string/semibold"
+                                android:textSize="@dimen/giga_text"/>
+
                         </LinearLayout>
 
                         <View

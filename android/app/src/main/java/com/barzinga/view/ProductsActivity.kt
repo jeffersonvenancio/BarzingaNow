@@ -1,24 +1,21 @@
 package com.barzinga.view
 
 import android.app.Activity
-import android.app.Dialog
 import android.app.SearchManager
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.SearchView
+import android.support.v7.widget.Toolbar
 import android.view.Menu
-import android.view.MotionEvent
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.EditText
 import android.widget.Toast
 import com.barzinga.R
-import com.barzinga.customViews.BarzingaEditText
 import com.barzinga.databinding.ActivityProductsBinding
 import com.barzinga.manager.UserManager
 import com.barzinga.model.Item
@@ -27,7 +24,6 @@ import com.barzinga.model.User
 import com.barzinga.restClient.parameter.TransactionParameter
 import com.barzinga.util.ConvertObjectsUtil
 import com.barzinga.util.ConvertObjectsUtil.Companion.getStringFromObject
-import com.barzinga.util.launchActivity
 import com.barzinga.util.loadUrl
 import com.barzinga.view.adapter.ProductsAdapter
 import com.barzinga.viewmodel.Constants
@@ -36,15 +32,7 @@ import com.barzinga.viewmodel.MainViewModel
 import com.barzinga.viewmodel.ProductListViewModel
 import com.barzinga.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.activity_products.*
-import kotlinx.android.synthetic.main.dialog_login.*
 import kotlinx.android.synthetic.main.view_bottom_bar.*
-import kotlinx.android.synthetic.main.view_top_bar.*
-import  android.support.v7.widget.SearchView
-import android.databinding.adapters.SearchViewBindingAdapter.setOnQueryTextListener
-import android.content.Context.SEARCH_SERVICE
-import android.R.menu
-import android.content.Context
-import android.support.v7.widget.Toolbar
 
 
 class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedListener, ProductListViewModel.ProductsListener,  UserManager.DataListener {

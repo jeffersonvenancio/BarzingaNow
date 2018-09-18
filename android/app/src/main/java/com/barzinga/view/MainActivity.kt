@@ -15,9 +15,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        llStart.setOnClickListener({
+        llStart.setOnClickListener {
             launchActivity<IdentifyRfidActivity>()
-        })
+        }
     }
 
     companion object {
