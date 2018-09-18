@@ -87,9 +87,9 @@
                                 android:id="@+id/userName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@{viewmodel.user.name > 0 ? @color/black : @color/red}"
+                                android:textColor="@{viewmodel.user.name.length() > 0 ? @color/black : @color/red}"
                                 android:layout_gravity="bottom"
-                                android:text="@{viewmodel.name}"
+                                android:text="@{viewmodel.user.name}"
                                 app:typefaceOpenSans="@string/semibold"
                                 android:textSize="@dimen/giga_text"/>
 
