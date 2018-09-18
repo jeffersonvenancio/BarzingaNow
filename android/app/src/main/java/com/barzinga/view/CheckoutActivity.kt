@@ -50,13 +50,10 @@ class CheckoutActivity : AppCompatActivity(), TransactionViewModel.TransactionLi
         viewModel = ViewModelProviders.of(this).get(TransactionViewModel::class.java)
 
         llFinishOrder.setOnClickListener({
-            if (userToken.text.isNotEmpty()){
-                disableButton()
-                transactionParameter?.pin = userToken.text.toString()
-                viewModel.buyProducts(transactionParameter, this)
-            }else{
-                userToken.error = getString(R.string.invalid_token)
-            }
+            disableButton()
+            transactionParameter?.pin = "Token Diego"
+            viewModel.buyProducts(transactionParameter, this)
+
         })
     }
 
@@ -80,10 +77,11 @@ class CheckoutActivity : AppCompatActivity(), TransactionViewModel.TransactionLi
             TransactionFinishedActivity.start(this)
             enableButton()
             setResult(Activity.RESULT_OK)
+            MainActivity.start(this@CheckoutActivity)
             finish()
         }else{
-            userToken.error = getString(R.string.invalid_token)
-            enableButton()
+            MainActivity.start(this@CheckoutActivity)
+            finish()
         }
     }
 

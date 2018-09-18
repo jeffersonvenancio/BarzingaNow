@@ -16,8 +16,7 @@ import retrofit2.Response
 
 interface RfidService {
 
-    @retrofit2.http.Headers("Bearer: Token Diego")
-    @retrofit2.http.GET("rfid/{value}")
+    @retrofit2.http.GET("/")
     fun getRfid(): io.reactivex.Observable<Response<ResponseBody>>
 
     companion object Factory {

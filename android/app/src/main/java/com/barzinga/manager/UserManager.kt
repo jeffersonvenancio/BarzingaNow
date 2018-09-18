@@ -33,6 +33,25 @@ class UserManager(internal var mListener: DataListener) {
         )
     }
 
+    fun logInWithRfid(rfid: String) {
+        val compositeDisposable: CompositeDisposable = CompositeDisposable()
+        val repository = RepositoryProvider.provideUserRepository()
+
+        compositeDisposable.add(
+                repository.getProfileByRfid(rfid)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribe ({
+                            result ->
+                            mListener.onLogInSuccess(result)
+                        }, { error ->
+                            error.printStackTrace()
+                            mListener.onLogInFailure()
+                        })
+        )
+    }
+
+
     fun logOut() {
 
     }

@@ -54,12 +54,15 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
     lateinit var viewModel: ProductListViewModel
     lateinit var viewModelMain: MainViewModel
     var searchView: SearchView? = null
+    var rfid : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityProductsBinding = DataBindingUtil.setContentView(this, R.layout.activity_products)
 
+        rfid = getIntent().getStringExtra("USER_RFID")
         var mToolbar = findViewById<Toolbar>(R.id.toolbar);
+
         setSupportActionBar(mToolbar);
         getSupportActionBar()!!.setDisplayShowTitleEnabled(false);
 
@@ -72,7 +75,7 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         getUser(binding)
 
         llFinishOrder.setOnClickListener({
-            logUser()
+            logUser(rfid!!)
         })
 
     }
@@ -145,22 +148,10 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         startActivityForResult(CheckoutActivity.startIntent(this, transactionJson), CHECKOUT_REQUEST)
     }
 
-    private fun logUser() {
-        val dialog = Dialog(this, R.style.MyDialogTheme)
-        dialog.setContentView(R.layout.dialog_login)
-
-        dialog.rateApp.setOnClickListener {
-            if (!dialog.userEmail.text.toString().isEmpty()) {
-                viewModelMain.logUser(dialog.userEmail.text.toString())
-                dialog.dismiss()
-
-            } else {
-                dialog.userEmail.error = getString(R.string.invalid_user_error)
-            }
-        }
-
-        dialog.show()
+    private fun logUser(rfid : String) {
+        viewModelMain.logUserWithRfid(rfid)
     }
+
     private fun setupRecyclerView(products: ArrayList<Product>) {
 
         var productsAdapter = ProductsAdapter(this, products, this)
