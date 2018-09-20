@@ -15,6 +15,7 @@ import com.barzinga.model.Product
 import com.barzinga.viewmodel.ProductListViewModel
 import com.barzinga.viewmodel.ProductViewModel
 import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.activity_products.*
 import kotlin.collections.ArrayList
 
 /**
@@ -112,30 +113,11 @@ class ProductsAdapter(val context: Context, var products: ArrayList<Product>, va
             animation2.setDuration(1500)
             animation2.setFillAfter(true)
 
-            binding.decreaseQtde.setOnClickListener({
-
-                binding.decreaseQtde.startAnimation(animation1)
-
-                var i = Integer.parseInt(binding.mQtde.getText().toString())
-
-                if (i > 0) {
-                    i--
-                    binding.mQtde.setText(i.toString())
-                    mProducts?.get(position)?.quantityOrdered = i
-
-                    mListener?.onProductsQuantityChanged()
-                }
-            })
-
             binding.increaseQtde.setOnClickListener({
 
                 binding.increaseQtde.startAnimation(animation2)
 
-                var i = Integer.parseInt(binding.mQtde.getText().toString())
-
-                i++
-                binding.mQtde.setText(i.toString())
-                mProducts?.get(position)?.quantityOrdered = i
+                mProducts?.get(position)?.quantityOrdered = mProducts?.get(position)?.quantityOrdered?.plus(1)
 
                 mListener?.onProductsQuantityChanged()
             })
@@ -170,5 +152,15 @@ class ProductsAdapter(val context: Context, var products: ArrayList<Product>, va
         }
 
         notifyDataSetChanged()
+    }
+
+    fun getCurrentOrderPrice(): Double? {
+        val products = getChosenProducts()
+        var currentOrderPrice: Double? = 0.0
+
+        for (product in products.orEmpty()) {
+            product.price?.let { currentOrderPrice = currentOrderPrice?.plus(it) }
+        }
+        return currentOrderPrice
     }
 }

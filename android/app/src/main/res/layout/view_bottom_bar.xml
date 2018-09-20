@@ -30,7 +30,7 @@
         <com.barzinga.customViews.BarzingaTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="FINALIZAR COMPRA"
+            android:text="@string/finish_shopping"
             android:gravity="center"
             android:textSize="22sp"/>
 

@@ -13,6 +13,7 @@ class ProductViewModel(val product: Product){
     fun getDescription() = product.description
     fun getPrice() = String.format("%.2f", product.price)
     fun getQuantity() = product.quantity.toString()
+    fun getQuantityOrdered() = product.quantityOrdered.toString()
 
     fun onClick() {
         clicks.onNext(Unit)

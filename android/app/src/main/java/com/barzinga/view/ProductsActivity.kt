@@ -44,7 +44,10 @@ import android.databinding.adapters.SearchViewBindingAdapter.setOnQueryTextListe
 import android.content.Context.SEARCH_SERVICE
 import android.R.menu
 import android.content.Context
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.support.v7.widget.Toolbar
+import android.widget.ImageView
 
 
 class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedListener, ProductListViewModel.ProductsListener,  UserManager.DataListener {
@@ -61,8 +64,8 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         val binding: ActivityProductsBinding = DataBindingUtil.setContentView(this, R.layout.activity_products)
 
         rfid = getIntent().getStringExtra("USER_RFID")
-        var mToolbar = findViewById<Toolbar>(R.id.toolbar);
-
+        var mToolbar = findViewById<Toolbar>(R.id.toolbar)
+        mToolbar.setBackgroundColor(resources.getColor(R.color.white))
         setSupportActionBar(mToolbar);
         getSupportActionBar()!!.setDisplayShowTitleEnabled(false);
 
@@ -75,7 +78,8 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         getUser(binding)
 
         llFinishOrder.setOnClickListener({
-            logUser(rfid!!)
+//            logUser(rfid!!)
+            openCheckout()
         })
 
     }
@@ -90,6 +94,14 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         searchView?.setSearchableInfo(searchManager
                 .getSearchableInfo(getComponentName()))
         searchView?.setMaxWidth(Integer.MAX_VALUE)
+        searchView!!.findViewById<ImageView>(android.support.v7.appcompat.R.id.search_button).setColorFilter(Color.BLACK)
+        searchView!!.findViewById<ImageView>(android.support.v7.appcompat.R.id.search_close_btn).setColorFilter(Color.BLACK)
+        searchView!!.findViewById<View>(android.support.v7.appcompat.R.id.search_plate).background.setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY)
+
+        val searchAutoComplete = searchView?.findViewById<SearchView.SearchAutoComplete>(android.support.v7.appcompat.R.id.search_src_text)
+        searchAutoComplete?.setHintTextColor(Color.BLACK)
+        searchAutoComplete?.setTextColor(Color.BLACK)
+        searchAutoComplete?.setHint(R.string.search_product_hint)
 
         // listening to search query text change
         searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -158,10 +170,11 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         products_list.apply {
             adapter = productsAdapter
             setHasFixedSize(true)
-            val gridLayout = GridLayoutManager(context, 3)
+            val gridLayout = GridLayoutManager(context, 2)
             layoutManager = gridLayout
         }
 
+        products_list.visibility = VISIBLE
         mLoadingProgress.visibility = GONE
 
         determinePaneLayout(setCategories(products))
@@ -169,12 +182,7 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
 
 
     override fun onProductsQuantityChanged() {
-        val products = (products_list.adapter as ProductsAdapter).getChosenProducts()
-        var currentOrderPrice: Double? = 0.0
-
-        for (product in products.orEmpty()) {
-            product.price?.let { currentOrderPrice = currentOrderPrice?.plus(it) }
-        }
+        var currentOrderPrice: Double? = (products_list.adapter as ProductsAdapter).getCurrentOrderPrice()
 
         if ((currentOrderPrice ?: 0.0) > 0.0) {
             mOrderPrice.text = String.format("%.2f", currentOrderPrice)
@@ -231,8 +239,15 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == CHECKOUT_REQUEST && resultCode == Activity.RESULT_OK) {
-            finish()
+        if (requestCode == CHECKOUT_REQUEST) {
+            if(resultCode == Activity.RESULT_OK) {
+                finish()
+            } else {
+                mLoadingProgress.visibility = VISIBLE
+                products_list.visibility = GONE
+                mBottomBar.visibility = GONE
+                viewModel.listProducts(this)
+            }
         }
     }
 
@@ -252,5 +267,4 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         }
         super.onBackPressed()
     }
-
 }

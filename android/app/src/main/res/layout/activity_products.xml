@@ -36,7 +36,6 @@
                         android:layout_width="130dp"
                         android:layout_height="90dp"
                         android:layout_gravity="left|center_vertical"
-                        android:paddingBottom="@dimen/centi_margin"
                         android:paddingLeft="@dimen/hecto_margin"
                         android:src="@drawable/logo_barzinga"/>
 
@@ -93,20 +92,15 @@
 
                     </LinearLayout>
 
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/black"
-                        android:layout_gravity="bottom"/>
-
                 </FrameLayout>
 
             </android.support.v7.widget.Toolbar>
 
-
-
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"
+                android:layout_gravity="bottom"/>
 
         </android.support.design.widget.AppBarLayout>
 
@@ -141,6 +135,7 @@
                         android:paddingBottom="@dimen/centi_margin"
                         android:paddingTop="@dimen/centi_margin"
                         android:paddingLeft="@dimen/centi_margin"
+                        android:clipToPadding="false"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
 
