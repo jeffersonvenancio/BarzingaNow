@@ -24,6 +24,12 @@
             app:viewmodel="@{viewmodel}"
             layout="@layout/view_top_bar"/>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            android:layout_gravity="bottom"/>
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"

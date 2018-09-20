@@ -5,21 +5,16 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
-import android.util.Log
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.View.VISIBLE
-
 import com.barzinga.R
 import com.barzinga.databinding.ActivityCheckoutBinding
 import com.barzinga.model.Product
 import com.barzinga.restClient.parameter.TransactionParameter
 import com.barzinga.util.ConvertObjectsUtil.Companion.getTransactionParameterFromJson
 import com.barzinga.view.adapter.ProductCartAdapter
-import com.barzinga.view.adapter.ProductsAdapter
-import com.barzinga.viewmodel.Constants
 import com.barzinga.viewmodel.Constants.TRANSACTION_EXTRA
 import com.barzinga.viewmodel.ProductListViewModel
 import com.barzinga.viewmodel.TransactionViewModel
@@ -28,8 +23,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import jp.wasabeef.glide.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_checkout.*
-import kotlinx.android.synthetic.main.activity_products.*
-import kotlinx.android.synthetic.main.view_top_bar.*
+import kotlinx.android.synthetic.main.view_user_info.*
 import okhttp3.ResponseBody
 import retrofit2.Response
 

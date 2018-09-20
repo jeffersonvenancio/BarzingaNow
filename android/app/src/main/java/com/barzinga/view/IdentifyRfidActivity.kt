@@ -1,20 +1,15 @@
 package com.barzinga.view
 
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.barzinga.R
 import com.barzinga.manager.RfidManager
-import com.barzinga.viewmodel.Constants
-import com.barzinga.viewmodel.IdentifyRfidViewModel
-import com.barzinga.viewmodel.MainViewModel
 import com.barzinga.viewmodel.RfidViewModel
 import okhttp3.ResponseBody
 import retrofit2.Response
-import android.arch.lifecycle.ViewModelProviders
-import java.util.*
-import kotlin.concurrent.timerTask
 
 class IdentifyRfidActivity : AppCompatActivity(), RfidManager.DataListener {
     lateinit var viewModelMain: RfidViewModel
@@ -26,16 +21,11 @@ class IdentifyRfidActivity : AppCompatActivity(), RfidManager.DataListener {
 
         viewModelMain.setListener(this)
         viewModelMain.getRfid()
-
-
-//        val timer = Timer()
-//        timer.schedule(timerTask {
-//            MainActivity.start(this@IdentifyRfidActivity)
-//            finish()
-//        }, 10000)
     }
 
     companion object {
+        const val USER_RFID = "USER_RFID"
+
         fun start(context: Context) {
             val starter = Intent(context, IdentifyRfidActivity::class.java)
             context.startActivity(starter)
@@ -44,7 +34,7 @@ class IdentifyRfidActivity : AppCompatActivity(), RfidManager.DataListener {
 
     override fun onRfidSuccess(response: Response<ResponseBody>) {
         var intent = Intent(this, ProductsActivity::class.java)
-        intent.putExtra("USER_RFID", response.body()!!.string())
+        intent.putExtra(USER_RFID, response.body()!!.string())
         startActivity(intent)
         finish()
     }
