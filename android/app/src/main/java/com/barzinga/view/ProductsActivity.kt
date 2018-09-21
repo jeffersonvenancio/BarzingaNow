@@ -46,7 +46,10 @@ import android.R.menu
 import android.content.Context
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.support.v7.app.ActionBar
 import android.support.v7.widget.Toolbar
+import android.view.Gravity
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import kotlinx.android.synthetic.main.view_user_info.*
 
@@ -99,26 +102,26 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchView = menu.findItem(R.id.action_search)
                 .actionView as SearchView
-        searchView?.setSearchableInfo(searchManager
-                .getSearchableInfo(getComponentName()))
-        searchView?.maxWidth = Integer.MAX_VALUE
-        searchView!!.findViewById<ImageView>(android.support.v7.appcompat.R.id.search_button).setColorFilter(Color.BLACK)
-        searchView!!.findViewById<ImageView>(android.support.v7.appcompat.R.id.search_close_btn).setColorFilter(Color.BLACK)
-        searchView!!.findViewById<View>(android.support.v7.appcompat.R.id.search_plate).background.setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY)
+        searchView.setSearchableInfo(searchManager
+                .getSearchableInfo(componentName))
+        searchView.maxWidth = 5000
+        searchView.findViewById<ImageView>(android.support.v7.appcompat.R.id.search_button).setColorFilter(Color.BLACK)
+        searchView.findViewById<ImageView>(android.support.v7.appcompat.R.id.search_close_btn).setColorFilter(Color.BLACK)
+        searchView.findViewById<View>(android.support.v7.appcompat.R.id.search_plate).background.setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY)
 
-        val searchAutoComplete = searchView?.findViewById<SearchView.SearchAutoComplete>(android.support.v7.appcompat.R.id.search_src_text)
+        val searchAutoComplete = searchView.findViewById<SearchView.SearchAutoComplete>(android.support.v7.appcompat.R.id.search_src_text)
         searchAutoComplete?.setHintTextColor(Color.BLACK)
         searchAutoComplete?.setTextColor(Color.BLACK)
         searchAutoComplete?.setHint(R.string.search_product_hint)
 
-        searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                (products_list.adapter as ProductsAdapter).getFilter().filter(query)
+                (products_list.adapter as ProductsAdapter).filter.filter(query)
                 return false
             }
 
             override fun onQueryTextChange(query: String): Boolean {
-                (products_list.adapter as ProductsAdapter).getFilter().filter(query)
+                (products_list.adapter as ProductsAdapter).filter.filter(query)
                 return false
             }
         })
@@ -126,8 +129,8 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
 
     private fun setUser(user: User) {
         this.user = user
-        mUserPhoto.loadUrl(user?.photoUrl)
-        binding.viewmodel = user?.let { UserViewModel(it) }
+        mUserPhoto.loadUrl(user.photoUrl)
+        binding.viewmodel = user.let { UserViewModel(it) }
     }
 
     private fun openCheckout() {
@@ -227,8 +230,19 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
     override fun onItemSelected(item: Item) {
         (products_list.adapter as ProductsAdapter).setCategory(item.title)
         products_list.scrollToPosition(0)
-        searchView.setQuery("", false)
-        searchView.isIconified = false
+        invalidateOptionsMenu()
+        hideKeyboard()
+    }
+
+    fun hideKeyboard() {
+        val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        //Find the currently focused view, so we can grab the correct window token from it.
+        var view = currentFocus
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = View(this)
+        }
+        imm!!.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     override fun onProductsListGotten(products: ArrayList<Product>) {
@@ -259,12 +273,13 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
     }
 
     override fun onLogInFailure() {
-        Toast.makeText(this, getString(R.string.login_failure), Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, getString(R.string.login_failure), Toast.LENGTH_SHORT).show()
+        finish()
     }
 
     override fun onBackPressed() {
-        if (!searchView?.isIconified!!) {
-            searchView?.isIconified = true
+        if (!searchView.isIconified) {
+            searchView.isIconified = true
             return
         }
         super.onBackPressed()

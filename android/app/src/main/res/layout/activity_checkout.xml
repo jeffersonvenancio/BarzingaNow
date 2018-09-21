@@ -106,20 +106,18 @@
                         android:id="@+id/llFinishOrder"
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:layout_marginLeft="@dimen/giga_margin"
-                        android:layout_marginRight="@dimen/giga_margin"
-                        android:background="@drawable/login_button"
-                        android:clickable="true"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                        android:paddingRight="@dimen/kilo_margin"
+                        android:gravity="center">
 
                         <com.barzinga.customViews.BarzingaTextView
                             android:id="@+id/btFinishOrder"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="CONCLUIR"
+                            android:background="@drawable/background_rectangular"
                             android:gravity="center"
-                            android:textSize="@dimen/default_button_text"/>
+                            android:padding="@dimen/centi_margin"
+                            android:textSize="@dimen/hecto_text"/>
 
                     </LinearLayout>
 

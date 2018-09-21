@@ -38,13 +38,22 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
+                    android:paddingLeft="@dimen/centi_margin"
                     android:orientation="vertical">
+
+                    <com.barzinga.customViews.BarzingaTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.description}"
+                        android:maxLines="2"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:textSize="@dimen/deca_text"
+                        android:textColor="@color/black"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right">
+                        android:layout_height="wrap_content">
 
                         <com.barzinga.customViews.BarzingaTextView
                             android:layout_width="wrap_content"
@@ -60,34 +69,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@{viewModel.price}"
-                            android:textSize="@dimen/mega_text"
+                            android:textSize="@dimen/deca_text"
                             android:layout_gravity="bottom"
                             app:typefaceOpenSans="@string/semibold"
                             android:textColor="@color/black"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/llQtde"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right">
-
-                        <com.barzinga.customViews.BarzingaTextView
-                            android:id="@+id/increaseQtde"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/hecto_text"
-                            android:textColor="@color/white"
-                            android:gravity="center_vertical"
-                            android:layout_gravity="center"
-                            android:layout_margin="@dimen/nano_margin"
-                            android:paddingTop="@dimen/micro_margin"
-                            android:paddingBottom="@dimen/micro_margin"
-                            android:paddingStart="@dimen/mili_margin"
-                            android:paddingEnd="@dimen/mili_margin"
-                            android:background="@drawable/background_rectangular"
-                            android:text="@string/add_to_cart"/>
 
                     </LinearLayout>
 
@@ -95,16 +80,35 @@
 
             </LinearLayout>
 
-            <com.barzinga.customViews.BarzingaTextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.description}"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal"
-                android:textSize="@dimen/kilo_text"
-                android:paddingRight="@dimen/centi_margin"
-                android:paddingLeft="@dimen/centi_margin"
-                android:textColor="@color/black"/>
+                android:gravity="right"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/llQtde"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.barzinga.customViews.BarzingaTextView
+                        android:id="@+id/increaseQtde"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/hecto_text"
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                        android:layout_margin="@dimen/nano_margin"
+                        android:paddingTop="@dimen/micro_margin"
+                        android:paddingBottom="@dimen/micro_margin"
+                        android:paddingStart="@dimen/mili_margin"
+                        android:paddingEnd="@dimen/mili_margin"
+                        android:background="@drawable/background_rectangular"
+                        android:text="@string/add_to_cart"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 

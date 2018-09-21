@@ -61,7 +61,7 @@ class ItemsListFragment : Fragment() {
             listener!!.onItemSelected(i)
         }
 
-        lvItems!!.post(Runnable {
+        lvItems!!.post({
             lvItems!!.setItemChecked(0, true)
         })
 

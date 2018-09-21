@@ -9,9 +9,9 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         android:paddingTop="@dimen/hecto_margin"
-        android:listSelector="@android:color/transparent"
-        android:cacheColorHint="@android:color/transparent"
+        android:listSelector="@color/colorPrimary"
         android:drawSelectorOnTop="false"
+        android:choiceMode="singleChoice"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true">
     </ListView>

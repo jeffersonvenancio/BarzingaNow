@@ -1,65 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_gravity="top"
         android:background="@color/black"/>
 
-    <View
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:background="#99000000" />
-
-    <LinearLayout
-        android:id="@+id/llFinishOrder"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_marginRight="@dimen/kilo_margin"
-        android:background="@drawable/login_button"
-        android:clickable="true"
-        android:gravity="center"
-        android:layout_gravity="center_vertical|right"
-        android:orientation="horizontal">
+        android:background="#99000000"
+        android:paddingTop="@dimen/centi_margin"
+        android:paddingBottom="@dimen/centi_margin"
+        android:paddingLeft="@dimen/kilo_margin"
+        android:paddingRight="@dimen/kilo_margin">
 
-        <com.barzinga.customViews.BarzingaTextView
+        <LinearLayout
+            android:id="@+id/llFinishOrder"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_vertical|right">
+
+            <com.barzinga.customViews.BarzingaTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/finish_shopping"
+                android:paddingTop="@dimen/micro_margin"
+                android:paddingBottom="@dimen/micro_margin"
+                android:paddingStart="@dimen/mili_margin"
+                android:paddingEnd="@dimen/mili_margin"
+                android:background="@drawable/background_rectangular"
+                android:gravity="center"
+                android:padding="@dimen/centi_margin"
+                android:textSize="@dimen/hecto_text"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/finish_shopping"
-            android:gravity="center"
-            android:textSize="22sp"/>
+            android:layout_gravity="center_vertical|left">
 
-    </LinearLayout>
+            <com.barzinga.customViews.BarzingaTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:text="BZG"
+                android:paddingRight="@dimen/micro_margin"
+                app:typefaceOpenSans="@string/semibold"
+                android:textSize="@dimen/deca_text" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/kilo_margin"
-        android:layout_gravity="center_vertical|left">
+            <com.barzinga.customViews.BarzingaTextView
+                android:id="@+id/mOrderPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                app:typefaceOpenSans="@string/semibold"
+                android:textSize="@dimen/giga_text"/>
 
-        <com.barzinga.customViews.BarzingaTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        </LinearLayout>
 
-            android:layout_gravity="bottom"
-            android:text="BZG"
-            android:paddingRight="@dimen/micro_margin"
-            app:typefaceOpenSans="@string/semibold"
-            android:textSize="@dimen/deca_text" />
+    </FrameLayout>
 
-        <com.barzinga.customViews.BarzingaTextView
-            android:id="@+id/mOrderPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            app:typefaceOpenSans="@string/semibold"
-            android:textSize="@dimen/giga_text"/>
-
-    </LinearLayout>
-
-</FrameLayout>
+</LinearLayout>
