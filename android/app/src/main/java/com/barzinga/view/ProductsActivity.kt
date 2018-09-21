@@ -57,15 +57,14 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
     lateinit var viewModel: ProductListViewModel
     lateinit var viewModelMain: MainViewModel
     var searchView: SearchView? = null
-    var rfid : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityProductsBinding = DataBindingUtil.setContentView(this, R.layout.activity_products)
 
-        rfid = getIntent().getStringExtra("USER_RFID")
-        var mToolbar = findViewById<Toolbar>(R.id.toolbar)
+        var mToolbar = findViewById<Toolbar>(R.id.toolbar);
         mToolbar.setBackgroundColor(resources.getColor(R.color.white))
+
         setSupportActionBar(mToolbar);
         getSupportActionBar()!!.setDisplayShowTitleEnabled(false);
 
@@ -78,10 +77,8 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         getUser(binding)
 
         llFinishOrder.setOnClickListener({
-//            logUser(rfid!!)
             openCheckout()
         })
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu):Boolean {
@@ -121,9 +118,8 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
     }
 
     private fun getUser(binding: ActivityProductsBinding) {
-        if (intent?.hasExtra(Constants.USER_EXTRA) == true) {
-            val userJson = intent.getStringExtra(Constants.USER_EXTRA)
-            user = ConvertObjectsUtil.getUserFromJson(userJson)
+        if (this.getIntent()?.hasExtra(Constants.USER_EXTRA) == true) {
+            user = this.getIntent().getSerializableExtra(Constants.USER_EXTRA) as User
             mUserPhotoProduct.loadUrl(user?.photoUrl)
             binding.viewmodel = user?.let { UserViewModel(it) }
         }
@@ -158,10 +154,6 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         val transactionJson = getStringFromObject(transactionParameter)
 
         startActivityForResult(CheckoutActivity.startIntent(this, transactionJson), CHECKOUT_REQUEST)
-    }
-
-    private fun logUser(rfid : String) {
-        viewModelMain.logUserWithRfid(rfid)
     }
 
     private fun setupRecyclerView(products: ArrayList<Product>) {
@@ -251,14 +243,6 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         }
     }
 
-    override fun onLogInSuccess(user: User) {
-        openCheckout()
-    }
-
-    override fun onLogInFailure() {
-        Toast.makeText(this, getString(R.string.login_failure), Toast.LENGTH_SHORT).show()
-    }
-
     override fun onBackPressed() {
         // close search view on back button pressed
         if (!searchView?.isIconified()!!) {
@@ -267,4 +251,11 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         }
         super.onBackPressed()
     }
+
+    override fun onLogInSuccess(user: User) {
+    }
+
+    override fun onLogInFailure() {
+    }
+
 }

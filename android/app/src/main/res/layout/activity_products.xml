@@ -21,7 +21,7 @@
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="100dp">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -32,20 +32,36 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:layout_width="130dp"
-                        android:layout_height="90dp"
-                        android:layout_gravity="left|center_vertical"
-                        android:paddingLeft="@dimen/hecto_margin"
-                        android:src="@drawable/logo_barzinga"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="right|center_vertical"
-                        android:paddingRight="@dimen/mili_margin"
+                        android:layout_gravity="start|center_vertical"
                         android:orientation="horizontal"
-                        android:visibility="gone">
+                        android:paddingRight="@dimen/mili_margin">
+
+                        <ImageView
+                            android:layout_width="130dp"
+                            android:layout_height="90dp"
+                            android:paddingBottom="@dimen/centi_margin"
+                            android:paddingLeft="@dimen/hecto_margin"
+                            android:src="@drawable/logo_barzinga" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="@dimen/centi_margin"
+                            android:layout_marginLeft="@dimen/kilo_margin"
+                            android:layout_marginRight="@dimen/centi_margin"
+                            android:layout_marginTop="@dimen/centi_margin"
+                            android:background="@color/black" />
+
+                        <ImageView
+                            android:id="@+id/mUserPhotoProduct"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:paddingBottom="@dimen/centi_margin"
+                            android:paddingTop="@dimen/centi_margin" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -55,41 +71,45 @@
                             <com.barzinga.customViews.BarzingaTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/black"
-                                android:layout_gravity="bottom"
-                                android:text="BZG"
                                 android:paddingRight="@dimen/micro_margin"
-                                app:typefaceOpenSans="@string/semibold"
-                                android:textSize="@dimen/deca_text" />
-
-                            <com.barzinga.customViews.BarzingaTextView
-                                android:id="@+id/userBalance"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@{viewmodel.user.money > 0 ? @color/black : @color/red}"
-                                android:layout_gravity="bottom"
-                                android:text="@{viewmodel.money}"
-                                app:typefaceOpenSans="@string/semibold"
-                                android:textSize="@dimen/giga_text"/>
+                                android:layout_gravity="center_vertical"
+                                android:text="@{viewmodel.user.name}"
+                                android:textColor="@color/black"
+                                android:textSize="@dimen/deca_text"
+                                app:typefaceOpenSans="@string/semibold" />
 
                         </LinearLayout>
 
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="@dimen/centi_margin"
-                            android:layout_marginTop="@dimen/centi_margin"
-                            android:layout_marginLeft="@dimen/kilo_margin"
-                            android:layout_marginRight="@dimen/centi_margin"
-                            android:background="@color/black"/>
 
-                        <ImageView
-                            android:id="@+id/mUserPhotoProduct"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:paddingBottom="@dimen/centi_margin"
-                            android:paddingTop="@dimen/centi_margin" />
 
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingRight="@dimen/mili_margin">
+
+                        <com.barzinga.customViews.BarzingaTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:paddingRight="@dimen/micro_margin"
+                            android:text="BZG"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/deca_text"
+                            app:typefaceOpenSans="@string/semibold" />
+
+                        <com.barzinga.customViews.BarzingaTextView
+                            android:id="@+id/userBalance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="@{viewmodel.money}"
+                            android:textColor="@{viewmodel.user.money > 0 ? @color/black : @color/red}"
+                            android:textSize="@dimen/giga_text"
+                            app:typefaceOpenSans="@string/semibold" />
                     </LinearLayout>
 
                 </FrameLayout>
