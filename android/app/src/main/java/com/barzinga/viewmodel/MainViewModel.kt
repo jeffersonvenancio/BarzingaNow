@@ -21,9 +21,6 @@ class MainViewModel(application: Application) : AndroidViewModel(application), U
 //        userManager.onViewDestroy()
 //    }
 
-    fun logUser(user: String) {
-        userManager.logIn(user)
-    }
 
     fun logUserWithRfid(rfid: String) {
         userManager.logInWithRfid(rfid)

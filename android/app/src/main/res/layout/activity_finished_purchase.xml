@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.barzinga.viewmodel.UserViewModel"/>
+
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.barzinga.view.MainActivity">
+
+        <include
+            android:id="@+id/mTopBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:viewmodel="@{viewmodel}"
+            layout="@layout/view_top_bar"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <com.barzinga.customViews.BarzingaTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/yotta_margin"
+            android:textSize="@dimen/peta_text"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:text="NEYMAR"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+</layout>
+

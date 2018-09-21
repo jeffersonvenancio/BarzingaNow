@@ -10,17 +10,30 @@ import com.barzinga.manager.RfidManager
 import com.barzinga.viewmodel.RfidViewModel
 import okhttp3.ResponseBody
 import retrofit2.Response
+import com.barzinga.viewmodel.MainViewModel
+import android.widget.Toast
+import com.barzinga.manager.UserManager
+import com.barzinga.model.User
+import com.barzinga.viewmodel.UserViewModel
+import java.util.*
+import kotlin.concurrent.timerTask
 
-class IdentifyRfidActivity : AppCompatActivity(), RfidManager.DataListener {
-    lateinit var viewModelMain: RfidViewModel
+class IdentifyRfidActivity : AppCompatActivity(), RfidManager.DataListener, UserManager.DataListener {
+    lateinit var viewModelRfid: RfidViewModel
+    lateinit var viewModelMain: MainViewModel
+    var user: User? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_identify_rfid)
-        viewModelMain = ViewModelProviders.of(this).get(RfidViewModel::class.java)
+        viewModelRfid = ViewModelProviders.of(this).get(RfidViewModel::class.java)
+        viewModelMain = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
+        viewModelRfid.setListener(this)
         viewModelMain.setListener(this)
-        viewModelMain.getRfid()
+
+        viewModelRfid.getRfid()
     }
 
     companion object {
@@ -33,10 +46,7 @@ class IdentifyRfidActivity : AppCompatActivity(), RfidManager.DataListener {
     }
 
     override fun onRfidSuccess(response: Response<ResponseBody>) {
-        var intent = Intent(this, ProductsActivity::class.java)
-        intent.putExtra(USER_RFID, response.body()!!.string())
-        startActivity(intent)
-        finish()
+        logUser(response.body()!!.string())
     }
 
     override fun onRfidFailure(error: String) {
@@ -44,4 +54,24 @@ class IdentifyRfidActivity : AppCompatActivity(), RfidManager.DataListener {
         finish()
     }
 
+    private fun logUser(rfid : String) {
+        viewModelMain.logUserWithRfid(rfid)
+    }
+
+
+    override fun onLogInSuccess(user: User) {
+        var intent = Intent(this, ProductsActivity::class.java)
+        intent.putExtra("USER_EXTRA", user)
+        startActivity(intent)
+        finish()
+    }
+
+    override fun onLogInFailure() {
+        Toast.makeText(this, getString(R.string.login_failure), Toast.LENGTH_SHORT).show()
+        val timer = Timer()
+        timer.schedule(timerTask {
+            MainActivity.start(this@IdentifyRfidActivity)
+            finish()
+        }, 2000)
+    }
 }

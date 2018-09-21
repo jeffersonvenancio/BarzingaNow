@@ -26,6 +26,11 @@ import kotlinx.android.synthetic.main.activity_checkout.*
 import kotlinx.android.synthetic.main.view_user_info.*
 import okhttp3.ResponseBody
 import retrofit2.Response
+import android.app.AlertDialog
+import android.content.DialogInterface
+import java.util.*
+import kotlin.concurrent.timerTask
+
 
 class CheckoutActivity : AppCompatActivity(), TransactionViewModel.TransactionListener, ProductListViewModel.ProductsListener {
     lateinit var binding: ActivityCheckoutBinding
@@ -96,11 +101,21 @@ class CheckoutActivity : AppCompatActivity(), TransactionViewModel.TransactionLi
             TransactionFinishedActivity.start(this)
             enableButton()
             setResult(Activity.RESULT_OK)
-            MainActivity.start(this@CheckoutActivity)
+            FinishedPurchaseActivity.start(this@CheckoutActivity)
             finish()
         }else{
-            MainActivity.start(this@CheckoutActivity)
-            finish()
+            val builder1 = AlertDialog.Builder(this)
+            builder1.setMessage("Bazinga! Algo deu errado!") //Só quero dizer que barzinga é um nome muito ruim, e TBBT é um show ruim também
+            builder1.setCancelable(true)
+
+            val alert11 = builder1.create()
+            alert11.show()
+
+            val timer = Timer()
+            timer.schedule(timerTask {
+                MainActivity.start(this@CheckoutActivity)
+                finish()
+            }, 3000)
         }
     }
 
