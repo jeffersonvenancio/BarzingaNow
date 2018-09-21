@@ -5,16 +5,16 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import com.barzinga.R
 import com.barzinga.manager.RfidManager
+import com.barzinga.manager.UserManager
+import com.barzinga.model.User
+import com.barzinga.viewmodel.Constants.USER_EXTRA
+import com.barzinga.viewmodel.MainViewModel
 import com.barzinga.viewmodel.RfidViewModel
 import okhttp3.ResponseBody
 import retrofit2.Response
-import com.barzinga.viewmodel.MainViewModel
-import android.widget.Toast
-import com.barzinga.manager.UserManager
-import com.barzinga.model.User
-import com.barzinga.viewmodel.UserViewModel
 import java.util.*
 import kotlin.concurrent.timerTask
 
@@ -37,8 +37,6 @@ class IdentifyRfidActivity : AppCompatActivity(), RfidManager.DataListener, User
     }
 
     companion object {
-        const val USER_RFID = "USER_RFID"
-
         fun start(context: Context) {
             val starter = Intent(context, IdentifyRfidActivity::class.java)
             context.startActivity(starter)
@@ -61,7 +59,7 @@ class IdentifyRfidActivity : AppCompatActivity(), RfidManager.DataListener, User
 
     override fun onLogInSuccess(user: User) {
         var intent = Intent(this, ProductsActivity::class.java)
-        intent.putExtra("USER_EXTRA", user)
+        intent.putExtra(USER_EXTRA, user)
         startActivity(intent)
         finish()
     }

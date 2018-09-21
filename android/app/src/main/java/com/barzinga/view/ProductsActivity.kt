@@ -1,67 +1,48 @@
 package com.barzinga.view
 
 import android.app.Activity
-import android.app.Dialog
 import android.app.SearchManager
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
-import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.SearchView
+import android.support.v7.widget.Toolbar
 import android.view.Menu
-import android.view.MotionEvent
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.EditText
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import com.barzinga.R
-import com.barzinga.customViews.BarzingaEditText
 import com.barzinga.databinding.ActivityProductsBinding
-import com.barzinga.manager.UserManager
 import com.barzinga.model.Item
 import com.barzinga.model.Product
 import com.barzinga.model.User
 import com.barzinga.restClient.parameter.TransactionParameter
-import com.barzinga.util.ConvertObjectsUtil
 import com.barzinga.util.ConvertObjectsUtil.Companion.getStringFromObject
-import com.barzinga.util.launchActivity
 import com.barzinga.util.loadUrl
 import com.barzinga.view.adapter.ProductsAdapter
 import com.barzinga.viewmodel.Constants
 import com.barzinga.viewmodel.Constants.CHECKOUT_REQUEST
-import com.barzinga.viewmodel.MainViewModel
 import com.barzinga.viewmodel.ProductListViewModel
 import com.barzinga.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.activity_products.*
-import kotlinx.android.synthetic.main.dialog_login.*
 import kotlinx.android.synthetic.main.view_bottom_bar.*
-import kotlinx.android.synthetic.main.view_top_bar.*
-import  android.support.v7.widget.SearchView
-import android.databinding.adapters.SearchViewBindingAdapter.setOnQueryTextListener
-import android.content.Context.SEARCH_SERVICE
-import android.R.menu
-import android.content.Context
-import android.graphics.Color
-import android.graphics.PorterDuff
-import android.support.v7.app.ActionBar
-import android.support.v7.widget.Toolbar
-import android.view.Gravity
-import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
 import kotlinx.android.synthetic.main.view_user_info.*
 
 
-class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedListener, ProductListViewModel.ProductsListener,  UserManager.DataListener {
+class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedListener, ProductListViewModel.ProductsListener {
 
     private var user: User? = null
 
     lateinit var viewModel: ProductListViewModel
-    lateinit var viewModelMain: MainViewModel
     lateinit var searchView: SearchView
-    var rfid : String? = null
     lateinit var binding: ActivityProductsBinding
 
 
@@ -69,21 +50,16 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_products)
 
-        rfid = intent.getStringExtra(IdentifyRfidActivity.USER_RFID)
         var mToolbar = findViewById<Toolbar>(R.id.toolbar)
         mToolbar.setBackgroundColor(resources.getColor(R.color.white))
         setSupportActionBar(mToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         viewModel = ViewModelProviders.of(this).get(ProductListViewModel::class.java)
-        viewModelMain = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        viewModelMain.setListener(this)
 
         viewModel.listProducts(this)
 
-        rfid?.let {
-            logUser("12345")
-        }
+        getUser()
 
         llFinishOrder.setOnClickListener({
             openCheckout()
@@ -127,10 +103,12 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         })
     }
 
-    private fun setUser(user: User) {
-        this.user = user
-        mUserPhoto.loadUrl(user.photoUrl)
-        binding.viewmodel = user.let { UserViewModel(it) }
+    private fun getUser() {
+        if (intent?.hasExtra(Constants.USER_EXTRA) == true) {
+            user = intent.getSerializableExtra(Constants.USER_EXTRA) as User?
+            mUserPhoto.loadUrl(user?.photoUrl)
+            binding.viewmodel = user?.let { UserViewModel(it) }
+        }
     }
 
     private fun openCheckout() {
@@ -162,10 +140,6 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         val transactionJson = getStringFromObject(transactionParameter)
 
         startActivityForResult(CheckoutActivity.startIntent(this, transactionJson), CHECKOUT_REQUEST)
-    }
-
-    private fun logUser(rfid : String) {
-        viewModelMain.logUserWithRfid(rfid)
     }
 
     private fun setupRecyclerView(products: ArrayList<Product>) {
@@ -266,15 +240,6 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
                 viewModel.listProducts(this)
             }
         }
-    }
-
-    override fun onLogInSuccess(user: User) {
-        setUser(user)
-    }
-
-    override fun onLogInFailure() {
-//        Toast.makeText(this, getString(R.string.login_failure), Toast.LENGTH_SHORT).show()
-        finish()
     }
 
     override fun onBackPressed() {
