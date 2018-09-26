@@ -55,25 +55,17 @@ def add_app():
 
     user_json = json_data.get('user')
 
-    # user_pin = json_data.get('pin')
-
-    print user_json.get('email')
-
     user = User.query().filter(User.email == user_json.get('email')).get()
 
     products = json_data.get('products')
-
-    # if user_pin != user.pin :
-    #     return str('Pin Invalido'), 303
 
     products_list = []
     quantity_table = {}
 
     for product in products:
-        quantity_table[product['id']] = product['quantity']
-        products_list.append(ndb.Key(Product, product['id']).get())
-
-    print products_list
+        id = int(product['id'])
+        quantity_table[id] = product['quantity']
+        products_list.append(ndb.Key(Product, id).get())
 
     try:
         transaction = Transaction.new(user, products_list, quantity_table)
