@@ -95,7 +95,7 @@ def get_by_rfid(rfid):
         user_json = {
             'name' : user.name,
             'email' : user.email,
-            'credit' : user.money,
+            'money' : user.money,
             'photo_url' : user.photo_url,
             'id' : user.key.id()
         }
