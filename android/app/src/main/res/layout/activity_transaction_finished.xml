@@ -43,7 +43,7 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="@dimen/tera_text"
-                android:text="MUITO OBRIGADO, SUA TRANSAÇÃO FOI CONCLUÍDA!"
+                android:text=""
                 android:orientation="horizontal"/>
 
             <LinearLayout
