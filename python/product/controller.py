@@ -29,11 +29,11 @@ def get_all(category=None):
         if category == 'POSSOCOMPRAR':
             user_logged = session['barzinga_user']
             user = User.query().filter(User.email == user_logged["email"]).get()
-            products = [p.to_dict() for p in Product.query(Product.price <= user.money).fetch()]
+            products = [p.to_dict() for p in Product.query(Product.price <= user.money).order(Product.description).fetch()]
         else:
-            products = [p.to_dict() for p in Product.query(Product.category == category).fetch()]
+            products = [p.to_dict() for p in Product.query(Product.category == category).order(Product.description).fetch()]
     else :
-        products = [p.to_dict() for p in Product.query().fetch()]
+        products = [p.to_dict() for p in Product.query().order(Product.description).fetch()]
 
     return json.dumps(products)
 

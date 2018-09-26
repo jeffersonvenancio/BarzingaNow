@@ -15,4 +15,10 @@
     <string name="sign_in">ENTRAR</string>
     <string name="invalid_token">Token inválido</string>
     <string name="login_failure">Falha no login! Por favor tente novamente.</string>
+    <string name="action_search">Procurar</string>
+    <string name="finish_shopping">FINALIZAR COMPRA</string>
+    <string name="add_to_cart">ADICIONAR</string>
+    <string name="search_product_hint">Digite o nome do produto</string>
+    <string name="scam_qr_code">POR FAVOR, APROXIME O CRACHA</string>
+
 </resources>

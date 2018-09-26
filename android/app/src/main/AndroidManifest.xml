@@ -14,13 +14,21 @@
         <activity
             android:name=".view.ProductsActivity"
             android:screenOrientation="landscape" >
-
         </activity>
         <activity
             android:name=".view.OptionsActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".view.MainActivity"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.IdentifyRfidActivity"
             android:screenOrientation="landscape">
 
         </activity>
@@ -30,11 +38,13 @@
         <activity
             android:name=".view.TransactionFinishedActivity"
             android:screenOrientation="landscape" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".view.FinishedPurchaseActivity"
+            android:screenOrientation="landscape" >
+
         </activity>
     </application>
 

@@ -9,5 +9,5 @@
     android:gravity="center_vertical"
     android:padding="?android:attr/listPreferredItemPaddingLeft"
     android:paddingRight="?android:attr/listPreferredItemPaddingRight"
-    android:background="?android:attr/activatedBackgroundIndicator"
+    android:background="@drawable/category_background"
 />

@@ -10,9 +10,10 @@ import io.reactivex.subjects.PublishSubject
 class ProductViewModel(val product: Product){
     private val clicks = PublishSubject.create<Unit>()
 
-    fun getDescription() = product.description
+    fun getDescription() = product.description?.trim()
     fun getPrice() = String.format("%.2f", product.price)
     fun getQuantity() = product.quantity.toString()
+    fun getQuantityOrdered() = product.quantityOrdered.toString()
 
     fun onClick() {
         clicks.onNext(Unit)

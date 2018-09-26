@@ -28,6 +28,10 @@ interface BarzingaService {
     @retrofit2.http.GET("user/email/{user}")
     fun getProfile(@retrofit2.http.Path("user") user: String): io.reactivex.Observable<User>
 
+    @retrofit2.http.Headers("Bearer: Token Diego")
+    @retrofit2.http.GET("user/rfid/{rfid}")
+    fun getProfileByRfid(@retrofit2.http.Path("rfid") rfid: String): io.reactivex.Observable<User>
+
     companion object Factory {
         fun create(): BarzingaService {
 

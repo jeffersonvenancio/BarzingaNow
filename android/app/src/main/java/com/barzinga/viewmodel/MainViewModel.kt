@@ -4,6 +4,7 @@ import com.barzinga.manager.UserManager
 import com.barzinga.model.User
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
+import com.barzinga.manager.RfidManager
 
 /**
  * Created by diego.santos on 03/10/17.
@@ -20,8 +21,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application), U
 //        userManager.onViewDestroy()
 //    }
 
-    fun logUser(user: String) {
-        userManager.logIn(user)
+
+    fun logUserWithRfid(rfid: String) {
+        userManager.logInWithRfid(rfid)
     }
 
     override fun onLogInSuccess(user: User) {

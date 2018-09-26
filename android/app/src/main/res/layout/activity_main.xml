@@ -58,7 +58,7 @@
                         android:layout_height="wrap_content"
                         android:text="INICIAR"
                         android:gravity="center"
-                        android:textSize="@dimen/default_button_text"/>
+                        android:textSize="@dimen/hecto_text"/>
 
                 </LinearLayout>
 

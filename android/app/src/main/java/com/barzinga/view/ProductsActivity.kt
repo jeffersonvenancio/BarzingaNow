@@ -1,76 +1,111 @@
 package com.barzinga.view
 
 import android.app.Activity
-import android.app.Dialog
+import android.app.SearchManager
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
-import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
-import android.view.MotionEvent
+import android.support.v7.widget.SearchView
+import android.support.v7.widget.Toolbar
+import android.view.Menu
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.EditText
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import com.barzinga.R
-import com.barzinga.customViews.BarzingaEditText
 import com.barzinga.databinding.ActivityProductsBinding
-import com.barzinga.manager.UserManager
 import com.barzinga.model.Item
 import com.barzinga.model.Product
 import com.barzinga.model.User
 import com.barzinga.restClient.parameter.TransactionParameter
-import com.barzinga.util.ConvertObjectsUtil
 import com.barzinga.util.ConvertObjectsUtil.Companion.getStringFromObject
-import com.barzinga.util.launchActivity
 import com.barzinga.util.loadUrl
 import com.barzinga.view.adapter.ProductsAdapter
 import com.barzinga.viewmodel.Constants
 import com.barzinga.viewmodel.Constants.CHECKOUT_REQUEST
-import com.barzinga.viewmodel.MainViewModel
 import com.barzinga.viewmodel.ProductListViewModel
 import com.barzinga.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.activity_products.*
-import kotlinx.android.synthetic.main.dialog_login.*
 import kotlinx.android.synthetic.main.view_bottom_bar.*
-import kotlinx.android.synthetic.main.view_top_bar.*
+import kotlinx.android.synthetic.main.view_user_info.*
 
 
-class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedListener, ProductListViewModel.ProductsListener,  UserManager.DataListener {
+class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedListener, ProductListViewModel.ProductsListener {
 
-    var user: User? = null
+    private var user: User? = null
 
     lateinit var viewModel: ProductListViewModel
-    lateinit var viewModelMain: MainViewModel
-    private lateinit var noActionHandler: Handler
-    private lateinit var noActionRunnable: Runnable
+    lateinit var searchView: SearchView
+    lateinit var binding: ActivityProductsBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityProductsBinding = DataBindingUtil.setContentView(this, R.layout.activity_products)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_products)
+
+        var mToolbar = findViewById<Toolbar>(R.id.toolbar)
+        mToolbar.setBackgroundColor(resources.getColor(R.color.white))
+        setSupportActionBar(mToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         viewModel = ViewModelProviders.of(this).get(ProductListViewModel::class.java)
-        viewModelMain = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        viewModelMain.setListener(this)
 
         viewModel.listProducts(this)
 
-        getUser(binding)
+        getUser()
 
         llFinishOrder.setOnClickListener({
-            logUser()
+            openCheckout()
         })
 
-        createNoActionHandler()
     }
 
-    private fun getUser(binding: ActivityProductsBinding) {
+    override fun onCreateOptionsMenu(menu: Menu):Boolean {
+        menuInflater.inflate(R.menu.product_menus, menu)
+
+        setSearch(menu)
+        return true
+    }
+
+    private fun setSearch(menu: Menu) {
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        searchView = menu.findItem(R.id.action_search)
+                .actionView as SearchView
+        searchView.setSearchableInfo(searchManager
+                .getSearchableInfo(componentName))
+        searchView.maxWidth = 5000
+        searchView.findViewById<ImageView>(android.support.v7.appcompat.R.id.search_button).setColorFilter(Color.BLACK)
+        searchView.findViewById<ImageView>(android.support.v7.appcompat.R.id.search_close_btn).setColorFilter(Color.BLACK)
+        searchView.findViewById<View>(android.support.v7.appcompat.R.id.search_plate).background.setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY)
+
+        val searchAutoComplete = searchView.findViewById<SearchView.SearchAutoComplete>(android.support.v7.appcompat.R.id.search_src_text)
+        searchAutoComplete?.setHintTextColor(Color.BLACK)
+        searchAutoComplete?.setTextColor(Color.BLACK)
+        searchAutoComplete?.setHint(R.string.search_product_hint)
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                (products_list.adapter as ProductsAdapter).filter.filter(query)
+                return false
+            }
+
+            override fun onQueryTextChange(query: String): Boolean {
+                (products_list.adapter as ProductsAdapter).filter.filter(query)
+                return false
+            }
+        })
+    }
+
+    private fun getUser() {
         if (intent?.hasExtra(Constants.USER_EXTRA) == true) {
-            val userJson = intent.getStringExtra(Constants.USER_EXTRA)
-            user = ConvertObjectsUtil.getUserFromJson(userJson)
+            user = intent.getSerializableExtra(Constants.USER_EXTRA) as User?
             mUserPhoto.loadUrl(user?.photoUrl)
             binding.viewmodel = user?.let { UserViewModel(it) }
         }
@@ -107,41 +142,17 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         startActivityForResult(CheckoutActivity.startIntent(this, transactionJson), CHECKOUT_REQUEST)
     }
 
-    private fun createNoActionHandler() {
-        noActionHandler = Handler()
-        noActionRunnable = Runnable {
-            launchActivity<MainActivity>()
-            finish()
-        }
-        noActionHandler.postDelayed(noActionRunnable, 6000)
-    }
-
-    private fun logUser() {
-        val dialog = Dialog(this, R.style.MyDialogTheme)
-        dialog.setContentView(R.layout.dialog_login)
-
-        dialog.rateApp.setOnClickListener {
-            if (!dialog.userEmail.text.toString().isEmpty()) {
-                viewModelMain.logUser(dialog.userEmail.text.toString())
-                dialog.dismiss()
-
-            } else {
-                dialog.userEmail.error = getString(R.string.invalid_user_error)
-            }
-        }
-
-        dialog.show()
-    }
     private fun setupRecyclerView(products: ArrayList<Product>) {
 
         var productsAdapter = ProductsAdapter(this, products, this)
         products_list.apply {
             adapter = productsAdapter
             setHasFixedSize(true)
-            val gridLayout = GridLayoutManager(context, 3)
+            val gridLayout = GridLayoutManager(context, 2)
             layoutManager = gridLayout
         }
 
+        products_list.visibility = VISIBLE
         mLoadingProgress.visibility = GONE
 
         determinePaneLayout(setCategories(products))
@@ -149,12 +160,7 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
 
 
     override fun onProductsQuantityChanged() {
-        val products = (products_list.adapter as ProductsAdapter).getChosenProducts()
-        var currentOrderPrice: Double? = 0.0
-
-        for (product in products.orEmpty()) {
-            product.price?.let { currentOrderPrice = currentOrderPrice?.plus(it) }
-        }
+        var currentOrderPrice: Double? = (products_list.adapter as ProductsAdapter).getCurrentOrderPrice()
 
         if ((currentOrderPrice ?: 0.0) > 0.0) {
             mOrderPrice.text = String.format("%.2f", currentOrderPrice)
@@ -169,7 +175,7 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         val products = products?.sortedBy { it.category }
 
         var categories = ArrayList<Item>()
-        var categoryName = "";
+        var categoryName = ""
 
         for (product in products.orEmpty()) {
             if (categoryName.isEmpty()) {
@@ -198,6 +204,19 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
     override fun onItemSelected(item: Item) {
         (products_list.adapter as ProductsAdapter).setCategory(item.title)
         products_list.scrollToPosition(0)
+        invalidateOptionsMenu()
+        hideKeyboard()
+    }
+
+    fun hideKeyboard() {
+        val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        //Find the currently focused view, so we can grab the correct window token from it.
+        var view = currentFocus
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = View(this)
+        }
+        imm!!.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     override fun onProductsListGotten(products: ArrayList<Product>) {
@@ -211,23 +230,23 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == CHECKOUT_REQUEST && resultCode == Activity.RESULT_OK) {
-            finish()
+        if (requestCode == CHECKOUT_REQUEST) {
+            if(resultCode == Activity.RESULT_OK) {
+                finish()
+            } else {
+                mLoadingProgress.visibility = VISIBLE
+                products_list.visibility = GONE
+                mBottomBar.visibility = GONE
+                viewModel.listProducts(this)
+            }
         }
     }
 
-    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        noActionHandler.removeCallbacks(noActionRunnable)
-        noActionHandler.postDelayed(noActionRunnable,60000)
-        return super.dispatchTouchEvent(ev)
+    override fun onBackPressed() {
+        if (!searchView.isIconified) {
+            searchView.isIconified = true
+            return
+        }
+        super.onBackPressed()
     }
-
-    override fun onLogInSuccess(user: User) {
-        openCheckout()
-    }
-
-    override fun onLogInFailure() {
-        Toast.makeText(this, getString(R.string.login_failure), Toast.LENGTH_SHORT).show()
-    }
-
 }

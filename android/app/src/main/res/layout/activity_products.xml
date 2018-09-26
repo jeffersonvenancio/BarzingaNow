@@ -11,6 +11,7 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        xmlns:bind="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -18,12 +19,33 @@
         android:orientation="vertical"
         tools:context="com.barzinga.view.ProductsActivity">
 
-        <include
-            android:id="@+id/mTopBar"
+
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/view_top_bar"
-            app:viewmodel="@{viewmodel}"/>
+            android:layout_height="100dp">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <include
+                    android:id="@+id/mTopBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:viewmodel="@{viewmodel}"
+                    layout="@layout/view_top_bar"/>
+
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            android:layout_gravity="bottom"/>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -56,6 +78,7 @@
                         android:paddingBottom="@dimen/centi_margin"
                         android:paddingTop="@dimen/centi_margin"
                         android:paddingLeft="@dimen/centi_margin"
+                        android:clipToPadding="false"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent" />
 
@@ -69,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:visibility="gone"
-                layout="@layout/view_bottom_bar"/>
+                layout="@layout/view_bottom_bar" />
 
             <ProgressBar
                 android:id="@+id/mLoadingProgress"
