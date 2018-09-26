@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.content.ContextCompat.startActivity
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.barzinga.R
@@ -32,8 +33,14 @@ class IdentifyRfidActivity : AppCompatActivity(), RfidManager.DataListener, User
 
         viewModelRfid.setListener(this)
         viewModelMain.setListener(this)
+        val str = intent?.extras?.getString("rfid")
+            if (str != null) {
+                logUser(str)
+                return
+        }
 
         viewModelRfid.getRfid()
+
     }
 
     companion object {
