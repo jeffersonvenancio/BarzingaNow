@@ -106,7 +106,7 @@ class CheckoutActivity : AppCompatActivity(), TransactionViewModel.TransactionLi
         }else{
             val builder1 = AlertDialog.Builder(this)
             builder1.setMessage("Bazinga! Algo deu errado!") //Só quero dizer que barzinga é um nome muito ruim, e TBBT é um show ruim também
-            builder1.setCancelable(true)
+            builder1.setCancelable(true)                     // O loco, TBBT é top demais :)
 
             val alert11 = builder1.create()
             alert11.show()
