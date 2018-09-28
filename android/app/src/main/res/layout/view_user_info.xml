@@ -19,27 +19,45 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical">
+            android:layout_gravity="center_vertical"
+            android:paddingTop="@dimen/centi_margin"
+            android:paddingBottom="@dimen/centi_margin"
+            android:orientation="vertical">
 
             <com.barzinga.customViews.BarzingaTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:layout_gravity="bottom"
-                android:text="BZG"
-                android:paddingRight="@dimen/micro_margin"
                 app:typefaceOpenSans="@string/semibold"
-                android:textSize="@dimen/deca_text" />
+                android:textSize="@dimen/kilo_text"
+                android:text="@{viewmodel.user.name}"/>
 
-            <com.barzinga.customViews.BarzingaTextView
-                android:id="@+id/userBalance"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@{viewmodel.user.money > 0 ? @color/black : @color/red}"
-                android:layout_gravity="bottom"
-                android:text="@{viewmodel.money}"
-                app:typefaceOpenSans="@string/semibold"
-                android:textSize="@dimen/giga_text"/>
+                android:layout_gravity="center_vertical">
+
+                <com.barzinga.customViews.BarzingaTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_gravity="bottom"
+                    android:text="@string/bzg"
+                    android:paddingRight="@dimen/micro_margin"
+                    app:typefaceOpenSans="@string/semibold"
+                    android:textSize="@dimen/deca_text" />
+
+                <com.barzinga.customViews.BarzingaTextView
+                    android:id="@+id/userBalance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@{viewmodel.user.money > 0 ? @color/black : @color/red}"
+                    android:layout_gravity="bottom"
+                    android:text="@{viewmodel.money}"
+                    app:typefaceOpenSans="@string/semibold"
+                    android:textSize="@dimen/giga_text"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
