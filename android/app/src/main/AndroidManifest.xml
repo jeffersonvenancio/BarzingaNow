@@ -41,12 +41,6 @@
             android:screenOrientation="landscape" >
 
         </activity>
-
-        <activity
-            android:name=".view.FinishedPurchaseActivity"
-            android:screenOrientation="landscape" >
-
-        </activity>
     </application>
 
 </manifest>
