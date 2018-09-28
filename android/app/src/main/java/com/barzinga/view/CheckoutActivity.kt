@@ -36,6 +36,7 @@ class CheckoutActivity : AppCompatActivity(), TransactionViewModel.TransactionLi
     lateinit var binding: ActivityCheckoutBinding
     lateinit var viewModel: TransactionViewModel
     var transactionParameter: TransactionParameter? = null
+    var price = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,7 +72,7 @@ class CheckoutActivity : AppCompatActivity(), TransactionViewModel.TransactionLi
     }
 
     private fun updatePrice() {
-        val price = (binding.cartProducts.adapter as ProductCartAdapter).getCurrentOrderPrice()
+        price = (binding.cartProducts.adapter as ProductCartAdapter).getCurrentOrderPrice()
 
         if (price != null && price > 0.0) {
             binding.mOrderPrice.text = String.format("%.2f", price)
@@ -97,15 +98,13 @@ class CheckoutActivity : AppCompatActivity(), TransactionViewModel.TransactionLi
 
     override fun onTransactionSuccess(response: Response<ResponseBody>) {
         if (response.code() == 200){
-            var response = response.body()?.string()
-            TransactionFinishedActivity.start(this)
+            TransactionFinishedActivity.start(this, (transactionParameter?.user?.money?.minus(price)).toString())
             enableButton()
             setResult(Activity.RESULT_OK)
-            FinishedPurchaseActivity.start(this@CheckoutActivity)
             finish()
         }else{
             val builder1 = AlertDialog.Builder(this)
-            builder1.setMessage("Bazinga! Algo deu errado!") //Só quero dizer que barzinga é um nome muito ruim, e TBBT é um show ruim também
+            builder1.setMessage(getString(R.string.transaction_error))
             builder1.setCancelable(true)
 
             val alert11 = builder1.create()
