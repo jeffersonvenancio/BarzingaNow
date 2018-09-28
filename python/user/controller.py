@@ -92,7 +92,15 @@ def put_rfid():
 def get_by_rfid(rfid):
     user = User.query().filter(User.rfid == rfid).get()
     if user:
-        return json.dumps(user.to_dict())
+        user_json = {
+            'name' : user.name,
+            'email' : user.email,
+            'money' : user.money,
+            'photo_url' : user.photo_url,
+            'id' : user.key.id()
+        }
+        return json.dumps(user_json)
+
     return '', 404
 
 @user.route('/index', methods=['DELETE'])
