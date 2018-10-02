@@ -50,18 +50,25 @@ def filter():
     if 'post_recommender' in request.url:
         return
 
-    if not 'barzinga_user' in session:
-        auth = request.headers.get('Authorization')
-        if (auth):
-            regex = re.search('Bearer (.*)', auth)
-            if (regex):
-                token = regex.group(1)
-                print('Loggining in %s' % token)
-                verifica_token(token, session)
+    if 'barzinga_user' in session:
+        return 
+
+    # if not 'barzinga_user' in session:
+    #     auth = request.headers.get('Authorization')
+    #     if (auth):
+    #         regex = re.search('Bearer (.*)', auth)
+    #         if (regex):
+    #             token = regex.group(1)
+    #             print('Loggining in %s' % token)
+    #             verifica_token(token, session)
 
     if '/api/auth' not in request.url and '/api/auth/token' not in request.url and '/user' not in request.url:
         if not 'barzinga_user' in session:
             return redirect('/api/auth/')
+
+@app.errorhandler(403)
+def forbidden(e):
+    return 'Acao nao permitida.', 403
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -82,5 +89,5 @@ def on_identity_loaded(sender, identity):
         identity.provides.add(RoleNeed('admin'))
 
 def verifyHeader(request):
-    print request.headers.get('Bearer') == 'Token Diego'
-    return request.headers.get('Bearer') == 'Token Diego';
+    print request.headers.get('Authorization') == 'Bearer NHogQU8SvqDdiFWiJCeQIkDzo1JSEhRH'
+    return request.headers.get('Authorization') == 'Bearer NHogQU8SvqDdiFWiJCeQIkDzo1JSEhRH'
