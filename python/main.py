@@ -51,7 +51,7 @@ def filter():
         return
 
     if 'barzinga_user' in session:
-        return 
+        return
 
     # if not 'barzinga_user' in session:
     #     auth = request.headers.get('Authorization')
@@ -89,5 +89,4 @@ def on_identity_loaded(sender, identity):
         identity.provides.add(RoleNeed('admin'))
 
 def verifyHeader(request):
-    print request.headers.get('Authorization') == 'Bearer NHogQU8SvqDdiFWiJCeQIkDzo1JSEhRH'
     return request.headers.get('Authorization') == 'Bearer NHogQU8SvqDdiFWiJCeQIkDzo1JSEhRH'

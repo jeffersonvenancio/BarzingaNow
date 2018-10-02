@@ -81,8 +81,10 @@ def put_pin():
 def put_rfid():
     user = User.query().filter(User.email == request.form['email']).get()
     rfid = request.form['rfid']
+    name = request.form['name']
     if user:
         user.rfid = rfid
+        user.name = name
         user.put()
         return '', 204
 
