@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 app:typefaceOpenSans="@string/semibold"
-                android:textSize="@dimen/kilo_text"
+                android:textSize="@dimen/deca_text"
                 android:text="@{viewmodel.user.name}"/>
 
             <LinearLayout
@@ -45,7 +45,7 @@
                     android:text="@string/bzg"
                     android:paddingRight="@dimen/micro_margin"
                     app:typefaceOpenSans="@string/semibold"
-                    android:textSize="@dimen/deca_text" />
+                    android:textSize="@dimen/centi_text" />
 
                 <com.barzinga.customViews.BarzingaTextView
                     android:id="@+id/userBalance"
@@ -55,7 +55,7 @@
                     android:layout_gravity="bottom"
                     android:text="@{viewmodel.money}"
                     app:typefaceOpenSans="@string/semibold"
-                    android:textSize="@dimen/giga_text"/>
+                    android:textSize="@dimen/mega_text"/>
 
             </LinearLayout>
 
