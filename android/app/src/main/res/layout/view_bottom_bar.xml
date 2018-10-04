@@ -29,7 +29,7 @@
             <com.barzinga.customViews.BarzingaTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/finish_shopping"
+                android:text="@string/show_shopping"
                 android:paddingTop="@dimen/micro_margin"
                 android:paddingBottom="@dimen/micro_margin"
                 android:paddingStart="@dimen/mili_margin"
