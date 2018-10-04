@@ -83,9 +83,9 @@ class ProductCartAdapter(val context: Context, var products: ArrayList<Product>,
         return extraProducts
     }
 
-    fun getCurrentOrderPrice(): Double? {
+    fun getCurrentOrderPrice(): Double {
         val products = getChosenProducts()
-        var currentOrderPrice: Double? = 0.0
+        var currentOrderPrice: Double = 0.0
 
         for (product in products.orEmpty()) {
             product.price?.let { currentOrderPrice = currentOrderPrice?.plus(it) }

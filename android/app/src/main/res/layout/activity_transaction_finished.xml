@@ -34,7 +34,7 @@
                 android:orientation="horizontal"/>
 
             <com.barzinga.customViews.BarzingaTextView
-                android:id="@+id/llStart"
+                android:id="@+id/transactionCompleteMessage"
                 android:layout_height="match_parent"
                 android:layout_width="wrap_content"
                 android:layout_marginLeft="@dimen/giga_margin"
@@ -43,7 +43,6 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="@dimen/tera_text"
-                android:text=""
                 android:orientation="horizontal"/>
 
             <LinearLayout
