@@ -46,7 +46,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="INICIAR"
+                        android:text="INICIAR COM RFID"
                         android:textSize="@dimen/hecto_text" />
 
                 </LinearLayout>
@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="QRCode"
+                    android:text="INICIAR COM QRCode"
                     android:textSize="@dimen/hecto_text" />
 
             </LinearLayout>

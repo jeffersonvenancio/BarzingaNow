@@ -113,7 +113,7 @@
                             android:id="@+id/btFinishOrder"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="CONCLUIR"
+                            android:text="FINALIZAR COMPRA"
                             android:background="@drawable/background_rectangular"
                             android:gravity="center"
                             android:padding="@dimen/centi_margin"
