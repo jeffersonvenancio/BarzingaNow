@@ -40,7 +40,7 @@ class ProductsAdapter(val context: Context, var products: ArrayList<Product>, va
         mProducts.addAll(products)
         mListener = listener
         ctx = this
-        allProducts = products
+        allProducts.addAll(products)
     }
 
     class ProductFilter() : Filter(){
