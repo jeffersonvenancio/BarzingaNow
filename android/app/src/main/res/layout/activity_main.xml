@@ -25,60 +25,64 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/hecto_margin"
+            android:orientation="vertical"
             android:layout_marginBottom="@dimen/giga_margin">
 
-            <LinearLayout
-                android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="70dp"
-                android:orientation="horizontal"/>
-
-            <FrameLayout
-                android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight="1">
 
                 <LinearLayout
                     android:id="@+id/llStart"
-                    android:layout_height="match_parent"
                     android:layout_width="match_parent"
+                    android:layout_height="88dp"
                     android:layout_marginLeft="@dimen/giga_margin"
                     android:layout_marginRight="@dimen/giga_margin"
                     android:background="@drawable/login_button"
                     android:clickable="true"
                     android:gravity="center"
-                    android:padding="70dp"
+                    android:layout_gravity="center"
                     android:orientation="horizontal">
 
                     <com.barzinga.customViews.BarzingaTextView
                         android:id="@+id/btStartTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="INICIAR"
                         android:gravity="center"
-                        android:textSize="@dimen/default_button_text"/>
+                        android:text="INICIAR COM RFID"
+                        android:textSize="@dimen/hecto_text" />
 
                 </LinearLayout>
 
-                <ProgressBar
+
+            <LinearLayout
+                android:id="@+id/llQRCode"
+                android:layout_width="match_parent"
+                android:layout_height="88dp"
+                android:layout_marginLeft="@dimen/giga_margin"
+                android:layout_marginRight="@dimen/giga_margin"
+                 android:layout_marginTop="8dp"
+                android:background="@drawable/login_button"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.barzinga.customViews.BarzingaTextView
+                    android:id="@+id/btQRCodeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="INICIAR COM QRCode"
+                    android:textSize="@dimen/hecto_text" />
+
+            </LinearLayout>
+
+
+            <ProgressBar
                     android:id="@+id/pbLoading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:visibility="gone"
                     android:indeterminate="true"/>
-
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="70dp"
-                android:orientation="horizontal"/>
 
         </LinearLayout>
 

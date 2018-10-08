@@ -5,41 +5,38 @@ import com.barzinga.restClient.RepositoryProvider
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import okhttp3.ResponseBody
+import retrofit2.Response
 
 /**
  * Created by diego.santos on 03/10/17.
  */
-class UserManager(internal var mListener: DataListener) {
+class RfidManager(internal var mListener: DataListener) {
 
     fun onViewDestroy() {
 
     }
 
-    fun logInWithRfid(rfid: String) {
+    fun getRfid() {
         val compositeDisposable: CompositeDisposable = CompositeDisposable()
         val repository = RepositoryProvider.provideUserRepository()
 
         compositeDisposable.add(
-                repository.getProfileByRfid(rfid)
+                repository.getRFID()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .subscribe ({
                             result ->
-                            mListener.onLogInSuccess(result)
+                            mListener.onRfidSuccess(result)
                         }, { error ->
                             error.printStackTrace()
-                            mListener.onLogInFailure()
+                            mListener.onRfidFailure(error.toString())
                         })
         )
     }
 
-
-    fun logOut() {
-
-    }
-
     interface DataListener {
-        fun onLogInSuccess(user: User)
-        fun onLogInFailure()
+        fun onRfidSuccess(response: Response<ResponseBody>)
+        fun onRfidFailure(error : String)
     }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.barzinga.R
 import com.barzinga.util.launchActivity
+import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -16,10 +17,29 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         llStart.setOnClickListener({
-            launchActivity<OptionsActivity>()
+            launchActivity<IdentifyRfidActivity>()
         })
+        llQRCode.setOnClickListener({
+           val integrador =  IntentIntegrator(this)
+            integrador.setCameraId(1)
+            integrador.initiateScan()
+        })
+
     }
 
+    override  fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data)
+        if (result != null ) {
+            val bundle = Bundle()
+            bundle.putString("rfid",result.contents)
+
+            val intent = Intent(this, IdentifyRfidActivity::class.java )
+            intent.putExtra("rfid",result.contents)
+            startActivity(intent)
+
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
     companion object {
         fun start(context: Context) {
             val starter = Intent(context, MainActivity::class.java)

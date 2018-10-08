@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.barzinga.viewmodel.ProductViewModel"/>
+
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="@dimen/centi_margin"
+        android:layout_marginEnd="@dimen/centi_margin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/mProductImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="@dimen/centi_margin"
+                android:layout_gravity="center_vertical"/>
+
+            <com.barzinga.customViews.BarzingaTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@{viewModel.description}"
+                android:ellipsize="end"
+                android:layout_gravity="center_vertical"
+                android:textSize="@dimen/kilo_text"
+                android:paddingRight="@dimen/centi_margin"
+                android:paddingLeft="@dimen/centi_margin"
+                android:textColor="@color/black"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <com.barzinga.customViews.BarzingaTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.quantityOrdered}"
+                    app:typefaceOpenSans="@string/semibold"
+                    android:textSize="@dimen/mega_text"
+                    android:paddingRight="@dimen/nano_margin"
+                    android:layout_gravity="bottom"
+                    android:textColor="@color/black"/>
+
+                <com.barzinga.customViews.BarzingaTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="X"
+                    app:typefaceOpenSans="@string/regular"
+                    android:textSize="@dimen/mega_text"
+                    android:paddingRight="@dimen/nano_margin"
+                    android:layout_gravity="bottom"
+                    android:textColor="@color/black"/>
+
+                <com.barzinga.customViews.BarzingaTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BZG"
+                    app:typefaceOpenSans="@string/semibold"
+                    android:textSize="@dimen/centi_text"
+                    android:paddingRight="@dimen/nano_margin"
+                    android:layout_gravity="bottom"
+                    android:textColor="@color/black"/>
+
+                <com.barzinga.customViews.BarzingaTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.price}"
+                    android:textSize="@dimen/mega_text"
+                    android:layout_gravity="bottom"
+                    app:typefaceOpenSans="@string/semibold"
+                    android:textColor="@color/black"/>
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/deleteButton"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:scaleType="fitCenter"
+                android:background="@null"
+                android:layout_margin="@dimen/centi_margin"
+                android:src="@drawable/ic_delete"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+</layout>

@@ -50,18 +50,25 @@ def filter():
     if verifyHeader(request):
         return
 
-    if not 'barzinga_user' in session:
-        auth = request.headers.get('Authorization')
-        if (auth):
-            regex = re.search('Bearer (.*)', auth)
-            if (regex):
-                token = regex.group(1)
-                print('Loggining in %s' % token)
-                verifica_token(token, session)
+    if 'barzinga_user' in session:
+        return
+
+    # if not 'barzinga_user' in session:
+    #     auth = request.headers.get('Authorization')
+    #     if (auth):
+    #         regex = re.search('Bearer (.*)', auth)
+    #         if (regex):
+    #             token = regex.group(1)
+    #             print('Loggining in %s' % token)
+    #             verifica_token(token, session)
 
     if '/api/auth' not in request.url and '/api/auth/token' not in request.url and '/user' not in request.url:
         if not 'barzinga_user' in session:
             return redirect('/api/auth/')
+
+@app.errorhandler(403)
+def forbidden(e):
+    return 'Acao nao permitida.', 403
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -75,4 +82,4 @@ def verifyCronHeader(request):
     return request.headers.get('X-Appengine-Cron')
 
 def verifyHeader(request):
-    return request.headers.get('Authorization') == 'Bearer: Update'
+    return request.headers.get('Authorization') == 'Bearer NHogQU8SvqDdiFWiJCeQIkDzo1JSEhRH'

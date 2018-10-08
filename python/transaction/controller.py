@@ -31,27 +31,7 @@ def get_by_id(transaction_id):
 
 @transaction.route('/', methods=['POST'])
 def add():
-    logged_user = session['barzinga_user']
-    logged_user = User.query().filter(User.email == logged_user["email"]).get()
-
-    products = json.loads(request.form['products'])
-
-    products_list = []
-    quantity_table = {}
-
-    for product in products:
-        quantity_table[product['id']] = product['quantity']
-        products_list.append(ndb.Key(Product, product['id']).get())
-
-    print products_list
-
-    try:
-        transaction = Transaction.new(logged_user, products_list, quantity_table)
-        transaction.put()
-    except Exception as e:
-        return str(e), 400
-
-    return '', 204
+    return 'Compra nao permitida', 403
 
 @transaction.route('/app', methods=['POST'])
 def add_app():
@@ -60,25 +40,17 @@ def add_app():
 
     user_json = json_data.get('user')
 
-    user_pin = json_data.get('pin')
-
-    print user_json.get('email')
-
     user = User.query().filter(User.email == user_json.get('email')).get()
 
     products = json_data.get('products')
-
-    if user_pin != user.pin :
-        return str('Pin Invalido'), 303
 
     products_list = []
     quantity_table = {}
 
     for product in products:
-        quantity_table[product['id']] = product['quantity']
-        products_list.append(ndb.Key(Product, product['id']).get())
-
-    print products_list
+        id = int(product['id'])
+        quantity_table[id] = product['quantity']
+        products_list.append(ndb.Key(Product, id).get())
 
     try:
         transaction = Transaction.new(user, products_list, quantity_table)
@@ -204,9 +176,28 @@ def transactions_all(start=None, end=None):
     make_blob_public(str(transactionsJson), start)
     return json.dumps(transactionsJson)
 
-@transaction.route('/sumarize_all', methods=['GET'])
+@transaction.route('/sumarize/', methods=['GET'])
 def sumarize_all():
     transactions = Transaction.query().fetch()
+    value =  0
+    for t in transactions:
+        value +=t.value
+
+    return json.dumps(value)
+
+@transaction.route('/sum/<string:start>/<string:end>', methods=['GET'], strict_slashes=True)
+def sum_value(start=None, end=None):
+
+    if start is None or end is None:
+        return 'No start or end date use: sum/01-01-1970/02-02-1970', 404
+    else:
+        splitStart = start.split('-')
+        from_date = datetime.datetime(year=int(splitStart[2]), month=int(splitStart[1]), day=int(splitStart[0]))
+        splitEnd = end.split('-')
+        to_date = datetime.datetime(year=int(splitEnd[2]), month=int(splitEnd[1]), day=int(splitEnd[0]))
+
+        transactions = Transaction.query().filter(Transaction.date <= to_date, Transaction.date >= from_date).fetch()
+
     value =  0
     for t in transactions:
         value +=t.value

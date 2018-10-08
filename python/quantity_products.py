@@ -14,4 +14,4 @@ with open('products.csv', 'rb') as data:
         url += "/quantity"
         data = {"quantity": int(line[4])}
         print data
-        print requests.put(url, data=data, headers=headers, params=params)
+        print requests.post(url, data=data, headers=headers, params=params)

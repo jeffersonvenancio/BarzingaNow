@@ -26,125 +26,114 @@
 
         <View
             android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            android:layout_gravity="bottom"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1">
 
-        <com.barzinga.customViews.BarzingaTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/tera_margin"
-            android:textSize="@dimen/peta_text"
-            android:textColor="@color/black"
-            android:gravity="center"
-            android:text="DIGITE O SEU TOKEN PARA CONCLUIR"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/cartProducts"
+                android:layout_width="match_parent"
+                app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                android:background="@color/background"
+                android:clipToPadding="false"
+                android:paddingTop="@dimen/centi_margin"
+                android:layout_height="match_parent"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
+            <View
+                android:id="@+id/blockListView"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight=".5"
-                android:gravity="center"
-                android:orientation="horizontal"/>
+                android:visibility="gone"
+                android:clickable="true" />
 
-            <LinearLayout
-                android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.barzinga.customViews.BarzingaEditText
-                    android:id="@+id/userToken"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="40sp"
-                    android:textColor="#000"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:backgroundTint="@color/black"
-                    android:textCursorDrawable="@null"
-                    android:layout_marginBottom="@dimen/hecto_margin"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight=".5"
-                android:gravity="center"
-                android:orientation="horizontal"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/centi_text"
-            android:layout_marginTop="@dimen/hecto_margin">
-
-            <LinearLayout
-                android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="70dp"
-                android:orientation="horizontal"/>
-
-            <FrameLayout
-                android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight="1">
-
-                <LinearLayout
-                    android:id="@+id/llFinishOrder"
-                    android:layout_height="match_parent"
-                    android:layout_width="match_parent"
-                    android:layout_marginLeft="@dimen/giga_margin"
-                    android:layout_marginRight="@dimen/giga_margin"
-                    android:background="@drawable/login_button"
-                    android:clickable="true"
-                    android:gravity="center"
-                    android:padding="70dp"
-                    android:orientation="horizontal">
-
-                    <com.barzinga.customViews.BarzingaTextView
-                        android:id="@+id/btFinishOrder"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="CONCLUIR"
-                        android:gravity="center"
-                        android:textSize="@dimen/default_button_text"/>
-
-                </LinearLayout>
-
-                <ProgressBar
-                    android:id="@+id/pbLoading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:visibility="gone"
-                    android:indeterminate="true"/>
-
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="70dp"
-                android:orientation="horizontal"/>
-
-        </LinearLayout>
+        </FrameLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="1dp"
+            android:layout_gravity="top"
+            android:background="@color/black"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:layout_marginBottom="@dimen/centi_text"
+            android:layout_marginTop="@dimen/hecto_margin">
+
+            <FrameLayout
+                android:layout_height="match_parent"
+                android:layout_width="match_parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/kilo_margin"
+                    android:layout_gravity="center_vertical|left">
+
+                    <com.barzinga.customViews.BarzingaTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_gravity="bottom"
+                        android:text="BZG"
+                        android:paddingRight="@dimen/micro_margin"
+                        app:typefaceOpenSans="@string/semibold"
+                        android:textSize="@dimen/deca_text" />
+
+                    <com.barzinga.customViews.BarzingaTextView
+                        android:id="@+id/mOrderPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:textColor="@color/black"
+                        app:typefaceOpenSans="@string/semibold"
+                        android:textSize="@dimen/giga_text"/>
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right">
+
+                    <LinearLayout
+                        android:id="@+id/llFinishOrder"
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:paddingRight="@dimen/kilo_margin"
+                        android:gravity="center">
+
+                        <com.barzinga.customViews.BarzingaTextView
+                            android:id="@+id/btFinishOrder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="FINALIZAR COMPRA"
+                            android:background="@drawable/background_rectangular"
+                            android:gravity="center"
+                            android:padding="@dimen/centi_margin"
+                            android:textSize="@dimen/hecto_text"/>
+
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/pbLoading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="gone"
+                        android:indeterminate="true"/>
+
+                </FrameLayout>
+
+            </FrameLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 

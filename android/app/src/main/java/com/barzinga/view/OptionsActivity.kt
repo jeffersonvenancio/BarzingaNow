@@ -16,7 +16,7 @@ import com.barzinga.viewmodel.Constants
 import com.barzinga.viewmodel.Constants.USER_EXTRA
 import com.barzinga.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.activity_options.*
-import kotlinx.android.synthetic.main.view_top_bar.*
+import kotlinx.android.synthetic.main.view_user_info.*
 
 class OptionsActivity : AppCompatActivity() {
 
