@@ -101,9 +101,7 @@ def modify(product_id):
 
 @product.route('/<int:product_id>/quantity', methods=['PUT'])
 def update_quantity(product_id):
-    print product_id
     product = Product.get_by_id(product_id)
-
     product.quantity = int(request.form['quantity'])
     product.put()
 
