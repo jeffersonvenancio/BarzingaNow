@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#99000000"
+        android:clickable="true"
         android:paddingTop="@dimen/centi_margin"
         android:paddingBottom="@dimen/centi_margin"
         android:paddingLeft="@dimen/kilo_margin"
