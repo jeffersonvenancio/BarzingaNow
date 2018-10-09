@@ -44,10 +44,10 @@ def meu_ip():
 
 @app.before_request
 def filter():
-    if verifyHeader(request):
+    if verifyCronHeader(request):
         return
 
-    if 'post_recommender' in request.url:
+    if verifyHeader(request):
         return
 
     if 'barzinga_user' in session:
@@ -78,15 +78,8 @@ def page_not_found(e):
 def application_error(e):
     return 'Sorry, unexpected error: {}'.format(e), 500
 
-@identity_loaded.connect_via(app)
-def on_identity_loaded(sender, identity):
-    user_json = session['barzinga_user']
-    user = User.query().filter(User.email == user_json["email"]).get()
-
-    identity.user = user.key.id()
-
-    if user.admin :
-        identity.provides.add(RoleNeed('admin'))
+def verifyCronHeader(request):
+    return request.headers.get('X-Appengine-Cron')
 
 def verifyHeader(request):
     return request.headers.get('Authorization') == 'Bearer NHogQU8SvqDdiFWiJCeQIkDzo1JSEhRH'

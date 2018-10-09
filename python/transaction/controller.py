@@ -1,7 +1,12 @@
+import os
 import json
+import cloudstorage as gcs
 import datetime
 
 from flask import Blueprint, request, session
+
+from google.appengine.api import app_identity
+
 from google.appengine.ext import ndb
 
 from transaction.model import Transaction, TransactionItem
@@ -65,11 +70,11 @@ def transactions_user():
     trans = [];
 
     for t in transactions:
-        transa = {}
-        transa['id'] = str(t.key)
-        transa['user'] = logged_user.name.encode('utf-8').strip()
-        transa['value'] = str(t.value)
-        transa['date'] = str(t.date.strftime('%d/%m/%y - %H:%M'))
+        transact = {}
+        transact['id'] = str(t.key)
+        transact['user'] = logged_user.name.encode('utf-8').strip()
+        transact['value'] = str(t.value)
+        transact['date'] = str(t.date.strftime('%d/%m/%y - %H:%M'))
         itens = []
         for it in t.items :
             item = {}
@@ -85,8 +90,8 @@ def transactions_user():
             item['quantity'] = str(transaction_item.quantity)
             itens.append(item)
 
-        transa['itens'] = itens
-        trans.append(transa)
+        transact['itens'] = itens
+        trans.append(transact)
 
     return json.dumps(trans)
 
@@ -107,14 +112,29 @@ def transactions_alll():
         for it in t.items :
             item = {}
             transaction_item = it.get()
-            item['product'] = transaction_item.product.get().description
+
+            prod = transaction_item.product.get()
+            item['product'] = 'Nao Existe Mais'
+
+            if prod :
+                item['product'] = prod.description
+
             item['quantity'] = transaction_item.quantity
             itens.append(item)
 
         transa['itens'] = itens
         trans.append(transa)
 
+    make_blob_public(str(json.dumps(trans)))
     return json.dumps(trans)
+
+def make_blob_public(usersJson, name=None):
+    bucket_name = os.environ.get('BUCKET_NAME', app_identity.get_default_gcs_bucket_name())
+    write_retry_params = gcs.RetryParams(backoff_factor=1.1)
+    filename = '/' + bucket_name + '/00_Reports/transactions_'+name+'.json'
+    gcs_file = gcs.open(filename, 'w', content_type='json', retry_params=write_retry_params)
+    gcs_file.write(usersJson)
+    gcs_file.close()
 
 @transaction.route('/transactions_all/<string:start>/<string:end>', methods=['GET'], strict_slashes=True)
 def transactions_all(start=None, end=None):
@@ -153,6 +173,7 @@ def transactions_all(start=None, end=None):
         transactionJson["itens"] = itensJson
         transactionsJson.append(transactionJson)
 
+    make_blob_public(str(transactionsJson), start)
     return json.dumps(transactionsJson)
 
 @transaction.route('/sumarize/', methods=['GET'])
@@ -186,7 +207,7 @@ def sum_value(start=None, end=None):
 @transaction.route('/dispatch', methods=['GET'])
 def dispatch_task():
     from google.appengine.api import taskqueue
-    task = taskqueue.add(url='/api/transaction/post_recommender')
+    task = taskqueue.add(url='/api/transaction/extract_all')
     return str(task), 200
 
 @transaction.route('/post_recommender', methods=['POST'])

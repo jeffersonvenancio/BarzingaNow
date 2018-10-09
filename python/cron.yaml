@@ -1,0 +1,8 @@
+cron:
+- description: "json de users"
+  url: /api/user/cron/all
+  schedule: 1 of month 02:00
+  retry_parameters:
+    min_backoff_seconds: 2.5
+    max_doublings: 5
+
