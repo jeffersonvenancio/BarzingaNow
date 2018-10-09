@@ -55,7 +55,6 @@ class IdentifyRfidActivity : AppCompatActivity(), RfidManager.DataListener, User
     }
 
     override fun onRfidFailure(error: String) {
-        MainActivity.start(this@IdentifyRfidActivity)
         finish()
     }
 
@@ -75,7 +74,6 @@ class IdentifyRfidActivity : AppCompatActivity(), RfidManager.DataListener, User
         Toast.makeText(this, getString(R.string.login_failure), Toast.LENGTH_SHORT).show()
         val timer = Timer()
         timer.schedule(timerTask {
-            MainActivity.start(this@IdentifyRfidActivity)
             finish()
         }, 2000)
     }
