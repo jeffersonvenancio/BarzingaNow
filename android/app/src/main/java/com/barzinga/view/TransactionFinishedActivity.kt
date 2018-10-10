@@ -19,10 +19,7 @@ class TransactionFinishedActivity : AppCompatActivity() {
 
         val timer = Timer()
         timer.schedule(timerTask {
-
-            MainActivity.start(this@TransactionFinishedActivity)
             finish()
-
         }, 4000)
 
     }
