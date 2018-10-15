@@ -98,7 +98,7 @@ class CheckoutActivity : AppCompatActivity(), TransactionViewModel.TransactionLi
 
     override fun onTransactionSuccess(response: Response<ResponseBody>) {
         if (response.code() == 200){
-            TransactionFinishedActivity.start(this, (transactionParameter?.user?.money?.minus(price)).toString())
+            TransactionFinishedActivity.start(this, transactionParameter?.user?.money?.minus(price))
             enableButton()
             setResult(Activity.RESULT_OK)
             finish()

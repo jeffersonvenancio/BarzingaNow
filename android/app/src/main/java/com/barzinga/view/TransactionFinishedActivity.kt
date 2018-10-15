@@ -14,15 +14,12 @@ class TransactionFinishedActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transaction_finished)
 
-        val money = intent.getStringExtra(MONEY)
-        transactionCompleteMessage.text = getString(R.string.transaction_finished, money)
+        val money = intent.getDoubleExtra(MONEY, 0.0)
+        transactionCompleteMessage.text = getString(R.string.transaction_finished, String.format("%.2f", money))
 
         val timer = Timer()
         timer.schedule(timerTask {
-
-            MainActivity.start(this@TransactionFinishedActivity)
             finish()
-
         }, 4000)
 
     }
@@ -30,7 +27,7 @@ class TransactionFinishedActivity : AppCompatActivity() {
     companion object {
         private const val MONEY = "MONEY"
 
-        fun start(context: Context, money: String) {
+        fun start(context: Context, money: Double?) {
             val starter = Intent(context, TransactionFinishedActivity::class.java)
             starter.putExtra(MONEY, money)
             context.startActivity(starter)

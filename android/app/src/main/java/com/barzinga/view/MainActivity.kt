@@ -24,19 +24,21 @@ class MainActivity : AppCompatActivity() {
             integrador.setCameraId(1)
             integrador.initiateScan()
         })
-
     }
 
     override  fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data)
-        if (result != null ) {
+        val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        if (result != null) {
             val bundle = Bundle()
-            bundle.putString("rfid",result.contents)
+            bundle.putString("rfid", result.contents)
 
-            val intent = Intent(this, IdentifyRfidActivity::class.java )
-            intent.putExtra("rfid",result.contents)
-            startActivity(intent)
-
+            if (result.contents != null && !result.contents.isEmpty()) {
+                val intent = Intent(this, IdentifyRfidActivity::class.java )
+                intent.putExtra("rfid",result.contents)
+                startActivity(intent)
+            } else {
+                startActivity(this.intent)
+            }
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
@@ -46,5 +48,4 @@ class MainActivity : AppCompatActivity() {
             context.startActivity(starter)
         }
     }
-
 }
