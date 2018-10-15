@@ -83,3 +83,13 @@ def verifyCronHeader(request):
 
 def verifyHeader(request):
     return request.headers.get('Authorization') == 'Bearer NHogQU8SvqDdiFWiJCeQIkDzo1JSEhRH'
+
+@identity_loaded.connect_via(app)
+def on_identity_loaded(sender, identity):
+    user_json = session['barzinga_user']
+    user = User.query().filter(User.email == user_json["email"]).get()
+
+    identity.user = user.key.id()
+
+    if user.admin :
+        identity.provides.add(RoleNeed('admin'))
