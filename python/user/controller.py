@@ -55,8 +55,9 @@ def filter():
 def add():
     name = request.form['name']
     email = request.form['email']
+    rfid = request.form['rfid']
 
-    user = User(name=name, email=email, admin=False, photo_url='', money=0, rfid=str(''))
+    user = User(name=name, email=email, admin=False, photo_url='', money=0, rfid=rfid)
     user.put()
 
     user_document = search.Document(
