@@ -89,7 +89,8 @@ def on_identity_loaded(sender, identity):
     user_json = session['barzinga_user']
     user = User.query().filter(User.email == user_json["email"]).get()
 
-    identity.user = user.key.id()
+    if user:
+        identity.user = user.key.id()
 
-    if user.admin :
-        identity.provides.add(RoleNeed('admin'))
+        if user.admin :
+            identity.provides.add(RoleNeed('admin'))
