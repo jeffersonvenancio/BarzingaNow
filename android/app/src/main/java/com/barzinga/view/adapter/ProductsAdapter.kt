@@ -149,9 +149,9 @@ class ProductsAdapter(val context: Context, var products: ArrayList<Product>, va
 
         for (product in products) {
             if ((product.quantityOrdered ?: 0) > 0) {
-                for (i in 0 until (product.quantityOrdered ?: 0)) {
+                //for (i in 0 until (product.quantityOrdered ?: 0)) {
                     extraProducts.add(product)
-                }
+                //}
             }
         }
 
@@ -176,7 +176,9 @@ class ProductsAdapter(val context: Context, var products: ArrayList<Product>, va
         var currentOrderPrice: Double? = 0.0
 
         for (product in products) {
-            product.price?.let { currentOrderPrice = currentOrderPrice?.plus(it) }
+            if((product.quantityOrdered ?: 0) > 0)
+                currentOrderPrice = currentOrderPrice?.plus((product.price ?: 0.0).times((product.quantityOrdered ?: 0)))
+            //product.price?.let { currentOrderPrice = currentOrderPrice?.plus(it) }
         }
         return currentOrderPrice
     }

@@ -116,26 +116,13 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         val products = (products_list.adapter as ProductsAdapter).getChosenProducts()
         val transactionProducts = ArrayList<Product>()
 
-        var currentProduct: Product? = null
-
         for (product in products) {
-
-            if (currentProduct == null) {
-                currentProduct = product
-            }
-
-            if (!currentProduct.description.equals(product.description)) {
-
-                currentProduct.quantity = currentProduct.quantityOrdered
-                currentProduct.let { it1 -> transactionProducts.add(it1) }
-
-                currentProduct = null
-
+            if((product.quantityOrdered ?: 0) > 0)
+            {
+                product.quantity = product.quantityOrdered
+                transactionProducts.add(product)
             }
         }
-
-        currentProduct?.quantity = currentProduct?.quantityOrdered
-        currentProduct?.let { it1 -> transactionProducts.add(it1) }
 
         val transactionParameter = TransactionParameter(user, "", transactionProducts)
         val transactionJson = getStringFromObject(transactionParameter)
