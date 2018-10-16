@@ -39,8 +39,8 @@ class IdentifyRfidActivity : AppCompatActivity(), RfidManager.DataListener, User
                 return
         }
 
-//        viewModelRfid.getRfid()
-logUser("0006915991")
+       viewModelRfid.getRfid()
+//logUser("0006915991")
     }
 
     companion object {
