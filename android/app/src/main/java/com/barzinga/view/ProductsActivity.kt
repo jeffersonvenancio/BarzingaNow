@@ -126,10 +126,10 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
 
             if (!currentProduct.description.equals(product.description)) {
 
-                product.quantity = product.quantityOrdered
+                currentProduct.quantity = currentProduct.quantityOrdered
                 currentProduct.let { it1 -> transactionProducts.add(it1) }
 
-                currentProduct = product
+                currentProduct = null
 
             }
         }

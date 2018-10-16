@@ -66,6 +66,7 @@ class CheckoutActivity : AppCompatActivity(), TransactionViewModel.TransactionLi
             disableButton()
             disableList()
             transactionParameter?.pin = "Token Diego"
+            transactionParameter?.products = (binding.cartProducts.adapter as ProductCartAdapter).getCartProducts()
             viewModel.buyProducts(transactionParameter, this)
         })
     }
@@ -73,7 +74,7 @@ class CheckoutActivity : AppCompatActivity(), TransactionViewModel.TransactionLi
     private fun updatePrice() {
         price = (binding.cartProducts.adapter as ProductCartAdapter).getCurrentOrderPrice()
 
-        if (price != null && price > 0.0) {
+        if (price > 0.0) {
             binding.mOrderPrice.text = String.format("%.2f", price)
         } else {
             setResult(Activity.RESULT_CANCELED)
@@ -140,7 +141,7 @@ class CheckoutActivity : AppCompatActivity(), TransactionViewModel.TransactionLi
 
     private fun setupRecyclerView(products: List<Product>) {
 
-        var productsAdapter = ProductCartAdapter(this, products as ArrayList<Product>, this)
+        val productsAdapter = ProductCartAdapter(this, products as ArrayList<Product>, this)
         cartProducts.apply {
             adapter = productsAdapter
             setHasFixedSize(true)
