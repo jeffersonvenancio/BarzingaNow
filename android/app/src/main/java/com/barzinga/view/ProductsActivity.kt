@@ -182,11 +182,13 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
                 categoryName = product.category.toString()
             }
 
-            if (!categoryName.equals(product.category)) {
+            if (categoryName != product.category) {
                 categories.add(Item(categoryName, ""))
                 categoryName = product.category.toString()
             }
         }
+
+        categories.add(Item(categoryName, ""))
 
         return categories
     }
