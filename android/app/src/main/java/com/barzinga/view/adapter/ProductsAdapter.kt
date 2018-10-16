@@ -15,7 +15,6 @@ import com.barzinga.model.Product
 import com.barzinga.viewmodel.ProductListViewModel
 import com.barzinga.viewmodel.ProductViewModel
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.activity_products.*
 import kotlin.collections.ArrayList
 
 /**
@@ -23,7 +22,7 @@ import kotlin.collections.ArrayList
  */
 class ProductsAdapter(val context: Context, var products: ArrayList<Product>, val listener: ProductListViewModel.ProductsListener) : RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>(), Filterable{
     override fun getFilter(): Filter {
-        return ProductFilter()
+        return ProductFilter(this)
     }
 
     private var itemClick: ((Product) -> Unit)? = null
@@ -32,50 +31,59 @@ class ProductsAdapter(val context: Context, var products: ArrayList<Product>, va
         var mProducts = ArrayList<Product>()
         var mListener: ProductListViewModel.ProductsListener? = null
         var mProductsFiltered = ArrayList<Product>()
-        var ctx: ProductsAdapter? = null
-        var allProducts = ArrayList<Product>()
+        val allProducts = ArrayList<Product>()
+        var currentCategory = ""
     }
 
     init {
         mProducts.addAll(products)
         mListener = listener
-        ctx = this
         allProducts.addAll(products)
     }
 
-    class ProductFilter() : Filter(){
+    @Suppress("UNCHECKED_CAST")
+    class ProductFilter(private val productsAdapter: ProductsAdapter) : Filter(){
         override fun performFiltering(p0: CharSequence?): FilterResults {
             if (p0.isNullOrEmpty()){
-                mProductsFiltered = allProducts
+                resetCurrentCategoryList()
             } else {
-                var filteredList = ArrayList<Product>()
+                val filteredList = ArrayList<Product>()
                 for (product in allProducts) {
                     if (product.description!!.toLowerCase().contains(p0.toString().toLowerCase())) {
-                        filteredList.add(product);
+                        filteredList.add(product)
                     }
                     mProductsFiltered = filteredList
                 }
             }
-
-            var filterResults = FilterResults()
+            val filterResults = FilterResults()
             filterResults.values = mProductsFiltered
             return filterResults
         }
 
+        private fun resetCurrentCategoryList() {
+            mProducts.clear()
+
+            for (product in allProducts){
+                if (product.category?.toUpperCase().equals(currentCategory)){
+                    mProducts.add(product)
+                }
+            }
+        }
+
         override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
-            mProducts = p1!!.values as ArrayList<Product>
-            ctx!!.notifyDataSetChanged()
+            mProducts = p1?.values as ArrayList<Product>
+            productsAdapter.notifyDataSetChanged()
         }
 
     }
 
-    override fun getItemCount(): Int = mProducts?.size ?: 0
+    override fun getItemCount(): Int = mProducts.size
 
     override fun onBindViewHolder(holder: ProductViewHolder?, position: Int) {
         val binding = holder?.binding
-        val product = mProducts?.get(position)
+        val product = mProducts[position]
 
-        var viewModel = product?.let { ProductViewModel(it) }
+        val viewModel = product.let { ProductViewModel(it) }
         binding?.viewModel = viewModel
 
         holder?.setClickListener(itemClick)
@@ -117,21 +125,17 @@ class ProductsAdapter(val context: Context, var products: ArrayList<Product>, va
 
                 binding.increaseQtde.startAnimation(animation2)
 
-                mProducts?.get(position)?.quantityOrdered = mProducts?.get(position)?.quantityOrdered?.plus(1)
+                mProducts[position].quantityOrdered = mProducts[position].quantityOrdered?.plus(1)
 
                 mListener?.onProductsQuantityChanged()
             })
         }
     }
 
-    fun setClickListener(itemClick: ((Product) -> Unit)?) {
-        this.itemClick = itemClick
-    }
-
     fun getChosenProducts(): List<Product> {
         val extraProducts = ArrayList<Product>()
 
-        for (product in products.orEmpty()) {
+        for (product in products) {
             if ((product.quantityOrdered ?: 0) > 0) {
                 for (i in 0 until (product.quantityOrdered ?: 0)) {
                     extraProducts.add(product)
@@ -148,6 +152,7 @@ class ProductsAdapter(val context: Context, var products: ArrayList<Product>, va
         for (product in products){
             if (product.category?.toUpperCase().equals(category.toUpperCase())){
                 mProducts.add(product)
+                currentCategory = product.category.toString()
             }
         }
 
@@ -158,7 +163,7 @@ class ProductsAdapter(val context: Context, var products: ArrayList<Product>, va
         val products = getChosenProducts()
         var currentOrderPrice: Double? = 0.0
 
-        for (product in products.orEmpty()) {
+        for (product in products) {
             product.price?.let { currentOrderPrice = currentOrderPrice?.plus(it) }
         }
         return currentOrderPrice
