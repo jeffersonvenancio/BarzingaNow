@@ -133,7 +133,7 @@ class ProductsAdapter(val context: Context, var products: ArrayList<Product>, va
                             binding.increaseQtde.isEnabled = true
                         })
                     }
-                }, 1000)
+                }, 500)
 
                 binding.increaseQtde.startAnimation(animation2)
 

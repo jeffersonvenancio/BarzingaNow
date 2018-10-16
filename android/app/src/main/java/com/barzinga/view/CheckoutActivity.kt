@@ -66,7 +66,6 @@ class CheckoutActivity : AppCompatActivity(), TransactionViewModel.TransactionLi
             disableButton()
             disableList()
             transactionParameter?.pin = "Token Diego"
-            transactionParameter?.products = (cartProducts.adapter as ProductCartAdapter).getChosenProducts()
             viewModel.buyProducts(transactionParameter, this)
         })
     }
