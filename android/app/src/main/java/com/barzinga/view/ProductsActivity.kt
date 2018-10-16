@@ -9,6 +9,7 @@ import android.databinding.DataBindingUtil
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.SearchView
@@ -50,8 +51,8 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_products)
 
-        var mToolbar = findViewById<Toolbar>(R.id.toolbar)
-        mToolbar.setBackgroundColor(resources.getColor(R.color.white))
+        val mToolbar = findViewById<Toolbar>(R.id.toolbar)
+        mToolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
         setSupportActionBar(mToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
@@ -112,8 +113,8 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
     }
 
     private fun openCheckout() {
-        var products = (products_list.adapter as ProductsAdapter).getChosenProducts()
-        var transactionProducts = ArrayList<Product>()
+        val products = (products_list.adapter as ProductsAdapter).getChosenProducts()
+        val transactionProducts = ArrayList<Product>()
 
         var currentProduct: Product? = null
 
@@ -144,7 +145,7 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
 
     private fun setupRecyclerView(products: ArrayList<Product>) {
 
-        var productsAdapter = ProductsAdapter(this, products, this)
+        val productsAdapter = ProductsAdapter(this, products, this)
         products_list.apply {
             adapter = productsAdapter
             setHasFixedSize(true)
@@ -160,7 +161,7 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
 
 
     override fun onProductsQuantityChanged() {
-        var currentOrderPrice: Double? = (products_list.adapter as ProductsAdapter).getCurrentOrderPrice()
+        val currentOrderPrice: Double? = (products_list.adapter as ProductsAdapter).getCurrentOrderPrice()
 
         if ((currentOrderPrice ?: 0.0) > 0.0) {
             mOrderPrice.text = String.format("%.2f", currentOrderPrice)
@@ -170,11 +171,11 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         }
     }
 
-    private fun setCategories(products: List<Product>?): ArrayList<Item> {
+    private fun setCategories(productsList: List<Product>?): ArrayList<Item> {
 
-        val products = products?.sortedBy { it.category }
+        val products = productsList?.sortedBy { it.category }
 
-        var categories = ArrayList<Item>()
+        val categories = ArrayList<Item>()
         var categoryName = ""
 
         for (product in products.orEmpty()) {
@@ -203,8 +204,8 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         (products_list.adapter as ProductsAdapter).setCategory(items.get(0).title)
     }
 
-    override fun onItemSelected(item: Item) {
-        (products_list.adapter as ProductsAdapter).setCategory(item.title)
+    override fun onItemSelected(i: Item) {
+        (products_list.adapter as ProductsAdapter).setCategory(i.title)
         products_list.scrollToPosition(0)
         invalidateOptionsMenu()
         hideKeyboard()
@@ -218,7 +219,7 @@ class ProductsActivity : AppCompatActivity(), ItemsListFragment.OnItemSelectedLi
         if (view == null) {
             view = View(this)
         }
-        imm!!.hideSoftInputFromWindow(view.windowToken, 0)
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     override fun onProductsListGotten(products: ArrayList<Product>) {
