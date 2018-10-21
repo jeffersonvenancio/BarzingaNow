@@ -21,6 +21,19 @@ android {
         }
     }
 
+    flavorDimensions "default"
+
+    productFlavors {
+        production {
+            versionCode = "1"
+        }
+        development {
+            versionCode = "1"
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
+        }
+    }
+
     dataBinding {
         enabled = true
     }
