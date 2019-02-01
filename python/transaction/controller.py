@@ -136,6 +136,14 @@ def make_blob_public(usersJson, name=None):
     gcs_file.write(usersJson)
     gcs_file.close()
 
+@transaction.route('/cron/lastmonthbalance', methods=['GET'], strict_slashes=True)
+def transactions_last_month_balance():
+    today = datetime.date.today()
+    first = today.replace(day=1)
+    lastMonthEnd = first - datetime.timedelta(days=1)
+    lastMonthBegin = lastMonthEnd.replace(day=1)
+    transactions_all(end=lastMonthEnd.strftime("%d-%m-%Y"), start=lastMonthBegin.strftime("%d-%m-%Y"));
+
 @transaction.route('/transactions_all/<string:start>/<string:end>', methods=['GET'], strict_slashes=True)
 def transactions_all(start=None, end=None):
     if start is None or end is None:
@@ -155,11 +163,13 @@ def transactions_all(start=None, end=None):
             transactionJson['date'] = str(t.date.strftime('%d/%m/%y - %H:%M'))
         else:
             transactionJson['date'] = ''
-            
+
         transactionJson['value'] = str(t.value)
 
-        if t.user is not None:
-            transactionJson['user'] = str(t.user.get().email).split('@')[0]
+        user = t.user.get()
+
+        if user is not None:
+            transactionJson['user'] = str(user.email).split('@')[0]
         else:
             transactionJson['user'] = 'Nao cadastrado'
 

@@ -1,4 +1,4 @@
-<resources>
+﻿<resources>
     <string name="app_name">Barzinga Now</string>
 
     <!--Fonts-->
@@ -20,7 +20,7 @@
     <string name="add_to_cart">ADICIONAR</string>
     <string name="search_product_hint">Digite o nome do produto</string>
     <string name="scam_qr_code">POR FAVOR, APROXIME O CRACHÁ</string>
-    <string name="transaction_finished">Muito obrigado! Sua transação foi concluída e seu novo saldo é de %1$sBGZ</string>
+    <string name="transaction_finished">Muito obrigado! Sua transação foi concluída e seu novo saldo é de %1$sBZG</string>
     <string name="bzg">BZG</string>
     <string name="transaction_error">Ops algo deu errado! Tente novamente.</string>
 
