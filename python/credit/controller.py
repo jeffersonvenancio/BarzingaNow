@@ -21,7 +21,8 @@ def add():
 
     user_email = request.form['user']
     value = float(request.form['value'])
-    user_email = user_email.split('@')[0] + '@dextra-sw.com'
+    if '@' not in user_email:
+        user_email = user_email + '@dextra-sw.com'
     userClient = User.query().filter(User.email == user_email).get()
     if userClient :
         userClient.credit(value=value)
