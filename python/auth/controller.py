@@ -62,8 +62,8 @@ def verifica_user():
     user_json = session['barzinga_user']
     user = User.query().filter(User.email == user_json["email"]).get()
 
-    dx = user_json['email'].endswith('dextra-sw.com')
-    mutant = user_json['email'].endswith('mutantbr.com')
+    dx = user_json['email'].endswith('@dextra-sw.com')
+    mutant = user_json['email'].endswith('@mutantbr.com')
     if not dx and not mutant:
         raise Exception('Invalid domain %s' % user_json['email'])
 
