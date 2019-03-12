@@ -14,14 +14,13 @@ auth = Blueprint('auth', __name__)
 redirect_uri = find_prop('REDIRECT_URI')
 scope = find_prop('SCOPE')
 client_id = find_prop('CLIENT_ID')
-hd = find_prop('HD')
 client_id = find_prop('CLIENT_ID')
 client_secret = find_prop('CLIENT_SECRET')
 
 @auth.route('/', strict_slashes=False)
 def hello():
     host_url = 'http://' + request.host + '/'
-    url = 'https://accounts.google.com/AccountChooser?continue=https://accounts.google.com/o/oauth2/auth?scope%3D'+scope+'%26response_type%3Dcode%26redirect_uri%3D'+host_url+redirect_uri+'%26state%3Dsecurity_token%253D138r5719ru3e1%2526url%253D'+host_url+'%26client_id%3D'+client_id+'%26from_login%3D1%26as%3D-231db6e2ffa9ce49&btmpl=authsub&scc=1&oauth=1&hd='+hd
+    url = 'https://accounts.google.com/AccountChooser?continue=https://accounts.google.com/o/oauth2/auth?scope%3D'+scope+'%26response_type%3Dcode%26redirect_uri%3D'+host_url+redirect_uri+'%26state%3Dsecurity_token%253D138r5719ru3e1%2526url%253D'+host_url+'%26client_id%3D'+client_id+'%26from_login%3D1%26as%3D-231db6e2ffa9ce49&btmpl=authsub&scc=1&oauth=1'
     return redirect(url)
 
 @auth.route('/token', strict_slashes=False)
@@ -62,6 +61,11 @@ def verifica_token(token, session):
 def verifica_user():
     user_json = session['barzinga_user']
     user = User.query().filter(User.email == user_json["email"]).get()
+
+    dx = user_json['email'].endswith('@dextra-sw.com')
+    mutant = user_json['email'].endswith('@mutantbr.com')
+    if not dx and not mutant:
+        raise Exception('Invalid domain %s' % user_json['email'])
 
     if not user:
         # user = User(name = user_json['name'], email=user_json['email'], photo_url=user_json['picture'], money=0.0, admin=False, rfid=str(''))
