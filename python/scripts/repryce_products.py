@@ -3,7 +3,7 @@ import requests
 
 X = []
 Y = []
-with open('products.csv', 'rb') as data:
+with open('update_qtd_products.csv', 'rb') as data:
     reader = csv.reader(data, delimiter=',')
     headers = {'content-type' : 'application/x-www-form-urlencoded', 'Authorization' : 'Bearer: Update'}
     params = {'sessionKey': '9ebbd0b25760557393a43064a92bae539d962103', 'format': 'xml', 'platformId': 1}
@@ -12,6 +12,6 @@ with open('products.csv', 'rb') as data:
         # url = "http://localhost:8080/api/product/"
         url += line[0]
         url += "/repryce"
-        data = {"description":line[1],"price": str(line[3]).replace(',', '.'), "quantity": int(line[2])}
+        data = {"description": line[1], "price": str(line[3]).replace(',', '.'), "quantity": int(line[2])}
         print data
-        print requests.put(url, data=data, headers=headers, params=params)
+        # print requests.put(url, data=data, headers=headers, params=params)

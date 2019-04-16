@@ -1,18 +1,16 @@
-import os
-import json
 import cloudstorage as gcs
-
+import json
+import os
+import datetime
 from flask import Blueprint, request, session
 from flask_principal import Permission, RoleNeed
-
 from google.appengine.api import app_identity
 from google.appengine.api.images import get_serving_url
 from google.appengine.ext import blobstore
-
 from product.model import Product
+from transaction.model import Transaction, TransactionItem
 from user.model import User
-
-from werkzeug.exceptions import HTTPException, Forbidden
+from werkzeug.exceptions import Forbidden
 
 admin_permission = Permission(RoleNeed('admin'))
 
@@ -124,6 +122,7 @@ def repryce(product_id):
     product = Product.get_by_id(product_id)
 
     product.price = float(request.form['price'])
+    product.quantity = int(request.form['quantity'])
     product.put()
 
     return '', 204
@@ -149,3 +148,27 @@ def delete(product_id):
     product.key.delete()
 
     return '', 204
+
+@product.route('/<int:product_id>/<string:start>/<int:quantity>', methods=['POST'])
+def comprasDoProduto(product_id, start, quantity):
+    product = Product.get_by_id(product_id)
+    print product
+    split_start = start.split('-')
+    from_date = datetime.datetime(year=int(split_start[2]), month=int(split_start[1]), day=int(split_start[0]))
+    transactions = Transaction.query().filter(Transaction.date >= from_date).fetch()
+
+    vendidos = 0
+
+    for t in transactions:
+        for it in t.items:
+            transaction_item = it.get()
+            if transaction_item.product == product.key:
+                vendidos += transaction_item.quantity
+                print 'AAAA', transaction_item
+
+
+    product.quantity = quantity - vendidos
+
+    product.put()
+
+    return 'produto', 200
