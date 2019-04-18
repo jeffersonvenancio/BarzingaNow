@@ -128,6 +128,19 @@ def repryce(product_id):
 
     return '', 204
 
+@product.route('/<int:product_id>/compra', methods=['PUT'])
+def compra(product_id):
+    print product_id
+    product = Product.get_by_id(product_id)
+
+    product.price = float(request.form['price'])
+    product.quantity += int(request.form['quantity'])
+
+    product.put()
+
+    return '', 204
+
+
 @product.route('/<int:product_id>/bar_code', methods=['PUT'])
 def update_bar_code(product_id):
     print product_id
