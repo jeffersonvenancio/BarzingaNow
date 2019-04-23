@@ -1,9 +1,7 @@
-import json
 import requests
 import requests.auth
-
 from flask import Blueprint, request, session, redirect, current_app
-from flask_principal import Identity, identity_changed, RoleNeed, UserNeed
+from flask_principal import Identity, identity_changed
 from google.appengine.api import search
 
 from user.model import User
@@ -69,7 +67,7 @@ def verifica_user():
 
     if not user:
         # user = User(name = user_json['name'], email=user_json['email'], photo_url=user_json['picture'], money=0.0, admin=False, rfid=str(''))
-        user = User(name = '', email=user_json['email'], photo_url=user_json['picture'], money=0.0, admin=False, rfid=str(''))
+        user = User(name = '', email=user_json['email'], photo_url=user_json['picture'], money=0.0, admin=False, rfid=str(''), active = True)
 
         user.put()
 

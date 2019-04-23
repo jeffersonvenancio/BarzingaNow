@@ -57,7 +57,7 @@ def add():
     email = request.form['email']
     rfid = request.form['rfid']
 
-    user = User(name=name, email=email, admin=False, photo_url='', money=0, rfid=rfid)
+    user = User(name=name, email=email, admin=False, photo_url='', money=0, rfid=rfid, active = True)
     user.put()
 
     user_document = search.Document(
@@ -150,3 +150,15 @@ def make_blob_public(usersJson):
     gcs_file = gcs.open(filename, 'w', content_type='csv', retry_params=write_retry_params)
     gcs_file.write(usersJson)
     gcs_file.close()
+
+
+@user.route('/deactivate', methods=['PUT'], strict_slashes=False)
+def deactivate():
+    user = User.query().filter(User.email == request.form['email']).get()
+
+    if user:
+        user.active = False
+        user.put()
+        return '', 204
+
+    return '', 404

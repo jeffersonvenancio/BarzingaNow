@@ -1,18 +1,16 @@
-from flask import Flask, request, session, url_for
+from flask import Flask, request, session
 from flask_cors import CORS
 from flask_principal import Principal, identity_loaded, RoleNeed
-from werkzeug.utils import redirect
 from requests_toolbelt.adapters import appengine
-from google.appengine.ext import ndb
+from werkzeug.utils import redirect
+
 from user.model import User
 
 appengine.monkeypatch()
 
 import json
-import re
 
 from auth.controller import auth as auth_controller
-from auth.controller import verifica_token
 from credit.controller import credit as credit_controller
 from user.controller import user as user_controller
 from product.controller import product as product_controller
@@ -52,15 +50,6 @@ def filter():
 
     if 'barzinga_user' in session:
         return
-
-    # if not 'barzinga_user' in session:
-    #     auth = request.headers.get('Authorization')
-    #     if (auth):
-    #         regex = re.search('Bearer (.*)', auth)
-    #         if (regex):
-    #             token = regex.group(1)
-    #             print('Loggining in %s' % token)
-    #             verifica_token(token, session)
 
     if '/api/auth' not in request.url and '/api/auth/token' not in request.url and '/user' not in request.url:
         if not 'barzinga_user' in session:

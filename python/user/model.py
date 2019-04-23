@@ -9,6 +9,7 @@ class User(ndb.Model):
     admin = ndb.BooleanProperty()
     pin = ndb.StringProperty()
     rfid = ndb.StringProperty()
+    active = ndb.BooleanProperty()
 
     def to_dict(self):
         result = super(User, self).to_dict()

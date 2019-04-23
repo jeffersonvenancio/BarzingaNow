@@ -27,8 +27,14 @@ indexes:
 
 - kind: Product
   properties:
+  - name: active
   - name: category
   - name: description
+
+- kind: Product
+  properties:
+    - name: active
+    - name: description
 
 - kind: Transaction
   properties:

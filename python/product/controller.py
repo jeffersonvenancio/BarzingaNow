@@ -1,18 +1,16 @@
-import os
 import json
-import cloudstorage as gcs
+import os
 
+import cloudstorage as gcs
 from flask import Blueprint, request, session
 from flask_principal import Permission, RoleNeed
-
 from google.appengine.api import app_identity
 from google.appengine.api.images import get_serving_url
 from google.appengine.ext import blobstore
+from werkzeug.exceptions import Forbidden
 
 from product.model import Product
 from user.model import User
-
-from werkzeug.exceptions import HTTPException, Forbidden
 
 admin_permission = Permission(RoleNeed('admin'))
 
@@ -24,16 +22,12 @@ product = Blueprint('product', __name__)
 @product.route('/category', defaults={'category': None}, methods=['GET'], strict_slashes=False)
 @product.route('/category/<string:category>/', methods=['GET'])
 def get_all(category=None):
-    print category
     if category:
-        if category == 'POSSOCOMPRAR':
-            user_logged = session['barzinga_user']
-            user = User.query().filter(User.email == user_logged["email"]).get()
-            products = [p.to_dict() for p in Product.query(Product.price <= user.money).order(Product.description).fetch()]
-        else:
-            products = [p.to_dict() for p in Product.query(Product.category == category).order(Product.description).fetch()]
-    else :
-        products = [p.to_dict() for p in Product.query().order(Product.description).fetch()]
+        query = Product.query().filter(Product.category == category)
+    else:
+        query = Product.query()
+
+    products = [p.to_dict() for p in query.filter(Product.active == True).order(Product.description).fetch()]
 
     return json.dumps(products)
 
@@ -73,7 +67,7 @@ def add():
 
             image_url =  get_serving_url(key)
 
-        product = Product(description=description, price=price, quantity=quantity, category=category, image_url=image_url, bar_code=str(''))
+        product = Product(description=description, price=price, quantity=quantity, category=category, image_url=image_url, bar_code=str(''), active = True)
         product.put()
 
         return '', 204
@@ -82,7 +76,6 @@ def add():
 
 @product.route('/<int:product_id>', methods=['PUT'])
 def modify(product_id):
-    print product_id
     product = Product.get_by_id(product_id)
 
     if not product:
@@ -109,7 +102,6 @@ def update_quantity(product_id):
 
 @product.route('/<int:product_id>/add', methods=['PUT'])
 def add_quantity(product_id):
-    print product_id
     product = Product.get_by_id(product_id)
 
     product.quantity += int(request.form['quantity'])
@@ -120,7 +112,6 @@ def add_quantity(product_id):
 
 @product.route('/<int:product_id>/repryce', methods=['PUT'])
 def repryce(product_id):
-    print product_id
     product = Product.get_by_id(product_id)
 
     product.price = float(request.form['price'])
@@ -130,8 +121,10 @@ def repryce(product_id):
 
 @product.route('/<int:product_id>/compra', methods=['PUT'])
 def compra(product_id):
-    print product_id
     product = Product.get_by_id(product_id)
+
+    if not product:
+        return 'Product id %s not found' % (product_id), 404
 
     product.price = float(request.form['price'])
     product.quantity += int(request.form['quantity'])
@@ -143,7 +136,6 @@ def compra(product_id):
 
 @product.route('/<int:product_id>/bar_code', methods=['PUT'])
 def update_bar_code(product_id):
-    print product_id
     product = Product.get_by_id(product_id)
 
     product.bar_code = str(request.form['bar_code'])
