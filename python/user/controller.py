@@ -129,25 +129,26 @@ def delete_all_in_index(index):
         index.delete(document_ids)
 
 
-
-@user.route('/cron/all', methods=['GET'], strict_slashes=False)
-def allCredits():
-    users = User.query().fetch()
+@user.route('/cron/week', methods=['GET'], strict_slashes=False)
+def weekDebit():
+    users = User.query().filter(User.money < 0).fetch()
 
     usersJson = 'email,valor \n'
 
     for u in users:
         usersJson += str(u.email)+','+str("%.2f" % round(u.money,2))+' \n'
 
-    make_blob_public(usersJson)
+    make_blob_public(usersJson, 'weekly/', datetime.datetime.now().strftime("%d_%m_%y"))
+
+    #ENVIAR EMAIL PARA OS DEVEDORES
+
     return json.dumps(usersJson)
 
-def make_blob_public(usersJson):
-    mydate = datetime.datetime.now()
+def make_blob_public(usersJson, subpath, fileName):
     bucket_name = os.environ.get('BUCKET_NAME', app_identity.get_default_gcs_bucket_name())
     write_retry_params = gcs.RetryParams(backoff_factor=1.1)
-    filename = '/' + bucket_name + '/00_Reports/'+mydate.strftime("%b")+'.csv'
-    gcs_file = gcs.open(filename, 'w', content_type='csv', retry_params=write_retry_params)
+    fullPath = '/' + bucket_name + '/00_Reports/'+subpath+fileName+'.csv'
+    gcs_file = gcs.open(fullPath, 'w', content_type='csv', retry_params=write_retry_params)
     gcs_file.write(usersJson)
     gcs_file.close()
 

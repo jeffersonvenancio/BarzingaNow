@@ -1,10 +1,13 @@
+import os
 import json
-
+import cloudstorage as gcs
 import datetime
 
 from flask import Blueprint, request, session
 from flask_principal import Permission, RoleNeed
 from werkzeug.exceptions import HTTPException, Forbidden
+
+from google.appengine.api import app_identity
 
 from credit.model import Credit
 from user.model import User
@@ -85,4 +88,42 @@ def credits_all(start=None, end=None):
         creditsJson.append(creditJson)
 
     return json.dumps(creditsJson)
+
+
+@credit.route('/cron/yesterday', methods=['GET'], strict_slashes=True)
+def yesterday():
+    yesterday_dt = datetime.datetime.now() - datetime.timedelta(days = 1)
+
+    from_date = yesterday_dt.replace(hour=0, minute=0, second=0)
+    to_date = yesterday_dt.replace(hour=23, minute=59, second=59)
+
+    credits = Credit.query().filter(Credit.date <= to_date, Credit.date >= from_date).fetch()
+
+    credits_str = 'data;valor;operador;usuario \n'
+
+    for c in credits:
+        credit_str = ""
+        if c.date is not None:
+            credit_str += str(c.date.strftime('%d/%m/%y - %H:%M'))+';'
+        else:
+            credit_str += ' ;'
+
+        credit_str += str(c.value)+';'
+        credit_str += str(c.operator).split('@')[0]+';'
+        credit_str += str(c.user_email).split('@')[0]+' \n'
+
+        credits_str += credit_str
+
+    make_blob_public(credits_str, yesterday_dt.strftime('%d_%m_%y'))
+
+    return "ok"
+
+
+def make_blob_public(to_write, fileName):
+    bucket_name = os.environ.get('BUCKET_NAME', app_identity.get_default_gcs_bucket_name())
+    write_retry_params = gcs.RetryParams(backoff_factor=1.1)
+    fullPath = '/' + bucket_name + '/00_Reports/daily/credits_'+fileName+'.csv'
+    gcs_file = gcs.open(fullPath, 'w', content_type='csv', retry_params=write_retry_params)
+    gcs_file.write(to_write)
+    gcs_file.close()
 

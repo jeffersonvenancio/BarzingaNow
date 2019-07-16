@@ -131,7 +131,7 @@ def transactions_alll():
 def make_blob_public(usersJson, name=None):
     bucket_name = os.environ.get('BUCKET_NAME', app_identity.get_default_gcs_bucket_name())
     write_retry_params = gcs.RetryParams(backoff_factor=1.1)
-    filename = '/' + bucket_name + '/00_Reports/transactions_'+name+'.json'
+    filename = '/' + bucket_name + '/00_Reports/monthly/transactions_'+name+'.json'
     gcs_file = gcs.open(filename, 'w', content_type='json', retry_params=write_retry_params)
     gcs_file.write(usersJson)
     gcs_file.close()

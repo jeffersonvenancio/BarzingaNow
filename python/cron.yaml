@@ -1,11 +1,4 @@
 cron:
-- description: "json de users"
-  url: /api/user/cron/all
-  schedule: 1 of month 02:00
-  retry_parameters:
-    min_backoff_seconds: 2.5
-    max_doublings: 5
-
 - description: "all transactions json last month"
   url: /api/transaction/cron/lastmonthbalance
   schedule: 1 of month 03:00
@@ -13,3 +6,16 @@ cron:
     min_backoff_seconds: 2.5
     max_doublings: 5
 
+- description: "notify user in debit"
+  url: /api/user/cron/week
+  schedule: every monday 04:00
+  retry_parameters:
+    min_backoff_seconds: 2.5
+    max_doublings: 5
+
+- description: "all credits from yesterday"
+  url: /api/credit/cron/yesterday
+  schedule: every day 04:30
+  retry_parameters:
+    min_backoff_seconds: 2.5
+    max_doublings: 5
