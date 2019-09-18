@@ -142,7 +142,8 @@ def transactions_last_month_balance():
     first = today.replace(day=1)
     lastMonthEnd = first - datetime.timedelta(days=1)
     lastMonthBegin = lastMonthEnd.replace(day=1)
-    transactions_all(end=lastMonthEnd.strftime("%d-%m-%Y"), start=lastMonthBegin.strftime("%d-%m-%Y"));
+    transactions_all(end=lastMonthEnd.strftime("%d-%m-%Y"), start=lastMonthBegin.strftime("%d-%m-%Y"))
+    return str('ok'), 200
 
 @transaction.route('/transactions_all/<string:start>/<string:end>', methods=['GET'], strict_slashes=True)
 def transactions_all(start=None, end=None):

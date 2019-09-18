@@ -1,7 +1,7 @@
 cron:
 - description: "all transactions json last month"
   url: /api/transaction/cron/lastmonthbalance
-  schedule: 1 of month 03:00
+  schedule: 1 of month 03:30
   retry_parameters:
     min_backoff_seconds: 2.5
     max_doublings: 5
@@ -16,6 +16,14 @@ cron:
 - description: "all credits from yesterday"
   url: /api/credit/cron/yesterday
   schedule: every day 04:30
+  retry_parameters:
+    min_backoff_seconds: 2.5
+    max_doublings: 5
+
+
+- description: "credit balance in the end of the month"
+  url: /api/user/cron/monthly
+  schedule: 1 of month 03:00
   retry_parameters:
     min_backoff_seconds: 2.5
     max_doublings: 5

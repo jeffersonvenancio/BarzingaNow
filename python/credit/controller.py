@@ -8,6 +8,7 @@ from flask_principal import Permission, RoleNeed
 from werkzeug.exceptions import HTTPException, Forbidden
 
 from google.appengine.api import app_identity
+from google.appengine.api import mail
 
 from credit.model import Credit
 from user.model import User
@@ -101,6 +102,8 @@ def yesterday():
 
     credits_str = 'data;valor;operador;usuario \n'
 
+    total = 0
+
     for c in credits:
         credit_str = ""
         if c.date is not None:
@@ -114,7 +117,15 @@ def yesterday():
 
         credits_str += credit_str
 
+        total += c.value
+
     make_blob_public(credits_str, yesterday_dt.strftime('%d_%m_%y'))
+
+    mail.send_mail(sender='jefferson.venancio@dextra-sw.com',
+                   to="franciane.oliveira@dextra-sw.com; juliana.oliveira@dextra-sw.com; jefferson.venancio@dextra-sw.com",
+                   subject="[BarzingaNow] - Creditos do dia " + yesterday_dt.strftime('%d_%m_%y'),
+                   body="Oi, total de creditos no dia "+yesterday_dt.strftime('%d_%m_%y')+" foi : "+str(total)+".")
+
 
     return "ok"
 

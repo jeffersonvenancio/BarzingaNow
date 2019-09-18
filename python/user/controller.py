@@ -8,6 +8,8 @@ from google.appengine.api import search
 
 from google.appengine.api import app_identity
 
+from credit.model import Credit
+from transaction.model import Transaction
 from user.model import User
 
 user = Blueprint('user', __name__)
@@ -131,18 +133,33 @@ def delete_all_in_index(index):
 
 @user.route('/cron/week', methods=['GET'], strict_slashes=False)
 def weekDebit():
-    users = User.query().filter(User.money < 0).fetch()
+    users = User.query().filter(User.money < -0.01).fetch()
 
-    usersJson = 'email,valor \n'
+    usersJson = 'email;valor \n'
 
     for u in users:
-        usersJson += str(u.email)+','+str("%.2f" % round(u.money,2))+' \n'
+        usersJson += str(u.email)+';'+str("%.2f" % round(u.money,2))+' \n'
 
     make_blob_public(usersJson, 'weekly/', datetime.datetime.now().strftime("%d_%m_%y"))
 
     #ENVIAR EMAIL PARA OS DEVEDORES
 
     return json.dumps(usersJson)
+
+
+
+@user.route('/cron/monthly', methods=['GET'], strict_slashes=False)
+def monthlyBalance():
+    users = User.query().fetch()
+
+    usersCSV = 'email;valor \n'
+
+    for u in users:
+        usersCSV += str(u.email)+';'+str("%.2f" % round(u.money,2))+' \n'
+
+    make_blob_public(usersCSV, 'monthly/', 'credit_balance_'+datetime.datetime.now().strftime("%d_%m_%y"))
+
+    return json.dumps(usersCSV)
 
 def make_blob_public(usersJson, subpath, fileName):
     bucket_name = os.environ.get('BUCKET_NAME', app_identity.get_default_gcs_bucket_name())
@@ -163,3 +180,33 @@ def deactivate():
         return '', 204
 
     return '', 404
+
+
+# @user.route('/cron/gerarodejulho', methods=['GET'], strict_slashes=False)
+# def gerarodejulho():
+#     users = User.query().fetch()
+#
+#     from_date = datetime.datetime(year=2019, month=8, day=1)
+#     to_date = datetime.datetime(year=2019, month=8, day=6)
+#
+#     transactions = Transaction.query().filter(Transaction.date <= to_date, Transaction.date >= from_date).fetch()
+#     credits = Credit.query().filter(Credit.date <= to_date, Credit.date >= from_date).fetch()
+#
+#     usersCSV = 'email;valor \n'
+#
+#     for u in users:
+#         saldo = u.money
+#
+#         for t in transactions:
+#             if t.user.get().email == u.email:
+#                 saldo+=t.value
+#
+#         for c in credits:
+#             if c.user_email == u.email:
+#                 saldo-=c.value
+#
+#         usersCSV += str(u.email)+';'+str("%.2f" % round(saldo,2))+' \n'
+#
+#     make_blob_public(usersCSV, 'monthly/', 'credit_balance_01_08_2019')
+#
+#     return json.dumps(usersCSV)
