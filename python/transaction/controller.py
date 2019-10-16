@@ -31,7 +31,28 @@ def get_by_id(transaction_id):
 
 @transaction.route('/', methods=['POST'])
 def add():
-    return 'Compra nao permitida', 403
+    # return 'Compra nao permitida', 403
+    logged_user = session['barzinga_user']
+    logged_user = User.query().filter(User.email == logged_user["email"]).get()
+
+    products = json.loads(request.form['products'])
+
+    products_list = []
+    quantity_table = {}
+
+    for product in products:
+        quantity_table[product['id']] = product['quantity']
+        products_list.append(ndb.Key(Product, product['id']).get())
+
+    print products_list
+
+    try:
+        transaction = Transaction.new(logged_user, products_list, quantity_table)
+        transaction.put()
+    except Exception as e:
+        return str(e), 400
+
+    return '', 204
 
 @transaction.route('/app', methods=['POST'])
 def add_app():
