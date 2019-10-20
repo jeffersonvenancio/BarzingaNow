@@ -8,7 +8,7 @@ cron:
 
 - description: "notify user in debit"
   url: /api/user/cron/week
-  schedule: every monday 04:00
+  schedule: first,second,third monday of month 09:00
   retry_parameters:
     min_backoff_seconds: 2.5
     max_doublings: 5
@@ -20,10 +20,23 @@ cron:
     min_backoff_seconds: 2.5
     max_doublings: 5
 
-
 - description: "credit balance in the end of the month"
   url: /api/user/cron/monthly
   schedule: 1 of month 03:00
+  retry_parameters:
+    min_backoff_seconds: 2.5
+    max_doublings: 5
+
+- description: "notify user in exceeded debit"
+  url: /api/user/cron/dailydebit
+  schedule: every mon,tue,wed,thu,fri 08:00
+  retry_parameters:
+    min_backoff_seconds: 2.5
+    max_doublings: 5
+
+- description: "email test job"
+  url: /api/user/cron/test
+  schedule: 22 of oct 10:30
   retry_parameters:
     min_backoff_seconds: 2.5
     max_doublings: 5

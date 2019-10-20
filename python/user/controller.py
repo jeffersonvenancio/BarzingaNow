@@ -7,6 +7,7 @@ from flask import Blueprint, request, session
 from google.appengine.api import search
 
 from google.appengine.api import app_identity
+from google.appengine.api import mail
 
 from credit.model import Credit
 from transaction.model import Transaction
@@ -133,19 +134,67 @@ def delete_all_in_index(index):
 
 @user.route('/cron/week', methods=['GET'], strict_slashes=False)
 def weekDebit():
-    users = User.query().filter(User.money < -0.01).fetch()
+    # Query executado somente sobre usuários ativos
+    users = User.query().filter(User.money < -0.01 && User.active == True).fetch()
+    users_email_list = []
 
     usersJson = 'email;valor \n'
 
     for u in users:
         usersJson += str(u.email)+';'+str("%.2f" % round(u.money,2))+' \n'
+        users_email_list.append(str(u.email))
 
     make_blob_public(usersJson, 'weekly/', datetime.datetime.now().strftime("%d_%m_%y"))
 
-    #ENVIAR EMAIL PARA OS DEVEDORES
+    if (len(users_email_list) != 0):
+        #EmailMessage(sender = '',
+        #            bcc = users_email_list,
+        #            subject = 'Barzinga: Saldo da conta',
+        #            html = """\ """).Send()
+    users_email_list.clear()
 
     return json.dumps(usersJson)
 
+
+@user.route('/cron/dailydebit', methods=['GET'], strict_slashes=False)
+def dailyDebitExceeded():
+    # Query executado somente sobre usuários ativos
+    users = User.query().filter(User.money < -40.01 && User.active == True).fetch()
+    users_email_list = []
+
+    usersJson = 'email;valor \n'
+
+    for u in users:
+        usersJson += str(u.email)+';'+str("%.2f" % round(u.money,2))+' \n'
+        users_email_list.append(str(u.email))
+
+    make_blob_public(usersJson, 'weekly/', datetime.datetime.now().strftime("%d_%m_%y"))
+
+    if (len(users_email_list) != 0):
+        #EmailMessage(sender = '',
+        #            bcc = users_email_list,
+        #            subject = 'Barzinga: Saldo da conta',
+        #            html = """\ """).Send()
+    users_email_list.clear()
+
+    return json.dumps(usersJson)
+
+
+@user.route('/cron/test', methods=['GET'], strict_slashes=False)
+def emailTest():
+    users_email_list = ['gabriela.batista@dextra-sw.com']
+
+    EmailMessage(sender = '',
+                bcc = users_email_list,
+                subject = 'Barzinga: Saldo',
+                html = """\<!DOCTYPE html><html><head><body><h1>Email de teste em HTML</h1><p>Parágrafo de teste!! xD</p></body></html>""").Send()
+
+    #EmailMessage(sender = '',
+    #            bcc = users_email_list,
+    #            subject = 'Barzinga: Saldo',
+    #            body = 'Olá!! Email para verificar seu saldo no Barzinga!').Send()
+
+    return 'Email test sent!'
 
 
 @user.route('/cron/monthly', methods=['GET'], strict_slashes=False)
