@@ -147,10 +147,10 @@ def weekDebit():
     make_blob_public(usersJson, 'weekly/', datetime.datetime.now().strftime("%d_%m_%y"))
 
     if (len(users_email_list) != 0):
-        EmailMessage(sender = 'fernanda.bezerra@dextra-sw.com',
-                    bcc = users_email_list,
-                    subject = 'Barzinga: Saldo da conta',
-                    html = """\ """).Send()
+        mail.EmailMessage(sender = 'fernanda.bezerra@dextra-sw.com',
+                        bcc = users_email_list,
+                        subject = 'Barzinga: Saldo da conta',
+                        html = """\ """).Send()
     users_email_list.clear()
 
     return json.dumps(usersJson)
@@ -171,10 +171,10 @@ def dailyDebitExceeded():
     make_blob_public(usersJson, 'debitExceeded/', datetime.datetime.now().strftime("%d_%m_%y"))
 
     if (len(users_email_list) != 0):
-        EmailMessage(sender = 'fernanda.bezerra@dextra-sw.com',
-                    bcc = users_email_list,
-                    subject = 'Barzinga: Saldo em débito excedido',
-                    html = """\ """).Send()
+        mail.EmailMessage(sender = 'fernanda.bezerra@dextra-sw.com',
+                        bcc = users_email_list,
+                        subject = 'Barzinga: Saldo em débito excedido',
+                        html = """\ """).Send()
     users_email_list.clear()
 
     return json.dumps(usersJson)
@@ -184,15 +184,15 @@ def dailyDebitExceeded():
 def emailTest():
     users_email_list = ['gabriela.batista@dextra-sw.com', 'matheus.lopes@dextra-sw.com']
 
-    EmailMessage(sender = 'fernanda.bezerra@dextra-sw.com',
-                bcc = users_email_list,
-                subject = 'Barzinga: Saldo HTML',
-                html = """\ <!DOCTYPE html><html><head><body><h1 style="color: blue">Email de teste em HTML</h1><p>Parágrafo de teste!! xD</p></body></html>""").Send()
+    mail.EmailMessage(sender = 'fernanda.bezerra@dextra-sw.com',
+                    bcc = users_email_list,
+                    subject = 'Barzinga: Saldo HTML',
+                    html = """\ <!DOCTYPE html><html><head><body><h1 style="color: blue">Email de teste em HTML</h1><p>Parágrafo de teste!! xD</p></body></html>""").Send()
 
-    EmailMessage(sender = 'fernanda.bezerra@dextra-sw.com',
-                bcc = users_email_list,
-                subject = 'Barzinga: Saldo Texto',
-                body = 'Olá!! Email para verificar seu saldo no Barzinga!').Send()
+    mail.EmailMessage(sender = 'fernanda.bezerra@dextra-sw.com',
+                    bcc = users_email_list,
+                    subject = 'Barzinga: Saldo Texto',
+                    body = 'Olá!! Email para verificar seu saldo no Barzinga!').Send()
 
     return 'Email test sent!'
 
