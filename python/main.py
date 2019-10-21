@@ -15,6 +15,7 @@ from credit.controller import credit as credit_controller
 from user.controller import user as user_controller
 from product.controller import product as product_controller
 from transaction.controller import transaction as transaction_controller
+from balance.controller import balance as balance_controller
 
 app = Flask(__name__, static_folder='web')
 
@@ -31,6 +32,7 @@ app.register_blueprint(credit_controller, url_prefix='/api/credit')
 app.register_blueprint(user_controller, url_prefix='/api/user')
 app.register_blueprint(product_controller, url_prefix='/api/product')
 app.register_blueprint(transaction_controller, url_prefix='/api/transaction')
+app.register_blueprint(balance_controller, url_prefix='/api/balance')
 
 @app.route('/')
 def main():

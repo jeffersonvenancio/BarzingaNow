@@ -7,6 +7,7 @@ class User(ndb.Model):
     email = ndb.StringProperty()
     photo_url = ndb.StringProperty()
     admin = ndb.BooleanProperty()
+    infra = ndb.BooleanProperty()
     pin = ndb.StringProperty()
     rfid = ndb.StringProperty()
     active = ndb.BooleanProperty()
