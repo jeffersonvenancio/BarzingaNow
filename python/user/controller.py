@@ -146,12 +146,12 @@ def weekDebit():
 
     make_blob_public(usersJson, 'weekly/', datetime.datetime.now().strftime("%d_%m_%y"))
 
-    #if (len(users_email_list) != 0):
-        #EmailMessage(sender = 'fernanda.bezerra@dextra-sw.com',
-        #            bcc = users_email_list,
-        #            subject = 'Barzinga: Saldo da conta',
-        #            html = """\ """).Send()
-    #users_email_list.clear()
+    if (len(users_email_list) != 0):
+        EmailMessage(sender = 'fernanda.bezerra@dextra-sw.com',
+                    bcc = users_email_list,
+                    subject = 'Barzinga: Saldo da conta',
+                    html = """\ """).Send()
+    users_email_list.clear()
 
     return json.dumps(usersJson)
 
@@ -170,12 +170,12 @@ def dailyDebitExceeded():
 
     make_blob_public(usersJson, 'debitExceeded/', datetime.datetime.now().strftime("%d_%m_%y"))
 
-    #if (len(users_email_list) != 0):
-        #EmailMessage(sender = 'fernanda.bezerra@dextra-sw.com',
-        #            bcc = users_email_list,
-        #            subject = 'Barzinga: Saldo da conta',
-        #            html = """\ """).Send()
-    #users_email_list.clear()
+    if (len(users_email_list) != 0):
+        EmailMessage(sender = 'fernanda.bezerra@dextra-sw.com',
+                    bcc = users_email_list,
+                    subject = 'Barzinga: Saldo em débito excedido',
+                    html = """\ """).Send()
+    users_email_list.clear()
 
     return json.dumps(usersJson)
 
