@@ -135,7 +135,7 @@ def delete_all_in_index(index):
 @user.route('/cron/week', methods=['GET'], strict_slashes=False)
 def weekDebit():
     # Query executado somente sobre usuários ativos
-    users = User.query().filter(User.money < -0.01 && User.active == True).fetch()
+    users = User.query().filter(User.money < -0.01 & User.active == True).fetch()
     users_email_list = []
 
     usersJson = 'email;valor \n'
@@ -159,7 +159,7 @@ def weekDebit():
 @user.route('/cron/dailydebit', methods=['GET'], strict_slashes=False)
 def dailyDebitExceeded():
     # Query executado somente sobre usuários ativos
-    users = User.query().filter(User.money < -40.01 && User.active == True).fetch()
+    users = User.query().filter(User.money < -40.01 & User.active == True).fetch()
     users_email_list = []
 
     usersJson = 'email;valor \n'
@@ -187,7 +187,7 @@ def emailTest():
     EmailMessage(sender = 'fernanda.bezerra@dextra-sw.com',
                 bcc = users_email_list,
                 subject = 'Barzinga: Saldo HTML',
-                html = """\ <!DOCTYPE html><html><head><body><h1>Email de teste em HTML</h1><p>Parágrafo de teste!! xD</p></body></html>""").Send()
+                html = """\ <!DOCTYPE html><html><head><body><h1 style="color: blue">Email de teste em HTML</h1><p>Parágrafo de teste!! xD</p></body></html>""").Send()
 
     EmailMessage(sender = 'fernanda.bezerra@dextra-sw.com',
                 bcc = users_email_list,
