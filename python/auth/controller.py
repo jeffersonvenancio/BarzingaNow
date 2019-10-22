@@ -67,7 +67,7 @@ def verifica_user():
 
     if not user:
         # user = User(name = user_json['name'], email=user_json['email'], photo_url=user_json['picture'], money=0.0, admin=False, rfid=str(''))
-        user = User(name = '', email=user_json['email'], photo_url=user_json['picture'], money=0.0, admin=False, rfid=str(''), active = True)
+        user = User(name = '', email=user_json['email'], photo_url=user_json['picture'], money=0.0, admin=False, infra=False, rfid=str(''), active = True)
 
         user.put()
 
