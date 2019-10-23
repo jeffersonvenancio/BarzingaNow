@@ -7,7 +7,6 @@ from flask import Blueprint, request, session
 from google.appengine.api import search
 
 from google.appengine.api import app_identity
-from google.appengine.api import mail
 
 from credit.model import Credit
 from transaction.model import Transaction

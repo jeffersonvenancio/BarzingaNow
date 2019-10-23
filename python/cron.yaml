@@ -8,7 +8,7 @@ cron:
 
 #- description: "notify user in debit"
 #  url: /api/balance/cron/user-position/weekly
-#  schedule: first,second,third monday of month 09:00
+#  schedule: first,second,third monday of month 05:00
 #  retry_parameters:
 #    min_backoff_seconds: 2.5
 #    max_doublings: 5
@@ -29,7 +29,7 @@ cron:
 
 #- description: "notify user in exceeded debit"
 #  url: /api/user/cron/dailydebit
-#  schedule: every mon,tue,wed,thu,fri 08:00
+#  schedule: every mon,tue,wed,thu,fri 05:30
 #  retry_parameters:
 #    min_backoff_seconds: 2.5
 #    max_doublings: 5

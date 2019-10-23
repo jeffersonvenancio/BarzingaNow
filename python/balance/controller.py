@@ -90,14 +90,12 @@ def user_position(period):
 
     make_blob_public(usersJson, period, 'user_positions_'+datetime.datetime.now().strftime("%d_%m_%y"))
 
-    if period == 'weekly':
-        if (len(users_email_list) != 0):
-            mail.EmailMessage(sender = 'fernanda.bezerra@dextra-sw.com',
-                            bcc = users_email_list,
-                            subject = 'Barzinga: Saldo da conta',
-                            html = """\ """).Send()
-        users_email_list.clear()
-
+    if (period == 'weekly' && len(users_email_list) != 0):
+        mail.EmailMessage(sender = 'fernanda.bezerra@dextra-sw.com',
+                        bcc = users_email_list,
+                        subject = 'Barzinga: Saldo da conta',
+                        html = """\ """).Send()
+    users_email_list.clear()
 
     return json.dumps(usersJson)
 
