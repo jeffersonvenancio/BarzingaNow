@@ -8,7 +8,7 @@ cron:
 
 - description: "notify user in debit"
   url: /api/balance/cron/user-position/weekly
-  schedule: every monday 04:00
+  schedule: every monday 05:00
   retry_parameters:
     min_backoff_seconds: 2.5
     max_doublings: 5
@@ -23,6 +23,13 @@ cron:
 - description: "all credits from yesterday"
   url: /api/balance/cron/yesterday
   schedule: every day 04:30
+  retry_parameters:
+    min_backoff_seconds: 2.5
+    max_doublings: 5
+
+- description: "notify user in exceeded debit"
+  url: /api/user/cron/exceeded-debit
+  schedule: every mon,wed,fri 05:30
   retry_parameters:
     min_backoff_seconds: 2.5
     max_doublings: 5
