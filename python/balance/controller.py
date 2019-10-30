@@ -78,7 +78,7 @@ def credits_all(start=None, end=None):
 
 @balance.route('/cron/user-position/<string:period>', methods=['GET'], strict_slashes=False)
 def user_position(period):
-    users = User.query().filter(User.money < -0.01 and User.active == True).fetch()
+    users = User.query().filter(User.money < -0.01, User.active == True).fetch()
     users_email_list = []
 
     usersJson = 'email;valor;active \n'
@@ -100,7 +100,7 @@ def user_position(period):
 
 @user.route('/cron/exceeded-debit', methods=['GET'], strict_slashes=False)
 def dailyDebitExceeded():
-    users = User.query().filter(User.money < -40.01 and User.active == True).fetch()
+    users = User.query().filter(User.money < -40.01, User.active == True).fetch()
     users_email_list = []
 
     usersJson = 'email;valor \n'
