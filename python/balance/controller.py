@@ -99,7 +99,7 @@ def user_position(period):
 
     return json.dumps(usersJson)
 
-@user.route('/cron/exceeded-debit', methods=['GET'], strict_slashes=False)
+@balance.route('/cron/exceeded-debit', methods=['GET'], strict_slashes=False)
 def dailyDebitExceeded():
     users = User.query().filter(User.money < -40.01 and User.active == True).fetch()
     users_email_list = []
