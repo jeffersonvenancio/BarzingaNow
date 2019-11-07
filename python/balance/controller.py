@@ -91,7 +91,7 @@ def user_position(period):
     make_blob_public(usersJson, period, 'user_positions_'+datetime.datetime.now().strftime("%d_%m_%y"))
 
     if (period == 'weekly' and len(users_email_list) != 0):
-        mail.EmailMessage(sender = 'financeiro@dextra-sw.com',
+        mail.send_mail(sender = 'financeiro@dextra-sw.com',
                         bcc = users_email_list,
                         subject = 'Barzinga: Saldo da conta',
                         body = 'Ola, Dextrana(o)! Percebemos que seu saldo no Barzinga esta negativo. Por isso, gostariamos de pedir que nos procure para se regularizar!').Send()
@@ -113,7 +113,7 @@ def dailyDebitExceeded():
     make_blob_public(usersJson, 'debitExceeded/', datetime.datetime.now().strftime("%d_%m_%y"))
 
     if (len(users_email_list) != 0):
-        mail.EmailMessage(sender = 'financeiro@dextra-sw.com',
+        mail.send_mail(sender = 'financeiro@dextra-sw.com',
                         bcc = users_email_list,
                         subject = 'Barzinga: Saldo em débito excedido',
                         body = 'Ola, Dextrana(o)! Nossos sistemas perceberam que sua conta no Barzinga encontra-se muito negativa... Por isso, gostariamos de pedir que nos procure para se regularizar urgentemente!').Send()
