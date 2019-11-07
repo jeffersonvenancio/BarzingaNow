@@ -28,7 +28,7 @@ cron:
     max_doublings: 5
 
 - description: "notify user in exceeded debit"
-  url: /api/user/cron/exceeded-debit
+  url: /api/balance/cron/exceeded-debit
   schedule: every mon,wed,fri 05:30
   retry_parameters:
     min_backoff_seconds: 2.5

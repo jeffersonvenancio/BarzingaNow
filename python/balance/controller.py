@@ -1,4 +1,4 @@
- # coding=utf-8
+# coding=utf-8
 import cloudstorage as gcs
 import datetime
 import json
