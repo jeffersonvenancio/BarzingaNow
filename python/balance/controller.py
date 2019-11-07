@@ -94,7 +94,7 @@ def user_position(period):
         mail.EmailMessage(sender = 'financeiro@dextra-sw.com',
                         bcc = users_email_list,
                         subject = 'Barzinga: Saldo da conta',
-                        body = 'Olá, Dextran@! Percebemos que seu saldo no Barzinga está negativo. Por isso, gostaríamos de pedir que nos procure para se regularizar! <3').Send()
+                        body = 'Ola, Dextrana(o)! Percebemos que seu saldo no Barzinga esta negativo. Por isso, gostariamos de pedir que nos procure para se regularizar!').Send()
     users_email_list.clear()
 
     return json.dumps(usersJson)
@@ -116,7 +116,7 @@ def dailyDebitExceeded():
         mail.EmailMessage(sender = 'financeiro@dextra-sw.com',
                         bcc = users_email_list,
                         subject = 'Barzinga: Saldo em débito excedido',
-                        body = 'Olá, Dextran@! Nossos sistemas perceberam que sua conta no Barzinga encontra-se muito negativa... Por isso, gostaríamos de pedir que nos procure para se regularizar, urgentemente! <3 ').Send()
+                        body = 'Ola, Dextrana(o)! Nossos sistemas perceberam que sua conta no Barzinga encontra-se muito negativa... Por isso, gostariamos de pedir que nos procure para se regularizar urgentemente!').Send()
     users_email_list.clear()
 
     return json.dumps(usersJson)
