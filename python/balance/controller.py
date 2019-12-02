@@ -96,7 +96,7 @@ def user_position(period):
         #                bcc = users_email_list,
         #                subject = 'Barzinga: Saldo da conta',
         #                body = 'Ola, Dextrana(o)! Percebemos que seu saldo no Barzinga esta negativo. Por isso, gostariamos de pedir que nos procure para se regularizar!').Send()
-    users_email_list.clear()
+    #  users_email_list.clear() - ISSO NÂO FUNCIONA
 
     return json.dumps(usersJson)
 
@@ -119,7 +119,7 @@ def dailyDebitExceeded():
         #                bcc = users_email_list,
         #                 subject = 'Barzinga: Saldo em débito excedido',
         #                body = 'Ola, Dextrana(o)! Nossos sistemas perceberam que sua conta no Barzinga encontra-se muito negativa... Por isso, gostariamos de pedir que nos procure para se regularizar urgentemente!').Send()
-    users_email_list.clear()
+    #  users_email_list.clear() - ISSO NÂO FUNCIONA
 
     return json.dumps(usersJson)
 
