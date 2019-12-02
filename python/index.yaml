@@ -46,3 +46,8 @@ indexes:
   - name: user
   - name: date
     direction: desc
+
+- kind: User
+  properties:
+    - name: active
+    - name: money
