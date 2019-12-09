@@ -45,8 +45,8 @@
     <header ng-controller="HeaderCtrl">
         <img ng-click="goHome($event)" class="logo" src="web/images/logo-barzinga.png">
         <div class="user-container">
-            <div class="money">
-                BZG <span>{{ (user.money || 0) | currency : '' : 2  }}</span>
+            <div class="money" ng-click="toggleCredit()">
+                <span>{{ (user.money || 0) | currency : '' : 2  }}</span> BZG
             </div>
             <div class="avatar">
                 <img src="#" alt="">

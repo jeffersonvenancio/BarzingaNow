@@ -121,7 +121,7 @@ header .user-container .money {
     border-right: 1px solid #777777;
 }
 
-header .user-container .money span {
+header .user-container .money {
     color: #FFDC00;
     font-size: 36px;
 }

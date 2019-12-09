@@ -29,5 +29,10 @@ app.controller('HeaderCtrl', ['$rootScope', 'UserService', '$location', function
         jQuery('nav').toggle();
     };
 
+    $rootScope.toggleCredit = function () {
+        jQuery('.money span').toggle();
+    };
+
+
     $rootScope.refreshUser();
 }]);
