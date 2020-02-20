@@ -3,16 +3,44 @@ import cloudstorage as gcs
 import datetime
 import json
 import os
+import requests
 from flask import Blueprint
 from google.appengine.api import app_identity
-
 from google.appengine.api import mail
-
 from transaction.model import Transaction
 from user.model import User
 from credit.model import Credit
+from mailjet_rest import Client
 
 balance = Blueprint('balance', __name__)
+
+def send_simple_message(emailList):
+    f=open("mail/template.html", "r")  
+    api_key = os.environ['API_KEY_BARZINGA']
+    api_secret = os.environ['API_SECRET_BARZINGA']
+
+    mailjet = Client(auth=(api_key, api_secret), version='v3.1')
+    data = {
+    'Messages': [
+        {
+        "From": {
+            "Email": "financeiro@dextra.com.br",
+            "Name": "financeiro"
+        },
+        "To": [{
+            "Email": "people@dextra-sw.com"
+        }],
+        "Bcc": emailList,
+        "Subject": "[Recarga] Barzinga",
+        "HTMLPart": f.read(),
+        "CustomID": "AppGettingStartedTest"
+        }
+    ]
+    }
+    result = mailjet.send.create(data=data)
+    f.close()
+    return "ok"
+
 
 def make_blob_public(csv, folder, name=None):
     bucket_name = os.environ.get('BUCKET_NAME', app_identity.get_default_gcs_bucket_name())
@@ -79,25 +107,21 @@ def credits_all(start=None, end=None):
 
 @balance.route('/cron/user-position/<string:period>', methods=['GET'], strict_slashes=False)
 def user_position(period):
-    users = User.query().filter(User.money < -0.01 and User.active == True).fetch()
+    users = User.query().filter(User.money < 0.0).filter(User.active == True).fetch()
     users_email_list = []
-
     usersJson = 'email;valor;active \n'
 
-    for u in users:
+    for idx,u in enumerate(users):
         usersJson += str(u.email)+';'+str("%.2f" % round(u.money,2))+';'+str(u.active)+' \n'
-        users_email_list.append(str(u.email))
-
+        mail = {}
+        mail["Email"] = u.email
+        users_email_list.append(mail)
     make_blob_public(usersJson, period, 'user_positions_'+datetime.datetime.now().strftime("%d_%m_%y"))
-
-    if (period == 'weekly' and len(users_email_list) != 0):
+   
+    if (period == 'monthly' and len(users_email_list) != 0):
         print(users_email_list)
-        #mail.send_mail(sender = 'financeiro@dextra-sw.com',
-        #                bcc = users_email_list,
-        #                subject = 'Barzinga: Saldo da conta',
-        #                body = 'Ola, Dextrana(o)! Percebemos que seu saldo no Barzinga esta negativo. Por isso, gostariamos de pedir que nos procure para se regularizar!').Send()
-    #  users_email_list.clear() - ISSO NÂO FUNCIONA
-
+        response = send_simple_message(users_email_list)
+        print(response)
     return json.dumps(usersJson)
 
 @balance.route('/cron/exceeded-debit', methods=['GET'], strict_slashes=False)
