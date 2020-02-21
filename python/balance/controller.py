@@ -21,24 +21,25 @@ def send_simple_message(emailList):
 
     mailjet = Client(auth=(api_key, api_secret), version='v3.1')
     data = {
-    'Messages': [
-        {
-        'From': {
-            'Email': 'financeiro@dextra.com.br',
-            'Name': 'financeiro'
-        },
-        'To': [{
-            'Email': 'people@dextra-sw.com'
-        }],
-        'Bcc': emailList,
-        'Subject': '[Recarga] Barzinga',
-        'HTMLPart': f.read(),
-        'CustomID': 'AppGettingStartedTest'
-        }
-    ]
+        'Messages': [
+            {
+                'From': {
+                    'Email': 'financeiro@dextra.com.br',
+                    'Name': 'financeiro'
+                },
+                'To': [{
+                    'Email': 'people@dextra-sw.com'
+                }],
+                'Bcc': emailList,
+                'Subject': '[Recarga] Barzinga',
+                'HTMLPart': f.read(),
+                'CustomID': 'AppGettingStartedTest'
+            }
+        ]
     }
     result = mailjet.send.create(data=data)
     f.close()
+
     return 'ok'
 
 
@@ -109,20 +110,24 @@ def credits_all(start=None, end=None):
 def user_position(period):
     users = User.query().filter(User.money < 0.0).filter(User.active == True).fetch()
     users_email_list = []
-    usersJson = 'email;valor;active \n'
+    usersCsv = 'email;valor;active \n'
 
-    for idx,user in enumerate(users):
-        usersJson += str(user.email)+';'+str("%.2f" % round(user.money,2))+';'+str(user.active)+' \n'
+    for idx, user in enumerate(users):
+        usersCsv += str(user.email)+';'+str("%.2f" % round(user.money,2))+';'+str(user.active)+' \n'
         mail = {}
         mail['Email'] = user.email
         users_email_list.append(mail)
-    make_blob_public(usersJson, period, 'user_positions_'+datetime.datetime.now().strftime("%d_%m_%y"))
+
+
+    make_blob_public(usersCsv, period, 'user_positions_'+datetime.datetime.now().strftime("%d_%m_%y"))
 
     if (period == 'monthly' and len(users_email_list) != 0):
         print(users_email_list)
         response = send_simple_message(users_email_list)
         print(response)
-    return json.dumps(usersJson)
+
+
+    return json.dumps(usersCsv)
 
 @balance.route('/cron/exceeded-debit', methods=['GET'], strict_slashes=False)
 def dailyDebitExceeded():
