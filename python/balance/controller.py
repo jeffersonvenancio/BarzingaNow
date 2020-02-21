@@ -42,7 +42,6 @@ def send_simple_message(emailList):
 
     return 'ok'
 
-
 def make_blob_public(csv, folder, name=None):
     bucket_name = os.environ.get('BUCKET_NAME', app_identity.get_default_gcs_bucket_name())
     write_retry_params = gcs.RetryParams(backoff_factor=1.1)
@@ -118,14 +117,12 @@ def user_position(period):
         mail['Email'] = user.email
         users_email_list.append(mail)
 
-
     make_blob_public(usersCsv, period, 'user_positions_'+datetime.datetime.now().strftime("%d_%m_%y"))
 
     if (period == 'monthly' and len(users_email_list) != 0):
         print(users_email_list)
         response = send_simple_message(users_email_list)
         print(response)
-
 
     return json.dumps(usersCsv)
 
