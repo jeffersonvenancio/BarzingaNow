@@ -15,7 +15,7 @@ from mailjet_rest import Client
 balance = Blueprint('balance', __name__)
 
 def send_simple_message(emailList):
-    f=open("mail/template.html", "r")  
+    f = open('mail/template.html', 'r')  
     api_key = os.environ['API_KEY_BARZINGA']
     api_secret = os.environ['API_SECRET_BARZINGA']
 
@@ -23,23 +23,23 @@ def send_simple_message(emailList):
     data = {
     'Messages': [
         {
-        "From": {
-            "Email": "financeiro@dextra.com.br",
-            "Name": "financeiro"
+        'From': {
+            'Email': 'financeiro@dextra.com.br',
+            'Name': 'financeiro'
         },
-        "To": [{
-            "Email": "people@dextra-sw.com"
-        }],
-        "Bcc": emailList,
-        "Subject": "[Recarga] Barzinga",
-        "HTMLPart": f.read(),
-        "CustomID": "AppGettingStartedTest"
+        'To': {
+            'Email': 'people@dextra-sw.com'
+        },
+        'Bcc': emailList,
+        'Subject': '[Recarga] Barzinga',
+        'HTMLPart': f.read(),
+        'CustomID': 'AppGettingStartedTest'
         }
     ]
     }
     result = mailjet.send.create(data=data)
     f.close()
-    return "ok"
+    return 'ok'
 
 
 def make_blob_public(csv, folder, name=None):
@@ -56,9 +56,9 @@ def transactions_last_month():
     first = today.replace(day=1)
     lastMonthEnd = first - datetime.timedelta(days=1)
     lastMonthBegin = lastMonthEnd.replace(day=1)
-    transactions = transactions_all(end=lastMonthEnd.strftime("%d-%m-%Y"), start=lastMonthBegin.strftime("%d-%m-%Y"))
+    transactions = transactions_all(end=lastMonthEnd.strftime('%d-%m-%Y'), start=lastMonthBegin.strftime('%d-%m-%Y'))
     users = User.query().fetch()
-    credits = credits_all(end=lastMonthEnd.strftime("%d-%m-%Y"), start=lastMonthBegin.strftime("%d-%m-%Y"))
+    credits = credits_all(end=lastMonthEnd.strftime('%d-%m-%Y'), start=lastMonthBegin.strftime('%d-%m-%Y'))
 
     totalTransacoesCompra = 0.00
     totalInadimplentes = 0.00
@@ -77,12 +77,12 @@ def transactions_last_month():
     for c in credits:
         totalCreditosComprados += c.value
 
-    resultado = 'Valor total das transacoes; '+str("%.2f" % round(totalTransacoesCompra,2))+'\n'
-    resultado += 'Valor total dos creditos em usuarios; '+str("%.2f" % round(totalCreditosEmUsuarios,2))+'\n'
-    resultado += 'Valor total dos Usuarios Negativos; '+str("%.2f" % round(totalInadimplentes,2))+'\n'
-    resultado += 'Valor total dos Creditos Adquiridos; '+str("%.2f" % round(totalCreditosComprados,2))+'\n'
+    resultado = 'Valor total das transacoes; '+str('%.2f' % round(totalTransacoesCompra,2))+'\n'
+    resultado += 'Valor total dos creditos em usuarios; '+str('%.2f' % round(totalCreditosEmUsuarios,2))+'\n'
+    resultado += 'Valor total dos Usuarios Negativos; '+str('%.2f' % round(totalInadimplentes,2))+'\n'
+    resultado += 'Valor total dos Creditos Adquiridos; '+str('%.2f' % round(totalCreditosComprados,2))+'\n'
 
-    make_blob_public(str(resultado), 'monthly', 'balance_'+lastMonthBegin.strftime("%d-%m-%Y"))
+    make_blob_public(str(resultado), 'monthly', 'balance_'+lastMonthBegin.strftime('%d-%m-%Y'))
 
     return str('ok'), 200
 
@@ -111,12 +111,12 @@ def user_position(period):
     users_email_list = []
     usersJson = 'email;valor;active \n'
 
-    for idx,u in enumerate(users):
-        usersJson += str(u.email)+';'+str("%.2f" % round(u.money,2))+';'+str(u.active)+' \n'
+    for idx,user in enumerate(users):
+        usersJson += str(user.email)+';'+str('%.2f' % round(user.money,2))+';'+str(user.active)+' \n'
         mail = {}
-        mail["Email"] = u.email
+        mail['Email'] = user.email
         users_email_list.append(mail)
-    make_blob_public(usersJson, period, 'user_positions_'+datetime.datetime.now().strftime("%d_%m_%y"))
+    make_blob_public(usersJson, period, 'user_positions_'+datetime.datetime.now().strftime('%d_%m_%y'))
    
     if (period == 'monthly' and len(users_email_list) != 0):
         print(users_email_list)
@@ -132,10 +132,10 @@ def dailyDebitExceeded():
     usersJson = 'email;valor \n'
 
     for u in users:
-        usersJson += str(u.email)+';'+str("%.2f" % round(u.money,2))+' \n'
+        usersJson += str(u.email)+';'+str('%.2f' % round(u.money,2))+' \n'
         users_email_list.append(str(u.email))
 
-    make_blob_public(usersJson, 'debitExceeded/', datetime.datetime.now().strftime("%d_%m_%y"))
+    make_blob_public(usersJson, 'debitExceeded/', datetime.datetime.now().strftime('%d_%m_%y'))
 
     if (len(users_email_list) != 0):
         print(users_email_list)
@@ -161,7 +161,7 @@ def credits_yesterday():
     total = 0
 
     for c in credits:
-        credit_str = ""
+        credit_str = ''
         if c.date is not None:
             credit_str += str(c.date.strftime('%d/%m/%y - %H:%M'))+';'
         else:
@@ -178,8 +178,8 @@ def credits_yesterday():
     make_blob_public(credits_str, 'daily',yesterday_dt.strftime('%d_%m_%y'))
 
     mail.send_mail(sender='jefferson.venancio@dextra-sw.com',
-                   to="franciane.oliveira@dextra-sw.com; juliana.oliveira@dextra-sw.com; jefferson.venancio@dextra-sw.com",
-                   subject="[BarzingaNow] - Creditos do dia " + yesterday_dt.strftime('%d_%m_%y'),
-                   body="Oi, total de creditos no dia "+yesterday_dt.strftime('%d_%m_%y')+" foi : "+str(total)+".")
+                   to='franciane.oliveira@dextra-sw.com; juliana.oliveira@dextra-sw.com; jefferson.venancio@dextra-sw.com',
+                   subject='[BarzingaNow] - Creditos do dia ' + yesterday_dt.strftime('%d_%m_%y'),
+                   body='Oi, total de creditos no dia '+yesterday_dt.strftime('%d_%m_%y')+' foi : '+str(total)+'.')
 
-    return "ok"
+    return 'ok'
