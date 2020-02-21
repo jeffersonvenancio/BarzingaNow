@@ -3,7 +3,6 @@ import cloudstorage as gcs
 import datetime
 import json
 import os
-import requests
 from flask import Blueprint
 from google.appengine.api import app_identity
 from google.appengine.api import mail
