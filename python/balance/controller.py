@@ -117,7 +117,7 @@ def user_position(period):
         mail['Email'] = user.email
         users_email_list.append(mail)
     make_blob_public(usersJson, period, 'user_positions_'+datetime.datetime.now().strftime("%d_%m_%y"))
-   
+
     if (period == 'monthly' and len(users_email_list) != 0):
         print(users_email_list)
         response = send_simple_message(users_email_list)
