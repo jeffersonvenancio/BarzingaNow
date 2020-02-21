@@ -15,7 +15,7 @@ from mailjet_rest import Client
 balance = Blueprint('balance', __name__)
 
 def send_simple_message(emailList):
-    f=open("mail/template.html", "r")  
+    f = open('mail/template.html', 'r')  
     api_key = os.environ['API_KEY_BARZINGA']
     api_secret = os.environ['API_SECRET_BARZINGA']
 
@@ -23,23 +23,23 @@ def send_simple_message(emailList):
     data = {
     'Messages': [
         {
-        "From": {
-            "Email": "financeiro@dextra.com.br",
-            "Name": "financeiro"
+        'From': {
+            'Email': 'financeiro@dextra.com.br',
+            'Name': 'financeiro'
         },
-        "To": [{
-            "Email": "people@dextra-sw.com"
+        'To': [{
+            'Email': 'people@dextra-sw.com'
         }],
-        "Bcc": emailList,
-        "Subject": "[Recarga] Barzinga",
-        "HTMLPart": f.read(),
-        "CustomID": "AppGettingStartedTest"
+        'Bcc': emailList,
+        'Subject': '[Recarga] Barzinga',
+        'HTMLPart': f.read(),
+        'CustomID': 'AppGettingStartedTest'
         }
     ]
     }
     result = mailjet.send.create(data=data)
     f.close()
-    return "ok"
+    return 'ok'
 
 
 def make_blob_public(csv, folder, name=None):
@@ -111,10 +111,10 @@ def user_position(period):
     users_email_list = []
     usersJson = 'email;valor;active \n'
 
-    for idx,u in enumerate(users):
-        usersJson += str(u.email)+';'+str("%.2f" % round(u.money,2))+';'+str(u.active)+' \n'
+    for idx,user in enumerate(users):
+        usersJson += str(user.email)+';'+str("%.2f" % round(user.money,2))+';'+str(user.active)+' \n'
         mail = {}
-        mail["Email"] = u.email
+        mail['Email'] = user.email
         users_email_list.append(mail)
     make_blob_public(usersJson, period, 'user_positions_'+datetime.datetime.now().strftime("%d_%m_%y"))
    
