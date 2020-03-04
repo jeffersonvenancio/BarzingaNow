@@ -9,8 +9,12 @@ RODE ESTES COMANDOS PARA ATUALIZAR AS LIBS DE SUPORTE DO PYTHON:
  - sudo apt-get install python-dev
  - pip install setuptools
 
-QUER INTALAR AS DEPENDENCIAS???
+QUER INSTALAR AS DEPENDENCIAS???
  - pip install -t ./lib -r requirements.txt --upgrade
+
+DESCRIPTOGRAFAR AS CHAVES DO MAILJET
+
+ - Entrar na pasta bash_scripts e rodar ./decrypt.sh  <*raiz do projeto*> e passe a senha da criptografia quando pedir
 
 QUER RODAR EM DEV (NA SUA MAQUINA, Meu CHAPA)!?!?
  - dev_appserver.py ../python
