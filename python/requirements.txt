@@ -10,7 +10,7 @@ Flask-Excel
 flask-cors
 urllib3[secure]
 urlfetch
-httplib2==0.9.2
+httplib2==0.18.0
 apiclient==1.0.2
 oauth2client==3.0.0
 requests
